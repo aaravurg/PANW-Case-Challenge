@@ -1,0 +1,1001 @@
+transaction_id,date,amount,merchant_name,category,payment_channel,pending
+tx_40197d80433d,2025-12-05 08:22:52,-14.4,Netflix,"[""Entertainment"", ""Subscriptions""]",online,False
+tx_901486176a24,2025-12-04 07:17:08,479.82,Transfer to Checking,"[""Transfer"", ""Bank""]",online,True
+tx_8af12123e4d6,2025-12-01 12:44:30,611.24,Transfer to Checking,"[""Transfer"", ""Bank""]",online,False
+tx_8a17852cdd36,2025-12-01 11:03:25,-345.7,Concert Tickets,"[""Entertainment"", ""Tickets""]",online,False
+tx_832cb1936698,2025-11-30 18:08:48,-13.42,Best Buy,"[""Shopping"", ""Electronics""]",online,False
+tx_3102686ab903,2025-11-30 12:04:28,-9.33,Local Grocery Store,"[""Food"", ""Groceries""]",online,False
+tx_238fa8e5a123,2025-11-30 08:28:21,-35.28,Walmart Supercenter,"[""Shopping"", ""Retail""]",in store,False
+tx_47eec1eacaee,2025-11-29 12:42:06,-9.2,Whole Foods Market,"[""Food"", ""Groceries""]",in store,False
+tx_a619eeacc2c0,2025-11-29 12:29:08,-9.9,Target,"[""Shopping"", ""Retail""]",in store,False
+tx_cbdb19d8c9a3,2025-11-29 09:25:42,-388.82,Airbnb,"[""Travel"", ""Lodging""]",in store,False
+tx_223babc885eb,2025-11-28 12:48:27,-13.06,Google *Play,"[""Technology"", ""Subscriptions""]",online,False
+tx_27e86403889e,2025-11-26 20:44:07,1387.84,Payment - Thank You,"[""Payment"", ""Credit Card""]",online,False
+tx_d1a7add68f24,2025-11-26 13:59:47,-220.49,Concert Tickets,"[""Entertainment"", ""Tickets""]",in store,False
+tx_d8a83f577d12,2025-11-26 12:16:12,-4.98,IKEA,"[""Shopping"", ""Home""]",in store,False
+tx_b0c9a0784db1,2025-11-26 07:16:18,-34.46,Chevron,"[""Transportation"", ""Gas & Fuel""]",online,False
+tx_6cff2cd9a1ae,2025-11-25 22:59:27,-8.73,Local Grocery Store,"[""Food"", ""Groceries""]",in store,False
+tx_438e5d7ffb9d,2025-11-25 12:18:01,-9.08,Comcast,"[""Utilities"", ""Internet""]",in store,False
+tx_db8902481f6e,2025-11-23 13:24:05,59.3,Refund - Amazon,"[""Refunds"", ""Online""]",online,False
+tx_9e00ec61f409,2025-11-23 12:01:43,-5.07,Starbucks,"[""Food"", ""Coffee""]",online,True
+tx_d462bea813ce,2025-11-23 04:58:36,-76.92,Marriott Hotels,"[""Travel"", ""Lodging""]",in store,False
+tx_305ca9a45bc4,2025-11-21 19:03:47,125.63,Payment - Thank You,"[""Payment"", ""Credit Card""]",online,False
+tx_3bb5cf87de47,2025-11-21 13:57:24,-1350.0,Rent - Apt 2B,"[""Housing"", ""Rent""]",in store,False
+tx_a6306654a2f9,2025-11-21 09:49:42,-5.85,Local Grocery Store,"[""Food"", ""Groceries""]",in store,False
+tx_a103c251bf46,2025-11-20 22:56:08,1595.68,WholePay,"[""Payment"", ""Credit Card""]",online,False
+tx_bb95d8897533,2025-11-20 22:02:39,-20.66,AT&T Wireless,"[""Utilities"", ""Cell Phone""]",in store,False
+tx_f9592d7fd2bd,2025-11-20 08:49:02,-11.89,Local Grocery Store,"[""Food"", ""Groceries""]",online,False
+tx_cd9903deb2e3,2025-11-19 13:44:08,-3.02,Electric Vehicle Charge,"[""Transportation"", ""Gas & Fuel""]",in store,False
+tx_ecb8b2632b2d,2025-11-17 08:21:23,-87.96,Marriott Hotels,"[""Travel"", ""Lodging""]",online,False
+tx_b1f9ae7681d5,2025-11-15 12:47:59,-14.81,Chevron,"[""Transportation"", ""Gas & Fuel""]",online,False
+tx_91c8c292aaea,2025-11-15 12:17:25,-8.05,Best Buy,"[""Shopping"", ""Electronics""]",online,False
+tx_57fd7bf507e3,2025-11-14 13:16:24,-26.68,Apple Services,"[""Technology"", ""Subscriptions""]",online,False
+tx_4d07e21095f3,2025-11-13 08:10:28,-8.67,Walmart Supercenter,"[""Shopping"", ""Retail""]",online,False
+tx_a586cfca1992,2025-11-10 18:15:02,-260.69,Southwest Airlines,"[""Travel"", ""Airfare""]",online,False
+tx_1710986752ba,2025-11-10 14:51:55,-16.56,Spotify,"[""Entertainment"", ""Subscriptions""]",online,False
+tx_71bdde6631c2,2025-11-09 08:23:51,-30.67,Chevron,"[""Transportation"", ""Gas & Fuel""]",in store,False
+tx_5f2a8da877bb,2025-11-09 07:37:42,-5.72,Unknown Merchant,"[""Uncategorized""]",in store,False
+tx_e533203a7d35,2025-11-08 19:00:04,27.37,Refund - Amazon,"[""Refunds"", ""Online""]",online,False
+tx_b4b1dcf77e28,2025-11-08 18:45:08,-44.19,Pharmacy Rx,"[""Healthcare"", ""Pharmacy""]",in store,False
+tx_ed0c5ff2ca64,2025-11-06 22:59:00,-9.7,Costco,"[""Shopping"", ""Wholesale""]",in store,False
+tx_7c322b6dc954,2025-11-05 13:10:01,-14.15,Walmart Supercenter,"[""Shopping"", ""Retail""]",in store,False
+tx_4d31b9bc4fa2,2025-11-05 08:47:28,-10.02,Amazon Marketplace,"[""Shopping"", ""Online""]",online,False
+tx_437ac6da1ae5,2025-11-04 12:32:50,1531.01,WholePay,"[""Payment"", ""Credit Card""]",online,False
+tx_61b389b3edf9,2025-11-03 12:31:08,-26.33,Trader Joe's,"[""Food"", ""Groceries""]",in store,False
+tx_08b3ecfc7e78,2025-11-03 10:59:36,41.0,Refund - Amazon,"[""Refunds"", ""Online""]",online,False
+tx_609b4faf0415,2025-11-02 18:30:58,79.43,Refund - Amazon,"[""Refunds"", ""Online""]",online,False
+tx_0b4feb183f8e,2025-11-01 18:03:25,-4.17,Local Grocery Store,"[""Food"", ""Groceries""]",online,False
+tx_0997c642d8aa,2025-11-01 08:13:42,-16.42,IKEA,"[""Shopping"", ""Home""]",online,False
+tx_8fe8a81da977,2025-10-30 21:23:34,-7.71,City Utilities,"[""Utilities"", ""Electric""]",online,False
+tx_833cfce3e8b9,2025-10-30 13:08:48,-23.34,AT&T Wireless,"[""Utilities"", ""Cell Phone""]",in store,False
+tx_18a98b5cc5cc,2025-10-30 09:10:50,-9.75,Trader Joe's,"[""Food"", ""Groceries""]",in store,False
+tx_46908015a250,2025-10-28 16:58:02,-19.14,Verizon Wireless,"[""Utilities"", ""Cell Phone""]",online,False
+tx_c7fe5f2a01af,2025-10-27 21:42:48,-63.92,Target,"[""Shopping"", ""Retail""]",in store,False
+tx_2574949e3e90,2025-10-26 18:47:14,1484.78,Payment - Thank You,"[""Payment"", ""Credit Card""]",online,False
+tx_a7e1c362359c,2025-10-25 13:52:00,-24.31,Spotify,"[""Entertainment"", ""Subscriptions""]",online,False
+tx_b3d2f61d836c,2025-10-25 07:21:26,12.84,Refund - Amazon,"[""Refunds"", ""Online""]",online,False
+tx_c72e3997bbd7,2025-10-24 22:46:55,-52.64,Costco,"[""Shopping"", ""Wholesale""]",in store,False
+tx_2b07c2a02393,2025-10-24 13:57:43,-66.37,Parking Garage,"[""Transportation"", ""Parking""]",in store,False
+tx_eeede29fba4c,2025-10-24 13:57:35,1702.89,Payment - Thank You,"[""Payment"", ""Credit Card""]",online,False
+tx_db5ad5c5a11f,2025-10-24 12:24:36,-7.19,City Utilities,"[""Utilities"", ""Electric""]",in store,False
+tx_62e4f9cbc1cf,2025-10-23 13:08:10,-1250.0,Rent - Apt 2B,"[""Housing"", ""Rent""]",in store,False
+tx_e4527f70fb31,2025-10-23 09:59:44,-27.27,Apple Services,"[""Technology"", ""Subscriptions""]",online,False
+tx_eebd2b3e636a,2025-10-23 07:48:10,-6.71,IKEA,"[""Shopping"", ""Home""]",online,False
+tx_4facff198a60,2025-10-21 20:06:13,-4.11,City Utilities,"[""Utilities"", ""Electric""]",in store,False
+tx_b2e2957c2d30,2025-10-21 12:19:43,1603.7,Payment - Thank You,"[""Payment"", ""Credit Card""]",online,False
+tx_a94f40e9a916,2025-10-20 20:13:33,-78.21,McDonald's,"[""Food"", ""Fast Food""]",in store,False
+tx_4fc392f0aca9,2025-10-20 19:43:10,-81.26,Airbnb,"[""Travel"", ""Lodging""]",in store,False
+tx_063dde0eb57e,2025-10-20 13:31:57,-4.34,Whole Foods Market,"[""Food"", ""Groceries""]",online,False
+tx_f6da416a1304,2025-10-19 12:26:29,-21.4,IKEA,"[""Shopping"", ""Home""]",in store,False
+tx_cdd21da2fc6f,2025-10-19 09:27:53,-27.62,Netflix,"[""Entertainment"", ""Subscriptions""]",online,False
+tx_5ab15655947b,2025-10-17 19:03:17,-38.57,Target,"[""Shopping"", ""Retail""]",in store,False
+tx_11978602c297,2025-10-17 08:30:31,-30.93,Pharmacy Rx,"[""Healthcare"", ""Pharmacy""]",in store,False
+tx_06bac66e67b0,2025-10-17 03:14:53,-10.0,Verizon Wireless,"[""Utilities"", ""Cell Phone""]",in store,False
+tx_bf7b165ea8ac,2025-10-16 21:18:34,1215.16,WholePay,"[""Payment"", ""Credit Card""]",online,True
+tx_b2579b4f2603,2025-10-16 18:45:09,-15.2,Uber *Trip,"[""Travel"", ""Taxi""]",in store,True
+tx_d66b8c1ec846,2025-10-15 12:57:34,-17.55,Target,"[""Shopping"", ""Retail""]",online,False
+tx_169eb2e862ce,2025-10-13 20:50:09,-28.26,AT&T Wireless,"[""Utilities"", ""Cell Phone""]",in store,False
+tx_7e922daf09e1,2025-10-11 13:20:35,-10.75,Parking Garage,"[""Transportation"", ""Parking""]",in store,False
+tx_bc45a162f642,2025-10-10 12:33:06,-13.32,Walmart Supercenter,"[""Shopping"", ""Retail""]",in store,False
+tx_d5164e6bb665,2025-10-10 09:22:09,-512.03,Southwest Airlines,"[""Travel"", ""Airfare""]",in store,False
+tx_c4d66f8079ab,2025-10-10 05:55:02,-14.45,Whole Foods Market,"[""Food"", ""Groceries""]",in store,False
+tx_1006c3640298,2025-10-09 13:17:02,-10.46,Amazon Marketplace,"[""Shopping"", ""Online""]",online,False
+tx_2593a65b0d03,2025-10-08 20:05:27,-6.56,Local Grocery Store,"[""Food"", ""Groceries""]",in store,False
+tx_059a4e9dc4cd,2025-10-07 12:52:28,-10.79,Lyft,"[""Travel"", ""Taxi""]",online,False
+tx_e8a5c513ad1c,2025-10-06 21:44:30,-11.11,Chevron,"[""Transportation"", ""Gas & Fuel""]",online,False
+tx_462a3f3dad2e,2025-10-06 20:00:36,-5.54,Apple Services,"[""Technology"", ""Subscriptions""]",online,False
+tx_e25d6caac284,2025-10-05 21:41:52,-171.07,Concert Tickets,"[""Entertainment"", ""Tickets""]",online,False
+tx_2130fc7cfc17,2025-10-05 13:05:27,-6.24,City Utilities,"[""Utilities"", ""Electric""]",in store,False
+tx_a9cac20d516e,2025-10-05 08:11:26,-125.1,AT&T Wireless,"[""Utilities"", ""Cell Phone""]",online,False
+tx_933b356c6a25,2025-10-02 22:06:00,-34.96,IKEA,"[""Shopping"", ""Home""]",in store,False
+tx_3ce257d38213,2025-09-30 22:16:20,-119.79,Southwest Airlines,"[""Travel"", ""Airfare""]",online,False
+tx_4f80a3ef0ca3,2025-09-30 08:20:06,-43.45,Unknown Merchant,"[""Uncategorized""]",in store,False
+tx_3f6f417e9aca,2025-09-28 19:15:06,-23.17,Comcast,"[""Utilities"", ""Internet""]",in store,False
+tx_06840a4d984b,2025-09-25 08:43:07,-4.34,Pharmacy Rx,"[""Healthcare"", ""Pharmacy""]",in store,False
+tx_02ccd088f7a3,2025-09-23 20:44:28,-26.89,Netflix,"[""Entertainment"", ""Subscriptions""]",online,False
+tx_b4dbd89feb02,2025-09-22 20:10:39,-17.41,Verizon Wireless,"[""Utilities"", ""Cell Phone""]",online,False
+tx_d2e0f2904057,2025-09-21 20:42:22,-19.44,Target,"[""Shopping"", ""Retail""]",in store,False
+tx_493a61f585f4,2025-09-20 18:28:31,-24.27,Pharmacy Rx,"[""Healthcare"", ""Pharmacy""]",in store,False
+tx_ef6aa0cde048,2025-09-19 12:06:42,-6.57,Pharmacy Rx,"[""Healthcare"", ""Pharmacy""]",in store,False
+tx_ea3009fffa69,2025-09-19 08:15:13,-97.05,Concert Tickets,"[""Entertainment"", ""Tickets""]",in store,False
+tx_756d9884c97e,2025-09-18 12:23:27,-17.96,IKEA,"[""Shopping"", ""Home""]",in store,False
+tx_635b4abad50f,2025-09-18 08:34:07,-20.08,Comcast,"[""Utilities"", ""Internet""]",in store,False
+tx_3e32b51311ce,2025-09-17 21:19:29,-17.06,Google *Play,"[""Technology"", ""Subscriptions""]",online,False
+tx_47d82532ff8b,2025-09-17 08:31:08,-59.57,Pharmacy Rx,"[""Healthcare"", ""Pharmacy""]",online,False
+tx_8cd4f5329e7d,2025-09-16 18:50:25,1936.18,Payment - Thank You,"[""Payment"", ""Credit Card""]",online,True
+tx_42f495fc416e,2025-09-16 18:00:03,-22.55,Amazon Marketplace,"[""Shopping"", ""Online""]",online,False
+tx_1254716c604f,2025-09-16 08:51:53,-29.8,Walmart Supercenter,"[""Shopping"", ""Retail""]",in store,False
+tx_f0c4a5670e03,2025-09-15 20:03:01,-22.1,Chevron,"[""Transportation"", ""Gas & Fuel""]",online,False
+tx_8f583a4ff108,2025-09-13 22:09:07,-7.85,IKEA,"[""Shopping"", ""Home""]",in store,False
+tx_2034b60a34a4,2025-09-13 13:33:34,-484.43,Marriott Hotels,"[""Travel"", ""Lodging""]",online,True
+tx_b492743af3b5,2025-09-12 20:01:20,-8.5,Walmart Supercenter,"[""Shopping"", ""Retail""]",in store,False
+tx_ffb2cb0cf97d,2025-09-11 12:46:27,766.33,WholePay,"[""Payment"", ""Credit Card""]",online,False
+tx_b3c761aebd86,2025-09-10 07:44:46,99.08,Refund - Amazon,"[""Refunds"", ""Online""]",online,False
+tx_0bf83a3e695b,2025-09-09 20:07:36,-28.33,Gym Membership,"[""Health"", ""Fitness""]",in store,False
+tx_45e4a4606b69,2025-09-09 19:39:42,92.12,Refund - Amazon,"[""Refunds"", ""Online""]",online,False
+tx_8de52dcd9a1b,2025-09-08 22:17:33,124.19,Refund - Amazon,"[""Refunds"", ""Online""]",online,False
+tx_ca5c149eb9c4,2025-09-07 13:25:37,-16.69,Walmart Supercenter,"[""Shopping"", ""Retail""]",in store,False
+tx_fd9134584749,2025-09-06 22:57:51,83.83,Refund - Amazon,"[""Refunds"", ""Online""]",online,False
+tx_4e58c8ae3e85,2025-09-06 22:40:19,-50.61,Target,"[""Shopping"", ""Retail""]",in store,False
+tx_4bafceaf34f4,2025-09-05 20:37:51,-11.54,Pharmacy Rx,"[""Healthcare"", ""Pharmacy""]",online,False
+tx_829bd7427553,2025-09-03 21:47:37,-14.25,Parking Garage,"[""Transportation"", ""Parking""]",in store,False
+tx_4a7749541120,2025-09-03 18:53:48,-14.95,Uber *Trip,"[""Travel"", ""Taxi""]",online,False
+tx_504a2f2ed755,2025-09-03 13:29:19,-21.38,Verizon Wireless,"[""Utilities"", ""Cell Phone""]",online,False
+tx_f0a711e88a27,2025-09-02 22:33:50,-8.15,Starbucks,"[""Food"", ""Coffee""]",in store,False
+tx_b093c44eccc1,2025-09-02 13:26:09,-32.63,City Utilities,"[""Utilities"", ""Electric""]",in store,False
+tx_1f120e7566f6,2025-09-01 08:22:30,-13.57,Google *Play,"[""Technology"", ""Subscriptions""]",online,False
+tx_a4f22756c01b,2025-08-31 22:44:14,-9.86,Apple Services,"[""Technology"", ""Subscriptions""]",online,False
+tx_9de9f29072b8,2025-08-31 12:19:51,-23.8,Apple Services,"[""Technology"", ""Subscriptions""]",online,False
+tx_431398014700,2025-08-30 21:34:50,-62.02,City Utilities,"[""Utilities"", ""Electric""]",online,False
+tx_e4d33757913e,2025-08-30 08:17:52,-9.2,Parking Garage,"[""Transportation"", ""Parking""]",in store,False
+tx_68d3bed7af20,2025-08-29 13:35:32,-17.6,Shell Service Station,"[""Transportation"", ""Gas & Fuel""]",in store,False
+tx_cccce0d1ee24,2025-08-28 12:55:43,-17.88,City Utilities,"[""Utilities"", ""Electric""]",online,False
+tx_fa4960922189,2025-08-28 07:41:14,-34.39,Parking Garage,"[""Transportation"", ""Parking""]",in store,False
+tx_5a56645b68c3,2025-08-27 20:24:36,-377.17,Airbnb,"[""Travel"", ""Lodging""]",in store,False
+tx_d4867adf200b,2025-08-27 08:05:00,-133.02,City Utilities,"[""Utilities"", ""Electric""]",online,True
+tx_431e9f8068f4,2025-08-26 19:05:56,-23.03,Google *Play,"[""Technology"", ""Subscriptions""]",online,False
+tx_ca28b24a8207,2025-08-25 07:44:33,1727.78,Payment - Thank You,"[""Payment"", ""Credit Card""]",online,False
+tx_9fc590e7557a,2025-08-24 13:52:46,-303.48,Concert Tickets,"[""Entertainment"", ""Tickets""]",in store,False
+tx_e41c22b01fff,2025-08-24 12:50:40,-14.68,Apple Services,"[""Technology"", ""Subscriptions""]",online,False
+tx_72889bd0e669,2025-08-24 09:55:23,-13.5,Lyft,"[""Travel"", ""Taxi""]",in store,False
+tx_0a2d106790ef,2025-08-23 22:48:50,-1350.0,Rent - Apt 2B,"[""Housing"", ""Rent""]",in store,False
+tx_7160ec174f70,2025-08-23 20:02:18,1645.84,Payment - Thank You,"[""Payment"", ""Credit Card""]",online,False
+tx_381919471124,2025-08-23 19:41:43,-21.42,City Utilities,"[""Utilities"", ""Electric""]",in store,False
+tx_7d4f2b8e9cfb,2025-08-23 12:54:14,-75.44,Marriott Hotels,"[""Travel"", ""Lodging""]",in store,False
+tx_2fad729b6e2a,2025-08-17 13:26:19,-1.87,McDonald's,"[""Food"", ""Fast Food""]",online,False
+tx_c7a9d7613487,2025-08-16 08:25:14,-17.26,Spotify,"[""Entertainment"", ""Subscriptions""]",online,False
+tx_e1bd13c9b891,2025-08-16 07:08:39,-44.01,Parking Garage,"[""Transportation"", ""Parking""]",in store,False
+tx_44fe892cc444,2025-08-15 09:29:31,-255.85,Southwest Airlines,"[""Travel"", ""Airfare""]",in store,False
+tx_3b9c432bf4bd,2025-08-15 07:45:12,-31.38,Electric Vehicle Charge,"[""Transportation"", ""Gas & Fuel""]",in store,False
+tx_9d9071d1f47d,2025-08-14 21:31:09,-321.17,Airbnb,"[""Travel"", ""Lodging""]",in store,False
+tx_26ca7bd93f57,2025-08-14 07:55:40,-9.78,Best Buy,"[""Shopping"", ""Electronics""]",in store,False
+tx_526a9c82b929,2025-08-13 22:41:40,-106.85,Parking Garage,"[""Transportation"", ""Parking""]",in store,False
+tx_2ade7ae42d5e,2025-08-13 12:08:42,-3.15,Walmart Supercenter,"[""Shopping"", ""Retail""]",in store,False
+tx_d0317523570c,2025-08-13 08:35:08,1269.55,WholePay,"[""Payment"", ""Credit Card""]",online,False
+tx_0fc5810ab9ef,2025-08-12 18:22:41,-28.26,Verizon Wireless,"[""Utilities"", ""Cell Phone""]",in store,False
+tx_0989504176a1,2025-08-11 07:28:34,-12.01,Starbucks,"[""Food"", ""Coffee""]",in store,False
+tx_d9f90c282718,2025-08-10 18:44:54,-23.29,Walmart Supercenter,"[""Shopping"", ""Retail""]",online,False
+tx_1ade2aa70e30,2025-08-09 22:52:46,-19.88,Gym Membership,"[""Health"", ""Fitness""]",in store,False
+tx_852b7bf9f621,2025-08-08 18:17:28,-19.52,Shell Service Station,"[""Transportation"", ""Gas & Fuel""]",in store,False
+tx_819323563238,2025-08-08 07:12:53,-6.74,Whole Foods Market,"[""Food"", ""Groceries""]",in store,True
+tx_a69183a7c844,2025-08-06 00:29:39,-16.42,Google *Play,"[""Technology"", ""Subscriptions""]",online,False
+tx_e614b6285704,2025-08-05 07:55:10,146.21,Refund - Amazon,"[""Refunds"", ""Online""]",online,False
+tx_b421eb327aa6,2025-08-05 01:13:38,-55.87,AT&T Wireless,"[""Utilities"", ""Cell Phone""]",online,False
+tx_8fba1ab97b37,2025-08-04 09:56:02,413.31,WholePay,"[""Payment"", ""Credit Card""]",online,True
+tx_77a335489844,2025-08-03 20:14:49,-326.61,Southwest Airlines,"[""Travel"", ""Airfare""]",in store,False
+tx_132a3ec55774,2025-08-03 15:58:15,-23.65,Costco,"[""Shopping"", ""Wholesale""]",online,False
+tx_e694f97d1213,2025-08-03 07:48:40,-29.93,Apple Services,"[""Technology"", ""Subscriptions""]",online,False
+tx_b4fe5d545412,2025-07-31 13:26:12,-12.11,Spotify,"[""Entertainment"", ""Subscriptions""]",online,False
+tx_48412d91ecf6,2025-07-30 22:33:41,-14.84,AT&T Wireless,"[""Utilities"", ""Cell Phone""]",online,False
+tx_10624e203bb8,2025-07-30 12:47:04,-11.47,Uber *Trip,"[""Travel"", ""Taxi""]",in store,False
+tx_325fa61b92e4,2025-07-29 07:35:10,-60.6,Shell Service Station,"[""Transportation"", ""Gas & Fuel""]",in store,False
+tx_1c947625ecdc,2025-07-29 05:04:23,-35.74,Amazon Marketplace,"[""Shopping"", ""Online""]",online,False
+tx_1c9f9cf6ff1b,2025-07-27 12:24:57,-72.58,Airbnb,"[""Travel"", ""Lodging""]",in store,False
+tx_c623715cc525,2025-07-26 18:55:44,-47.99,Pharmacy Rx,"[""Healthcare"", ""Pharmacy""]",online,False
+tx_f64f966a0dcf,2025-07-25 19:02:22,-146.24,Electric Vehicle Charge,"[""Transportation"", ""Gas & Fuel""]",online,False
+tx_6da6bdd041ad,2025-07-24 19:33:21,-447.56,Airbnb,"[""Travel"", ""Lodging""]",online,False
+tx_16f82f5c4a55,2025-07-24 12:31:14,83.04,Refund - Amazon,"[""Refunds"", ""Online""]",online,False
+tx_352165128c84,2025-07-22 20:49:20,-6.85,Pharmacy Rx,"[""Healthcare"", ""Pharmacy""]",online,False
+tx_fead04cc7a08,2025-07-22 12:08:43,-6.71,Costco,"[""Shopping"", ""Wholesale""]",in store,False
+tx_851c684e9a63,2025-07-20 12:26:15,-25.07,Target,"[""Shopping"", ""Retail""]",in store,False
+tx_6c71c07ef69d,2025-07-19 07:54:32,-106.79,Walmart Supercenter,"[""Shopping"", ""Retail""]",online,False
+tx_4960cff25472,2025-07-19 00:48:01,-32.16,Uber *Trip,"[""Travel"", ""Taxi""]",in store,False
+tx_c397a3e0e5ac,2025-07-18 22:12:23,-22.94,Parking Garage,"[""Transportation"", ""Parking""]",in store,False
+tx_6e965c4cd0ec,2025-07-17 22:34:01,-14.77,Parking Garage,"[""Transportation"", ""Parking""]",in store,False
+tx_4d13be890215,2025-07-17 19:27:41,1269.93,Payment - Thank You,"[""Payment"", ""Credit Card""]",online,False
+tx_5282c6758d03,2025-07-16 21:38:37,-56.2,Shell Service Station,"[""Transportation"", ""Gas & Fuel""]",in store,False
+tx_ce1b7cf0a6f9,2025-07-16 18:53:11,-13.52,Verizon Wireless,"[""Utilities"", ""Cell Phone""]",online,False
+tx_30a21ad0e637,2025-07-14 13:23:43,-60.04,Shell Service Station,"[""Transportation"", ""Gas & Fuel""]",online,False
+tx_6acfa40fa01f,2025-07-13 12:44:30,-61.54,Airbnb,"[""Travel"", ""Lodging""]",in store,False
+tx_fed306a09f56,2025-07-11 18:07:45,-40.76,Shell Service Station,"[""Transportation"", ""Gas & Fuel""]",in store,False
+tx_d9048ee19b3d,2025-07-11 13:22:28,-16.14,Google *Play,"[""Technology"", ""Subscriptions""]",online,False
+tx_4b5d9344d639,2025-07-10 21:02:18,-12.36,Walmart Supercenter,"[""Shopping"", ""Retail""]",online,False
+tx_caf855d4474d,2025-07-10 13:25:08,-10.1,Netflix,"[""Entertainment"", ""Subscriptions""]",online,False
+tx_c6e5200b1361,2025-07-07 22:05:59,-205.73,Southwest Airlines,"[""Travel"", ""Airfare""]",in store,False
+tx_b2f3db3a776e,2025-07-07 13:28:57,-191.96,Southwest Airlines,"[""Travel"", ""Airfare""]",in store,False
+tx_d894e6399a0c,2025-07-06 08:25:32,-123.12,Target,"[""Shopping"", ""Retail""]",in store,False
+tx_843cccf1d90d,2025-07-05 02:31:24,-45.62,AT&T Wireless,"[""Utilities"", ""Cell Phone""]",online,False
+tx_40901f2c9869,2025-07-04 08:53:44,-3.49,Local Grocery Store,"[""Food"", ""Groceries""]",online,False
+tx_fc69147775b6,2025-07-03 12:24:35,-3.51,IKEA,"[""Shopping"", ""Home""]",online,False
+tx_9ca43c92238f,2025-07-03 07:46:33,-1350.0,Rent - Apt 2B,"[""Housing"", ""Rent""]",in store,False
+tx_99e6ec9972ef,2025-07-02 08:26:21,-3.58,Lyft,"[""Travel"", ""Taxi""]",in store,False
+tx_1524cd97a986,2025-07-01 09:31:20,-24.27,Google *Play,"[""Technology"", ""Subscriptions""]",online,False
+tx_dbdbf7d34e6c,2025-07-01 09:10:38,-10.81,Pharmacy Rx,"[""Healthcare"", ""Pharmacy""]",in store,False
+tx_26f20bcfaaa5,2025-06-30 20:07:55,-9.85,Starbucks,"[""Food"", ""Coffee""]",in store,False
+tx_1ecf609d52cf,2025-06-30 18:24:57,-1350.0,Rent - Apt 2B,"[""Housing"", ""Rent""]",in store,False
+tx_52bd78aeb093,2025-06-29 12:54:49,-9.6,Starbucks,"[""Food"", ""Coffee""]",in store,False
+tx_3d648934c1f8,2025-06-28 07:32:46,-15.93,Unknown Merchant,"[""Uncategorized""]",in store,False
+tx_b7e7bf0a1d57,2025-06-26 18:34:37,-11.78,Google *Play,"[""Technology"", ""Subscriptions""]",online,False
+tx_37ed2db0d03f,2025-06-25 19:53:54,-25.65,Google *Play,"[""Technology"", ""Subscriptions""]",online,False
+tx_efe0fca316d4,2025-06-24 21:28:39,-24.55,Pharmacy Rx,"[""Healthcare"", ""Pharmacy""]",in store,True
+tx_ba1d622b2e0a,2025-06-22 20:08:06,-259.38,Marriott Hotels,"[""Travel"", ""Lodging""]",in store,False
+tx_a9271e6bc400,2025-06-22 19:08:22,-37.77,Starbucks,"[""Food"", ""Coffee""]",in store,False
+tx_9fb904b32581,2025-06-22 07:03:17,-16.52,AT&T Wireless,"[""Utilities"", ""Cell Phone""]",in store,False
+tx_1c7b1c9816d7,2025-06-20 09:46:33,-7.04,Pharmacy Rx,"[""Healthcare"", ""Pharmacy""]",online,False
+tx_1e4d0320541c,2025-06-18 20:19:10,-93.2,Southwest Airlines,"[""Travel"", ""Airfare""]",online,False
+tx_1fc1b1628364,2025-06-18 19:32:54,-3.81,Target,"[""Shopping"", ""Retail""]",online,False
+tx_db55a36067ec,2025-06-17 10:57:31,-15.83,Verizon Wireless,"[""Utilities"", ""Cell Phone""]",in store,False
+tx_8bf92b11b87a,2025-06-17 08:50:50,-36.71,Walmart Supercenter,"[""Shopping"", ""Retail""]",in store,False
+tx_e9e4c734b06f,2025-06-16 21:31:11,-17.34,Lyft,"[""Travel"", ""Taxi""]",online,False
+tx_e9a1ca1d762d,2025-06-16 12:00:47,143.72,Refund - Amazon,"[""Refunds"", ""Online""]",online,False
+tx_3af9685f840b,2025-06-15 22:19:39,-18.98,Walmart Supercenter,"[""Shopping"", ""Retail""]",in store,False
+tx_07dc89bff765,2025-06-15 19:20:53,-8.01,AT&T Wireless,"[""Utilities"", ""Cell Phone""]",in store,False
+tx_118dc07979cf,2025-06-15 19:19:44,-85.23,Concert Tickets,"[""Entertainment"", ""Tickets""]",in store,False
+tx_e562403d4b13,2025-06-12 22:48:17,-9.81,Starbucks,"[""Food"", ""Coffee""]",in store,False
+tx_ef03e32927a1,2025-06-12 18:33:28,-52.34,Airbnb,"[""Travel"", ""Lodging""]",in store,False
+tx_59363189f612,2025-06-11 22:09:22,952.97,Payment - Thank You,"[""Payment"", ""Credit Card""]",online,False
+tx_c0c78d1debc0,2025-06-11 12:43:31,-9.05,Pharmacy Rx,"[""Healthcare"", ""Pharmacy""]",in store,False
+tx_05d49ab5b207,2025-06-09 06:46:02,-58.6,IKEA,"[""Shopping"", ""Home""]",online,False
+tx_530958d49d6b,2025-06-08 15:39:00,-3.53,Target,"[""Shopping"", ""Retail""]",in store,False
+tx_1897b2946f98,2025-06-08 07:39:56,-17.43,Amazon Marketplace,"[""Shopping"", ""Online""]",online,False
+tx_3dc42345b6e4,2025-06-06 12:09:01,-573.92,Airbnb,"[""Travel"", ""Lodging""]",online,False
+tx_4e6dbad0405a,2025-06-06 07:00:26,-18.68,AT&T Wireless,"[""Utilities"", ""Cell Phone""]",in store,False
+tx_4141fa8a4006,2025-06-05 01:52:50,-61.94,AT&T Wireless,"[""Utilities"", ""Cell Phone""]",online,False
+tx_207fe5ad5cc1,2025-06-04 22:05:41,-25.32,Verizon Wireless,"[""Utilities"", ""Cell Phone""]",in store,False
+tx_6b90d70c8fe4,2025-06-04 19:55:43,-61.5,Delta Air Lines,"[""Travel"", ""Airfare""]",in store,False
+tx_b51fc0ce7a05,2025-06-04 08:55:42,-19.03,Gym Membership,"[""Health"", ""Fitness""]",in store,False
+tx_3b1e33b2de6b,2025-06-04 08:48:50,-29.78,Trader Joe's,"[""Food"", ""Groceries""]",in store,False
+tx_b9acfdbd0521,2025-06-02 22:19:21,-12.58,Whole Foods Market,"[""Food"", ""Groceries""]",in store,False
+tx_1e202e4d822c,2025-06-01 09:46:58,-16.22,Parking Garage,"[""Transportation"", ""Parking""]",in store,False
+tx_1b4ef545400d,2025-05-31 13:29:31,407.54,Payment - Thank You,"[""Payment"", ""Credit Card""]",online,False
+tx_878b442f4d03,2025-05-30 20:32:19,-20.57,Verizon Wireless,"[""Utilities"", ""Cell Phone""]",in store,False
+tx_6170831634c7,2025-05-29 07:12:35,-76.27,Delta Air Lines,"[""Travel"", ""Airfare""]",online,False
+tx_575223ad5385,2025-05-28 21:50:29,-7.42,Walmart Supercenter,"[""Shopping"", ""Retail""]",in store,False
+tx_99a6666c8095,2025-05-28 08:46:07,-6.63,Costco,"[""Shopping"", ""Wholesale""]",in store,False
+tx_6790e562c881,2025-05-28 07:41:19,55.93,Refund - Amazon,"[""Refunds"", ""Online""]",online,False
+tx_c1102e7e75ae,2025-05-27 19:55:09,-19.13,Verizon Wireless,"[""Utilities"", ""Cell Phone""]",online,False
+tx_c0f3083e850a,2025-05-26 22:21:53,-49.04,Shell Service Station,"[""Transportation"", ""Gas & Fuel""]",in store,False
+tx_7ee042543fb6,2025-05-26 22:08:31,-80.0,ATM Withdrawal,"[""Cash"", ""ATM""]",online,True
+tx_93b3bb4e754a,2025-05-26 18:09:25,-35.43,IKEA,"[""Shopping"", ""Home""]",in store,False
+tx_83ecaaa7e09d,2025-05-26 12:12:33,-23.02,AT&T Wireless,"[""Utilities"", ""Cell Phone""]",online,False
+tx_8bff0e7e5486,2025-05-26 09:42:40,-17.76,Shell Service Station,"[""Transportation"", ""Gas & Fuel""]",in store,False
+tx_3d1bbe4b2761,2025-05-25 21:26:03,-6.5,Starbucks,"[""Food"", ""Coffee""]",in store,False
+tx_86d54be2c0d7,2025-05-25 20:01:11,-5.65,Gym Membership,"[""Health"", ""Fitness""]",online,False
+tx_59de9fe75f8c,2025-05-24 18:49:27,-32.9,Lyft,"[""Travel"", ""Taxi""]",in store,False
+tx_25bd419049f9,2025-05-24 12:29:51,-200.52,Delta Air Lines,"[""Travel"", ""Airfare""]",in store,False
+tx_170ee56653f9,2025-05-23 13:28:43,-4.5,Unknown Merchant,"[""Uncategorized""]",in store,False
+tx_f8b89280e952,2025-05-23 12:19:14,-17.34,Target,"[""Shopping"", ""Retail""]",in store,False
+tx_8c3c120a902d,2025-05-23 02:24:42,-6.32,Spotify,"[""Entertainment"", ""Subscriptions""]",online,False
+tx_d2caad390d2a,2025-05-22 20:48:02,-41.35,Target,"[""Shopping"", ""Retail""]",in store,False
+tx_571bbfdc86c2,2025-05-21 22:47:46,-6.25,Target,"[""Shopping"", ""Retail""]",in store,False
+tx_77a065ff8a45,2025-05-18 13:53:47,-2.66,Whole Foods Market,"[""Food"", ""Groceries""]",in store,False
+tx_aeb4da101c78,2025-05-17 13:56:35,-178.52,Airbnb,"[""Travel"", ""Lodging""]",in store,False
+tx_6ac77f1bef76,2025-05-16 09:38:15,-25.58,Spotify,"[""Entertainment"", ""Subscriptions""]",online,False
+tx_ba88ea0e04c3,2025-05-15 12:27:16,-16.13,Trader Joe's,"[""Food"", ""Groceries""]",online,False
+tx_aedbb93aa390,2025-05-14 13:01:02,-57.98,Concert Tickets,"[""Entertainment"", ""Tickets""]",in store,False
+tx_9a0202fe7e67,2025-05-12 12:12:54,-13.49,Chevron,"[""Transportation"", ""Gas & Fuel""]",online,False
+tx_f64942f3513e,2025-05-11 20:58:22,-17.28,IKEA,"[""Shopping"", ""Home""]",in store,False
+tx_196904d056c8,2025-05-10 20:32:19,-501.19,Concert Tickets,"[""Entertainment"", ""Tickets""]",online,False
+tx_31dfd7d18735,2025-05-09 18:37:36,-16.74,Uber *Trip,"[""Travel"", ""Taxi""]",online,False
+tx_9e5885fceb64,2025-05-09 08:43:48,-448.24,Marriott Hotels,"[""Travel"", ""Lodging""]",in store,False
+tx_ad0f46599cbb,2025-05-09 07:05:31,-16.89,Gym Membership,"[""Health"", ""Fitness""]",in store,False
+tx_70a8196d11d4,2025-05-08 20:54:04,-7.43,Local Grocery Store,"[""Food"", ""Groceries""]",in store,False
+tx_22fd7ca7feba,2025-05-08 19:23:22,-19.83,Local Grocery Store,"[""Food"", ""Groceries""]",in store,False
+tx_8d8196fd7a99,2025-05-07 20:48:37,-40.0,ATM Withdrawal,"[""Cash"", ""ATM""]",in store,False
+tx_3ad5887ae74e,2025-05-06 08:52:50,-29.5,Chevron,"[""Transportation"", ""Gas & Fuel""]",in store,False
+tx_2fb33c955e1f,2025-05-05 04:45:13,-52.87,AT&T Wireless,"[""Utilities"", ""Cell Phone""]",online,False
+tx_239b66338624,2025-05-04 21:05:56,-14.02,Amazon Marketplace,"[""Shopping"", ""Online""]",online,False
+tx_fad619ffc01c,2025-05-03 21:27:44,1037.89,Payment - Thank You,"[""Payment"", ""Credit Card""]",online,False
+tx_8752fba6d568,2025-05-03 20:36:12,-12.32,Gym Membership,"[""Health"", ""Fitness""]",in store,False
+tx_c68d23308a9c,2025-05-03 19:09:51,-12.68,Parking Garage,"[""Transportation"", ""Parking""]",in store,False
+tx_1e61328639ae,2025-05-03 00:06:47,-167.37,Marriott Hotels,"[""Travel"", ""Lodging""]",in store,False
+tx_2cd3d268f897,2025-05-02 09:41:02,-23.37,Uber *Trip,"[""Travel"", ""Taxi""]",in store,False
+tx_0f8e5ad50761,2025-05-01 22:31:03,-15.58,Chevron,"[""Transportation"", ""Gas & Fuel""]",online,False
+tx_edfacfaa0433,2025-04-29 12:39:36,-10.85,Parking Garage,"[""Transportation"", ""Parking""]",online,False
+tx_5dbf2b7e92d1,2025-04-29 08:05:08,-25.21,Apple Services,"[""Technology"", ""Subscriptions""]",online,False
+tx_7d0221a9eb1d,2025-04-29 07:42:06,-24.27,Netflix,"[""Entertainment"", ""Subscriptions""]",online,False
+tx_d9d57ed8864c,2025-04-28 13:37:36,-4.43,Uber *Trip,"[""Travel"", ""Taxi""]",online,False
+tx_06cd10c303dc,2025-04-27 09:06:48,-30.92,Parking Garage,"[""Transportation"", ""Parking""]",in store,False
+tx_e4dab561fedf,2025-04-26 18:32:58,-11.67,Target,"[""Shopping"", ""Retail""]",online,False
+tx_ca31456b208f,2025-04-25 08:09:10,-26.9,Verizon Wireless,"[""Utilities"", ""Cell Phone""]",in store,False
+tx_95dd86c58c56,2025-04-24 22:58:30,-1200.0,Rent - Apt 2B,"[""Housing"", ""Rent""]",in store,False
+tx_5e942f92a42f,2025-04-23 13:00:47,-11.29,Spotify,"[""Entertainment"", ""Subscriptions""]",online,False
+tx_fa5eb3ef0c81,2025-04-22 21:29:37,-8.94,Target,"[""Shopping"", ""Retail""]",online,False
+tx_643d63fa9efa,2025-04-21 13:41:20,-21.02,Lyft,"[""Travel"", ""Taxi""]",online,False
+tx_886ea6a078b8,2025-04-20 18:05:10,-15.54,Verizon Wireless,"[""Utilities"", ""Cell Phone""]",in store,False
+tx_75cc23aed28d,2025-04-20 07:14:43,-20.13,Spotify,"[""Entertainment"", ""Subscriptions""]",online,True
+tx_dbc3f2358c10,2025-04-19 21:22:46,-20.9,Starbucks,"[""Food"", ""Coffee""]",online,False
+tx_925bc060362c,2025-04-18 22:46:15,-61.64,Walmart Supercenter,"[""Shopping"", ""Retail""]",in store,False
+tx_6b2b40a10eed,2025-04-17 12:17:25,-60.19,Parking Garage,"[""Transportation"", ""Parking""]",in store,False
+tx_f6c72a933747,2025-04-16 20:49:51,-9.47,Trader Joe's,"[""Food"", ""Groceries""]",online,False
+tx_017b15a20f48,2025-04-16 12:59:34,-18.18,Netflix,"[""Entertainment"", ""Subscriptions""]",online,False
+tx_0f91463dca44,2025-04-15 20:56:28,-22.75,Apple Services,"[""Technology"", ""Subscriptions""]",online,False
+tx_c829503cadfc,2025-04-15 19:45:47,1335.5,Transfer to Checking,"[""Transfer"", ""Bank""]",online,False
+tx_37eb9079b9d5,2025-04-15 18:49:52,-10.52,Shell Service Station,"[""Transportation"", ""Gas & Fuel""]",in store,False
+tx_09ec76bb8938,2025-04-15 12:55:50,-56.37,Parking Garage,"[""Transportation"", ""Parking""]",online,False
+tx_658244526b93,2025-04-15 08:57:39,-13.21,Lyft,"[""Travel"", ""Taxi""]",online,False
+tx_f4f3f3d18dc9,2025-04-13 08:18:29,-15.45,Parking Garage,"[""Transportation"", ""Parking""]",in store,False
+tx_53d948528208,2025-04-12 12:02:02,-64.75,Southwest Airlines,"[""Travel"", ""Airfare""]",in store,False
+tx_2d9e3031a7e1,2025-04-11 19:56:35,69.07,Refund - Amazon,"[""Refunds"", ""Online""]",online,False
+tx_b71d341b27a4,2025-04-11 19:16:38,-9.29,Chevron,"[""Transportation"", ""Gas & Fuel""]",in store,False
+tx_36013d358944,2025-04-10 22:20:55,-35.49,Amazon Marketplace,"[""Shopping"", ""Online""]",online,False
+tx_060c5aed9fd9,2025-04-09 21:00:18,-17.26,Unknown Merchant,"[""Uncategorized""]",online,False
+tx_687723994334,2025-04-09 20:15:19,-7.18,Parking Garage,"[""Transportation"", ""Parking""]",online,False
+tx_c51f7eab2f5e,2025-04-09 13:32:38,-6.37,City Utilities,"[""Utilities"", ""Electric""]",online,False
+tx_fbe07f2d785d,2025-04-08 21:39:22,399.02,Payment - Thank You,"[""Payment"", ""Credit Card""]",online,False
+tx_ad2ff0561788,2025-04-08 20:35:00,-11.98,Verizon Wireless,"[""Utilities"", ""Cell Phone""]",in store,False
+tx_036d3726bd55,2025-04-08 12:46:03,-7.43,McDonald's,"[""Food"", ""Fast Food""]",in store,False
+tx_15d5a8d1ed7a,2025-04-07 04:53:31,-18.42,Lyft,"[""Travel"", ""Taxi""]",in store,False
+tx_f7f84b7c3574,2025-04-06 13:22:30,-51.8,Electric Vehicle Charge,"[""Transportation"", ""Gas & Fuel""]",online,False
+tx_223235dc12b3,2025-04-06 09:14:39,-22.37,Best Buy,"[""Shopping"", ""Electronics""]",online,False
+tx_820044447a01,2025-04-06 07:26:42,-16.61,Electric Vehicle Charge,"[""Transportation"", ""Gas & Fuel""]",in store,False
+tx_6571cf5c2f76,2025-04-05 08:52:43,-89.3,AT&T Wireless,"[""Utilities"", ""Cell Phone""]",online,False
+tx_0d26b3346747,2025-04-05 07:07:17,-7.76,Whole Foods Market,"[""Food"", ""Groceries""]",in store,False
+tx_a24130e1ec87,2025-04-04 21:23:51,-6.57,Chevron,"[""Transportation"", ""Gas & Fuel""]",online,False
+tx_0638f97f3347,2025-04-03 08:01:15,-412.75,Delta Air Lines,"[""Travel"", ""Airfare""]",in store,False
+tx_18090bb5e40b,2025-04-03 07:20:07,-27.96,Google *Play,"[""Technology"", ""Subscriptions""]",online,False
+tx_d75e335cb446,2025-04-02 21:19:46,-10.57,Comcast,"[""Utilities"", ""Internet""]",in store,False
+tx_11c555334506,2025-04-02 20:27:20,-65.77,Costco,"[""Shopping"", ""Wholesale""]",in store,False
+tx_b33bcaf597a4,2025-04-01 21:52:17,-57.16,Parking Garage,"[""Transportation"", ""Parking""]",online,False
+tx_ab7a6a03f3e9,2025-04-01 19:13:19,25.24,Refund - Amazon,"[""Refunds"", ""Online""]",online,False
+tx_d7292203c1da,2025-03-31 12:01:04,-12.4,Electric Vehicle Charge,"[""Transportation"", ""Gas & Fuel""]",in store,False
+tx_ff0e04bd22a2,2025-03-29 21:18:09,-18.82,Netflix,"[""Entertainment"", ""Subscriptions""]",online,False
+tx_13a4c7fbff26,2025-03-29 13:12:01,-471.59,Southwest Airlines,"[""Travel"", ""Airfare""]",online,False
+tx_3eebd29c7fc5,2025-03-29 12:03:32,-6.42,AT&T Wireless,"[""Utilities"", ""Cell Phone""]",in store,False
+tx_8009bdeb3576,2025-03-28 22:52:12,-13.24,Whole Foods Market,"[""Food"", ""Groceries""]",online,False
+tx_a11f024a4616,2025-03-28 08:51:19,-14.17,Netflix,"[""Entertainment"", ""Subscriptions""]",online,False
+tx_ab2fc248f520,2025-03-26 15:55:09,-25.93,Google *Play,"[""Technology"", ""Subscriptions""]",online,False
+tx_a30353679266,2025-03-26 12:05:58,-42.2,Whole Foods Market,"[""Food"", ""Groceries""]",online,False
+tx_f008b49206e7,2025-03-25 08:22:44,-122.94,Delta Air Lines,"[""Travel"", ""Airfare""]",online,False
+tx_65f71e1b13ee,2025-03-24 12:24:41,-5.54,Starbucks,"[""Food"", ""Coffee""]",online,False
+tx_b1de48df6384,2025-03-24 09:11:23,-7.71,Walmart Supercenter,"[""Shopping"", ""Retail""]",in store,False
+tx_a71adb160c89,2025-03-22 20:26:24,-18.94,Netflix,"[""Entertainment"", ""Subscriptions""]",online,False
+tx_0b89d93e67fe,2025-03-21 13:31:01,-26.64,Shell Service Station,"[""Transportation"", ""Gas & Fuel""]",in store,False
+tx_347c7c85b068,2025-03-20 18:50:45,-17.25,Google *Play,"[""Technology"", ""Subscriptions""]",online,False
+tx_fd417f14faf4,2025-03-20 13:02:20,-67.13,Airbnb,"[""Travel"", ""Lodging""]",online,False
+tx_3f3c142aaa94,2025-03-20 01:21:45,-80.68,Apple Services,"[""Technology"", ""Subscriptions""]",online,False
+tx_1c13efa3191d,2025-03-19 22:26:43,-46.71,Electric Vehicle Charge,"[""Transportation"", ""Gas & Fuel""]",online,False
+tx_123f4652e9fc,2025-03-19 09:43:14,-40.0,ATM Withdrawal,"[""Cash"", ""ATM""]",online,False
+tx_9f7d17dda448,2025-03-19 04:06:02,-17.77,Gym Membership,"[""Health"", ""Fitness""]",in store,False
+tx_131d13ff6a3b,2025-03-17 22:43:34,-3.0,Costco,"[""Shopping"", ""Wholesale""]",in store,False
+tx_d9c2561edeb0,2025-03-16 20:13:41,-6.64,Spotify,"[""Entertainment"", ""Subscriptions""]",online,False
+tx_1cd913c489da,2025-03-16 18:59:06,-42.34,Lyft,"[""Travel"", ""Taxi""]",online,False
+tx_d5e8fccaea1b,2025-03-15 13:40:43,-23.53,Pharmacy Rx,"[""Healthcare"", ""Pharmacy""]",in store,False
+tx_dee06471bb2e,2025-03-15 07:18:02,-2.4,Target,"[""Shopping"", ""Retail""]",in store,False
+tx_10954ae45f24,2025-03-12 13:35:33,-38.84,Trader Joe's,"[""Food"", ""Groceries""]",in store,False
+tx_3fcf0579f811,2025-03-11 19:08:21,-11.88,Walmart Supercenter,"[""Shopping"", ""Retail""]",in store,False
+tx_c7b0ca532bc5,2025-03-11 09:44:34,-13.14,McDonald's,"[""Food"", ""Fast Food""]",in store,False
+tx_d7a1c99f031b,2025-03-10 13:46:01,-29.94,Trader Joe's,"[""Food"", ""Groceries""]",online,False
+tx_f9ba620be92d,2025-03-09 20:04:25,-29.28,Best Buy,"[""Shopping"", ""Electronics""]",in store,False
+tx_d3365584f544,2025-03-09 12:12:18,-19.69,Whole Foods Market,"[""Food"", ""Groceries""]",online,False
+tx_498b87c236ff,2025-03-09 08:21:07,-19.53,Amazon Marketplace,"[""Shopping"", ""Online""]",online,False
+tx_fa790ae9d173,2025-03-08 07:29:08,-6.0,Trader Joe's,"[""Food"", ""Groceries""]",in store,False
+tx_964acca43eef,2025-03-07 13:12:09,-116.51,Airbnb,"[""Travel"", ""Lodging""]",online,False
+tx_dfa6ae92c57c,2025-03-07 12:12:11,-15.35,Spotify,"[""Entertainment"", ""Subscriptions""]",online,False
+tx_7a578c79f477,2025-03-07 08:08:11,-102.47,Chevron,"[""Transportation"", ""Gas & Fuel""]",in store,False
+tx_1a80e3fa80d1,2025-03-07 07:09:21,-7.67,McDonald's,"[""Food"", ""Fast Food""]",in store,False
+tx_8559141f5d99,2025-03-06 13:12:54,-40.0,ATM Withdrawal,"[""Cash"", ""ATM""]",online,False
+tx_d380d1e3c65d,2025-03-05 19:07:02,-1200.0,Rent - Apt 2B,"[""Housing"", ""Rent""]",in store,True
+tx_857f89cce216,2025-03-05 13:47:35,-6.99,Pharmacy Rx,"[""Healthcare"", ""Pharmacy""]",online,False
+tx_8f69b64600e7,2025-03-05 07:02:19,-12.86,Electric Vehicle Charge,"[""Transportation"", ""Gas & Fuel""]",online,False
+tx_472df60ecdf6,2025-03-05 02:33:27,-122.8,AT&T Wireless,"[""Utilities"", ""Cell Phone""]",online,False
+tx_ae1cc6c8ac05,2025-03-04 13:24:29,1834.5,Payment - Thank You,"[""Payment"", ""Credit Card""]",online,False
+tx_7a90656f384f,2025-03-04 12:33:46,-154.43,Concert Tickets,"[""Entertainment"", ""Tickets""]",online,False
+tx_66cbfb486eea,2025-03-02 09:04:16,-16.52,Gym Membership,"[""Health"", ""Fitness""]",online,False
+tx_f04870b23d0c,2025-03-01 12:25:32,-13.51,Trader Joe's,"[""Food"", ""Groceries""]",in store,False
+tx_ab1fccfcafba,2025-03-01 09:13:47,-140.92,Concert Tickets,"[""Entertainment"", ""Tickets""]",online,False
+tx_f8d1316aa142,2025-02-26 13:17:55,-3.21,Chevron,"[""Transportation"", ""Gas & Fuel""]",online,False
+tx_07d8a0a693fa,2025-02-26 12:00:45,-19.95,Apple Services,"[""Technology"", ""Subscriptions""]",online,False
+tx_ef200494378c,2025-02-24 12:21:00,8.47,Refund - Amazon,"[""Refunds"", ""Online""]",online,False
+tx_4ad2b640a95b,2025-02-23 12:07:42,-12.05,Uber *Trip,"[""Travel"", ""Taxi""]",online,False
+tx_2a87cc02e320,2025-02-23 08:44:52,-18.8,Walmart Supercenter,"[""Shopping"", ""Retail""]",in store,False
+tx_e9743dac25ee,2025-02-21 20:05:19,-262.73,Concert Tickets,"[""Entertainment"", ""Tickets""]",online,False
+tx_91c0071a5a30,2025-02-20 12:19:44,-22.19,Lyft,"[""Travel"", ""Taxi""]",online,False
+tx_6270f45731ca,2025-02-20 08:30:47,-79.56,Apple Services,"[""Technology"", ""Subscriptions""]",online,False
+tx_8400479b088c,2025-02-18 21:19:16,-20.07,IKEA,"[""Shopping"", ""Home""]",in store,False
+tx_177161739121,2025-02-18 14:59:22,-23.08,Shell Service Station,"[""Transportation"", ""Gas & Fuel""]",in store,False
+tx_59927ebba08d,2025-02-17 03:11:20,-6.69,AT&T Wireless,"[""Utilities"", ""Cell Phone""]",in store,False
+tx_a41cf802d429,2025-02-16 08:52:16,-9.0,Gym Membership,"[""Health"", ""Fitness""]",in store,False
+tx_0d94a6ccf236,2025-02-13 12:52:12,-10.49,Best Buy,"[""Shopping"", ""Electronics""]",in store,False
+tx_181164607125,2025-02-12 13:52:36,-44.49,Pharmacy Rx,"[""Healthcare"", ""Pharmacy""]",online,False
+tx_4e5bcb94eddb,2025-02-10 22:30:39,-56.02,Concert Tickets,"[""Entertainment"", ""Tickets""]",in store,False
+tx_542fd0bf53c3,2025-02-10 20:11:45,-7.13,Unknown Merchant,"[""Uncategorized""]",online,False
+tx_8111117e5ffe,2025-02-10 07:52:42,-23.63,Trader Joe's,"[""Food"", ""Groceries""]",in store,False
+tx_4aa1bf52b981,2025-02-08 19:30:24,-33.03,Amazon Marketplace,"[""Shopping"", ""Online""]",online,False
+tx_3922ee5be70d,2025-02-08 12:17:28,-24.14,Spotify,"[""Entertainment"", ""Subscriptions""]",online,False
+tx_ff7d0ac815d6,2025-02-06 11:24:30,-181.44,Delta Air Lines,"[""Travel"", ""Airfare""]",online,False
+tx_22c496f75bb7,2025-02-06 07:10:20,-17.42,Costco,"[""Shopping"", ""Wholesale""]",in store,False
+tx_f50449a5e72d,2025-02-05 20:10:23,-14.1,IKEA,"[""Shopping"", ""Home""]",online,False
+tx_190d9f49c7a3,2025-02-05 19:36:40,-29.01,Chevron,"[""Transportation"", ""Gas & Fuel""]",online,True
+tx_8ca5c92c2852,2025-02-05 06:10:36,-44.08,AT&T Wireless,"[""Utilities"", ""Cell Phone""]",online,False
+tx_c7f0f8798eb8,2025-02-04 21:30:27,-15.54,Starbucks,"[""Food"", ""Coffee""]",online,False
+tx_5b20b451a144,2025-02-01 09:12:16,-15.9,AT&T Wireless,"[""Utilities"", ""Cell Phone""]",in store,False
+tx_b8f3fcb42ce2,2025-01-31 22:37:44,-70.38,Marriott Hotels,"[""Travel"", ""Lodging""]",in store,False
+tx_d968cff8e3d7,2025-01-31 20:44:42,-181.33,Airbnb,"[""Travel"", ""Lodging""]",in store,False
+tx_b23040176be5,2025-01-30 13:01:07,-13.77,Spotify,"[""Entertainment"", ""Subscriptions""]",online,False
+tx_e4dc13055a68,2025-01-29 22:31:45,-19.83,Google *Play,"[""Technology"", ""Subscriptions""]",online,False
+tx_67733dcc7a7b,2025-01-29 09:42:13,-316.34,Concert Tickets,"[""Entertainment"", ""Tickets""]",in store,False
+tx_949c60e154e1,2025-01-28 08:31:37,-57.19,Shell Service Station,"[""Transportation"", ""Gas & Fuel""]",in store,False
+tx_24fc515ef702,2025-01-27 21:55:10,-8.18,Shell Service Station,"[""Transportation"", ""Gas & Fuel""]",in store,False
+tx_4b641f82bb0c,2025-01-27 18:54:26,-1200.0,Rent - Apt 2B,"[""Housing"", ""Rent""]",in store,False
+tx_ab8ebc7ff333,2025-01-26 13:45:07,-14.25,Chevron,"[""Transportation"", ""Gas & Fuel""]",in store,False
+tx_3d43d2ae321a,2025-01-25 21:51:58,-32.61,McDonald's,"[""Food"", ""Fast Food""]",online,False
+tx_317faf4c5349,2025-01-24 18:11:14,-1200.0,Rent - Apt 2B,"[""Housing"", ""Rent""]",online,False
+tx_7c9cb504293d,2025-01-24 13:23:32,-8.34,Apple Services,"[""Technology"", ""Subscriptions""]",online,True
+tx_74f2cfe864cb,2025-01-24 13:05:23,12.72,Refund - Amazon,"[""Refunds"", ""Online""]",online,False
+tx_c0d5fb079a07,2025-01-22 19:47:15,-70.74,Southwest Airlines,"[""Travel"", ""Airfare""]",in store,False
+tx_0f56e346c00c,2025-01-21 19:45:32,-6.84,Parking Garage,"[""Transportation"", ""Parking""]",online,False
+tx_00b6f4fa9bf9,2025-01-21 07:49:16,-8.09,Amazon Marketplace,"[""Shopping"", ""Online""]",online,False
+tx_716147719910,2025-01-20 18:53:54,-74.97,Southwest Airlines,"[""Travel"", ""Airfare""]",in store,False
+tx_dc74559a753c,2025-01-20 07:33:40,-10.84,Lyft,"[""Travel"", ""Taxi""]",in store,True
+tx_71b30be1cdff,2025-01-20 06:55:05,-128.78,Apple Services,"[""Technology"", ""Subscriptions""]",online,False
+tx_0c26db4e97b3,2025-01-19 13:26:45,-17.63,Gym Membership,"[""Health"", ""Fitness""]",in store,False
+tx_6df9379f585f,2025-01-19 13:21:35,842.36,Transfer to Checking,"[""Transfer"", ""Bank""]",online,False
+tx_828f55f27c9b,2025-01-17 09:47:46,-14.63,Shell Service Station,"[""Transportation"", ""Gas & Fuel""]",in store,False
+tx_9be6d1e88441,2025-01-15 21:04:57,-18.06,Amazon Marketplace,"[""Shopping"", ""Online""]",online,False
+tx_5b3c1f602241,2025-01-15 13:38:24,-21.76,Netflix,"[""Entertainment"", ""Subscriptions""]",online,False
+tx_3de93a8256f0,2025-01-14 20:47:31,-24.07,Netflix,"[""Entertainment"", ""Subscriptions""]",online,False
+tx_021efccb1e97,2025-01-14 12:55:49,-1350.0,Rent - Apt 2B,"[""Housing"", ""Rent""]",in store,False
+tx_a3af306e730a,2025-01-13 08:13:03,-21.54,Gym Membership,"[""Health"", ""Fitness""]",in store,False
+tx_3ebdfaf51136,2025-01-12 13:02:14,-14.42,Electric Vehicle Charge,"[""Transportation"", ""Gas & Fuel""]",in store,False
+tx_464dfaf2300e,2025-01-11 22:18:34,-4.3,Whole Foods Market,"[""Food"", ""Groceries""]",in store,False
+tx_37f81e088836,2025-01-11 09:55:02,-573.36,Airbnb,"[""Travel"", ""Lodging""]",in store,False
+tx_0e78ee234cbe,2025-01-10 20:49:29,-58.24,Parking Garage,"[""Transportation"", ""Parking""]",online,False
+tx_115efc68dea3,2025-01-10 03:56:26,-24.61,Uber *Trip,"[""Travel"", ""Taxi""]",online,False
+tx_3b6e6532ca62,2025-01-09 22:34:52,-13.93,Target,"[""Shopping"", ""Retail""]",online,True
+tx_fe730431155b,2025-01-09 13:13:52,-8.97,Gym Membership,"[""Health"", ""Fitness""]",in store,False
+tx_8903e804fedc,2025-01-09 07:24:40,-19.71,McDonald's,"[""Food"", ""Fast Food""]",in store,False
+tx_dde4863f007a,2025-01-08 22:59:06,-6.29,Netflix,"[""Entertainment"", ""Subscriptions""]",online,False
+tx_17c4bc46a8a4,2025-01-08 21:25:41,-5.86,Uber *Trip,"[""Travel"", ""Taxi""]",online,False
+tx_ebe6fbecc385,2025-01-08 07:13:10,-55.0,Unknown Merchant,"[""Uncategorized""]",online,False
+tx_bf6fb66447e8,2025-01-07 13:20:18,-167.34,Southwest Airlines,"[""Travel"", ""Airfare""]",in store,False
+tx_5649a894b9c3,2025-01-05 20:20:18,-16.19,Pharmacy Rx,"[""Healthcare"", ""Pharmacy""]",online,False
+tx_3fde6f76ae6b,2025-01-05 12:57:36,-11.23,Chevron,"[""Transportation"", ""Gas & Fuel""]",online,False
+tx_7c1dbaebe234,2025-01-05 12:16:09,-40.69,AT&T Wireless,"[""Utilities"", ""Cell Phone""]",online,False
+tx_e074200754be,2025-01-04 13:57:54,-296.63,Airbnb,"[""Travel"", ""Lodging""]",in store,False
+tx_d63499d49f45,2025-01-04 12:43:59,-35.11,Parking Garage,"[""Transportation"", ""Parking""]",in store,False
+tx_af364bf2ae87,2025-01-03 20:00:07,-6.96,IKEA,"[""Shopping"", ""Home""]",in store,False
+tx_d3f945802f4d,2025-01-03 19:30:09,-33.77,Pharmacy Rx,"[""Healthcare"", ""Pharmacy""]",online,False
+tx_415d69498f1f,2025-01-02 22:13:29,-19.92,Uber *Trip,"[""Travel"", ""Taxi""]",in store,False
+tx_b4530bec8b53,2025-01-02 07:19:54,-231.84,Concert Tickets,"[""Entertainment"", ""Tickets""]",online,False
+tx_1cb1a208ded2,2025-01-01 22:07:55,-38.81,Walmart Supercenter,"[""Shopping"", ""Retail""]",in store,False
+tx_ea58836abcad,2025-01-01 19:23:25,-98.73,Concert Tickets,"[""Entertainment"", ""Tickets""]",online,False
+tx_e647878bf750,2025-01-01 19:02:15,-8.66,McDonald's,"[""Food"", ""Fast Food""]",in store,False
+tx_721c8720aa04,2025-01-01 12:10:06,-6.45,Spotify,"[""Entertainment"", ""Subscriptions""]",online,False
+tx_ef86bf962be5,2025-01-01 08:11:49,-9.96,Walmart Supercenter,"[""Shopping"", ""Retail""]",in store,False
+tx_d9bf74cfceb8,2024-12-31 13:58:17,-20.17,Chevron,"[""Transportation"", ""Gas & Fuel""]",in store,False
+tx_5d5669821a91,2024-12-31 13:20:42,1939.66,WholePay,"[""Payment"", ""Credit Card""]",online,False
+tx_56e1ddd59533,2024-12-30 21:17:32,-20.0,ATM Withdrawal,"[""Cash"", ""ATM""]",in store,False
+tx_07dd80ba8701,2024-12-30 13:36:46,-14.22,Starbucks,"[""Food"", ""Coffee""]",in store,False
+tx_16033634b320,2024-12-30 12:18:45,-13.95,Unknown Merchant,"[""Uncategorized""]",online,False
+tx_76f09a7c28ab,2024-12-29 04:48:14,-51.15,Costco,"[""Shopping"", ""Wholesale""]",online,False
+tx_6f2b2b46d910,2024-12-28 17:59:17,-37.48,Pharmacy Rx,"[""Healthcare"", ""Pharmacy""]",in store,False
+tx_6e5f193601ea,2024-12-27 20:20:05,184.41,Payment - Thank You,"[""Payment"", ""Credit Card""]",online,False
+tx_a6b873366ea0,2024-12-25 13:31:35,-26.94,Verizon Wireless,"[""Utilities"", ""Cell Phone""]",in store,False
+tx_e21463f51a8d,2024-12-24 08:24:20,222.13,Transfer to Checking,"[""Transfer"", ""Bank""]",online,False
+tx_024212e84700,2024-12-23 10:36:27,-30.32,McDonald's,"[""Food"", ""Fast Food""]",online,False
+tx_f613a82ae955,2024-12-22 19:00:47,-9.05,Verizon Wireless,"[""Utilities"", ""Cell Phone""]",in store,False
+tx_281dc02509e4,2024-12-21 20:17:12,-61.69,Uber *Trip,"[""Travel"", ""Taxi""]",online,False
+tx_8449f21c9120,2024-12-21 04:00:47,1548.61,WholePay,"[""Payment"", ""Credit Card""]",online,False
+tx_457d8de06b0c,2024-12-20 09:16:29,-21.1,Netflix,"[""Entertainment"", ""Subscriptions""]",online,False
+tx_2de24316555e,2024-12-20 01:41:26,-124.72,Apple Services,"[""Technology"", ""Subscriptions""]",online,False
+tx_3e3b4fa6061d,2024-12-19 12:45:44,-18.12,Walmart Supercenter,"[""Shopping"", ""Retail""]",in store,False
+tx_de5b9df2dfa5,2024-12-18 13:37:47,-11.08,City Utilities,"[""Utilities"", ""Electric""]",online,False
+tx_af18729442f4,2024-12-18 09:56:46,-15.86,Apple Services,"[""Technology"", ""Subscriptions""]",online,False
+tx_2fc836e60884,2024-12-17 13:54:07,-341.2,Delta Air Lines,"[""Travel"", ""Airfare""]",online,False
+tx_3f5e9c031306,2024-12-17 12:30:45,-1300.0,Rent - Apt 2B,"[""Housing"", ""Rent""]",online,False
+tx_558865542711,2024-12-15 21:00:45,-86.47,Southwest Airlines,"[""Travel"", ""Airfare""]",in store,False
+tx_b564cdb223a0,2024-12-15 20:52:39,-21.57,Best Buy,"[""Shopping"", ""Electronics""]",in store,False
+tx_ae3ddfd8e227,2024-12-15 18:41:12,-16.28,Whole Foods Market,"[""Food"", ""Groceries""]",in store,False
+tx_5d21a8e0cf80,2024-12-15 13:08:56,-18.24,Walmart Supercenter,"[""Shopping"", ""Retail""]",in store,False
+tx_ae9b9d0fb14c,2024-12-15 12:39:44,-5.87,IKEA,"[""Shopping"", ""Home""]",in store,False
+tx_4ca59d9d703f,2024-12-15 12:11:27,596.85,Transfer to Checking,"[""Transfer"", ""Bank""]",online,False
+tx_7470a200e65c,2024-12-12 20:19:37,-14.58,Netflix,"[""Entertainment"", ""Subscriptions""]",online,False
+tx_95481434c5fc,2024-12-12 18:13:46,-12.69,Comcast,"[""Utilities"", ""Internet""]",online,False
+tx_3982d6b8b82f,2024-12-12 13:57:41,-18.2,Best Buy,"[""Shopping"", ""Electronics""]",in store,False
+tx_d69d281b8624,2024-12-10 13:57:32,-15.95,Target,"[""Shopping"", ""Retail""]",in store,False
+tx_791b5abd321b,2024-12-10 12:54:23,-305.57,Delta Air Lines,"[""Travel"", ""Airfare""]",in store,False
+tx_60f67a463003,2024-12-10 08:57:01,-2.49,Amazon Marketplace,"[""Shopping"", ""Online""]",online,False
+tx_5728f9017cb6,2024-12-09 18:57:06,94.33,Refund - Amazon,"[""Refunds"", ""Online""]",online,False
+tx_74e7ee8dd783,2024-12-09 13:16:09,-26.6,Target,"[""Shopping"", ""Retail""]",in store,False
+tx_265379ca5ec3,2024-12-08 12:26:44,-11.99,McDonald's,"[""Food"", ""Fast Food""]",in store,False
+tx_c5d25fd181d4,2024-12-06 19:05:09,-8.12,Spotify,"[""Entertainment"", ""Subscriptions""]",online,True
+tx_bb07230c8f83,2024-12-06 18:44:24,-25.13,Comcast,"[""Utilities"", ""Internet""]",in store,False
+tx_5511fd151585,2024-12-06 09:02:08,-1250.0,Rent - Apt 2B,"[""Housing"", ""Rent""]",online,False
+tx_6be21793163e,2024-12-05 08:56:46,-13.93,Verizon Wireless,"[""Utilities"", ""Cell Phone""]",online,False
+tx_342ded65d18c,2024-12-05 07:21:38,-6.33,Comcast,"[""Utilities"", ""Internet""]",online,False
+tx_619bb6be6e59,2024-12-05 04:03:25,-104.16,AT&T Wireless,"[""Utilities"", ""Cell Phone""]",online,False
+tx_871056d25946,2024-12-04 09:29:11,155.96,WholePay,"[""Payment"", ""Credit Card""]",online,False
+tx_73ccbbb465ec,2024-12-04 08:14:23,-1.64,Unknown Merchant,"[""Uncategorized""]",in store,False
+tx_0fe0e6700466,2024-12-04 06:30:45,-14.18,Spotify,"[""Entertainment"", ""Subscriptions""]",online,False
+tx_ecd29810f6fe,2024-12-03 12:04:42,-20.36,Comcast,"[""Utilities"", ""Internet""]",in store,False
+tx_53c22963bd63,2024-12-02 19:30:22,-42.05,Amazon Marketplace,"[""Shopping"", ""Online""]",online,False
+tx_e661e277b4af,2024-12-01 09:23:51,-2.65,Target,"[""Shopping"", ""Retail""]",in store,False
+tx_3117d37d46ee,2024-11-30 22:08:19,-16.0,Verizon Wireless,"[""Utilities"", ""Cell Phone""]",online,False
+tx_a004b321e22c,2024-11-30 08:46:23,-35.41,Amazon Marketplace,"[""Shopping"", ""Online""]",online,False
+tx_c5a2591903d6,2024-11-30 04:41:59,-11.62,Uber *Trip,"[""Travel"", ""Taxi""]",online,False
+tx_d121813eed08,2024-11-28 19:15:20,-5.35,Spotify,"[""Entertainment"", ""Subscriptions""]",online,False
+tx_113fae1b1b90,2024-11-28 13:08:10,-4.05,Whole Foods Market,"[""Food"", ""Groceries""]",in store,False
+tx_43c8d84b8969,2024-11-26 07:41:09,-69.11,Southwest Airlines,"[""Travel"", ""Airfare""]",online,False
+tx_44afc911eab3,2024-11-25 21:54:19,-20.96,Google *Play,"[""Technology"", ""Subscriptions""]",online,False
+tx_e74851193aa9,2024-11-25 12:15:29,-172.06,Concert Tickets,"[""Entertainment"", ""Tickets""]",in store,False
+tx_167c302bd6ed,2024-11-25 07:26:07,-29.52,Comcast,"[""Utilities"", ""Internet""]",in store,False
+tx_6a5d3f3d8ff6,2024-11-24 22:06:01,-26.93,Apple Services,"[""Technology"", ""Subscriptions""]",online,False
+tx_a93d1ef6c416,2024-11-24 12:44:33,-16.52,Apple Services,"[""Technology"", ""Subscriptions""]",online,False
+tx_cfc6aeaa0fef,2024-11-24 09:34:44,-8.28,City Utilities,"[""Utilities"", ""Electric""]",online,False
+tx_8e962221af6e,2024-11-21 20:23:54,876.69,WholePay,"[""Payment"", ""Credit Card""]",online,False
+tx_ade4879b4f9f,2024-11-20 19:59:58,-35.85,Chevron,"[""Transportation"", ""Gas & Fuel""]",online,False
+tx_2d071fd5e95a,2024-11-20 08:40:20,-135.54,Apple Services,"[""Technology"", ""Subscriptions""]",online,False
+tx_1f6a832af39d,2024-11-19 18:31:56,-6.3,Parking Garage,"[""Transportation"", ""Parking""]",in store,False
+tx_d6a0811f2aa7,2024-11-19 18:12:28,-11.73,AT&T Wireless,"[""Utilities"", ""Cell Phone""]",online,False
+tx_f8a81d35f042,2024-11-17 13:25:26,-585.17,Marriott Hotels,"[""Travel"", ""Lodging""]",in store,False
+tx_5c052df4525a,2024-11-17 09:53:43,-7.68,Verizon Wireless,"[""Utilities"", ""Cell Phone""]",online,False
+tx_f90fc666f964,2024-11-17 07:08:46,-1350.0,Rent - Apt 2B,"[""Housing"", ""Rent""]",in store,False
+tx_a6fe334bb2d5,2024-11-16 21:52:46,-26.11,AT&T Wireless,"[""Utilities"", ""Cell Phone""]",in store,False
+tx_9a41b8aef5b8,2024-11-16 20:29:47,-10.01,IKEA,"[""Shopping"", ""Home""]",in store,False
+tx_38cdaaca4939,2024-11-16 16:09:10,-198.15,Delta Air Lines,"[""Travel"", ""Airfare""]",in store,False
+tx_02b635052e90,2024-11-15 21:25:15,-1250.0,Rent - Apt 2B,"[""Housing"", ""Rent""]",online,False
+tx_4cea684303c7,2024-11-15 09:38:12,-7.59,McDonald's,"[""Food"", ""Fast Food""]",in store,False
+tx_7db209445628,2024-11-14 19:04:30,-16.16,Lyft,"[""Travel"", ""Taxi""]",in store,False
+tx_5f92519a741c,2024-11-12 07:29:07,-5.33,Gym Membership,"[""Health"", ""Fitness""]",in store,False
+tx_d213ea2513cc,2024-11-11 12:44:14,204.09,Payment - Thank You,"[""Payment"", ""Credit Card""]",online,False
+tx_925313a42645,2024-11-10 22:00:47,-21.73,Comcast,"[""Utilities"", ""Internet""]",online,False
+tx_96d4005ef972,2024-11-10 19:58:02,-7.19,Electric Vehicle Charge,"[""Transportation"", ""Gas & Fuel""]",in store,False
+tx_6eb261665bb4,2024-11-10 09:42:33,-5.0,Whole Foods Market,"[""Food"", ""Groceries""]",in store,False
+tx_d8a184a0c32e,2024-11-09 09:56:36,-22.73,Google *Play,"[""Technology"", ""Subscriptions""]",online,True
+tx_d2db305bf840,2024-11-08 13:42:48,-9.99,AT&T Wireless,"[""Utilities"", ""Cell Phone""]",online,False
+tx_72a04ccc921b,2024-11-07 22:18:45,-6.61,City Utilities,"[""Utilities"", ""Electric""]",in store,False
+tx_5c93dc200ad5,2024-11-07 13:55:19,-52.59,Electric Vehicle Charge,"[""Transportation"", ""Gas & Fuel""]",in store,False
+tx_6e42f91c1679,2024-11-07 09:12:23,-1200.0,Rent - Apt 2B,"[""Housing"", ""Rent""]",in store,False
+tx_e5857828a70a,2024-11-05 08:12:16,-114.15,AT&T Wireless,"[""Utilities"", ""Cell Phone""]",online,False
+tx_17347b52e75e,2024-11-04 20:54:43,-20.57,Verizon Wireless,"[""Utilities"", ""Cell Phone""]",in store,False
+tx_65c682bc6d0e,2024-11-04 06:56:50,-28.41,Spotify,"[""Entertainment"", ""Subscriptions""]",online,False
+tx_c39af57eeeef,2024-11-03 18:02:37,-57.52,Costco,"[""Shopping"", ""Wholesale""]",in store,False
+tx_837327585f55,2024-11-02 21:25:24,732.0,Transfer to Checking,"[""Transfer"", ""Bank""]",online,False
+tx_781711e8d982,2024-11-02 18:30:10,-80.0,ATM Withdrawal,"[""Cash"", ""ATM""]",in store,False
+tx_6778c163a62d,2024-11-01 13:35:23,-31.18,Amazon Marketplace,"[""Shopping"", ""Online""]",online,False
+tx_e912f0fbaebc,2024-11-01 12:13:37,-5.38,Target,"[""Shopping"", ""Retail""]",in store,False
+tx_cc1383659d9a,2024-10-30 18:40:24,-23.9,McDonald's,"[""Food"", ""Fast Food""]",in store,False
+tx_ecc683d0ed8d,2024-10-30 12:51:31,-14.43,AT&T Wireless,"[""Utilities"", ""Cell Phone""]",in store,False
+tx_b26779168aaf,2024-10-28 08:23:11,-99.7,Concert Tickets,"[""Entertainment"", ""Tickets""]",in store,False
+tx_fbb5cfef099f,2024-10-27 21:34:43,-6.51,Gym Membership,"[""Health"", ""Fitness""]",in store,False
+tx_b25065ba1bd3,2024-10-26 20:09:31,-16.09,City Utilities,"[""Utilities"", ""Electric""]",in store,False
+tx_bb2d3b00e66e,2024-10-25 21:15:47,-124.7,Airbnb,"[""Travel"", ""Lodging""]",in store,False
+tx_3d167c88ad1c,2024-10-25 01:41:48,-45.61,Gym Membership,"[""Health"", ""Fitness""]",online,False
+tx_78a8727d7789,2024-10-24 13:28:29,-4.85,Costco,"[""Shopping"", ""Wholesale""]",in store,False
+tx_719bd08b06ff,2024-10-24 12:23:23,-34.91,Costco,"[""Shopping"", ""Wholesale""]",in store,False
+tx_c8a9bc97c91b,2024-10-24 09:32:47,-10.39,Lyft,"[""Travel"", ""Taxi""]",online,False
+tx_aeebbdd6d0f0,2024-10-24 09:12:46,968.8,Transfer to Checking,"[""Transfer"", ""Bank""]",online,False
+tx_928ddd0f496b,2024-10-24 07:06:20,-211.91,Marriott Hotels,"[""Travel"", ""Lodging""]",in store,False
+tx_a3d00d29982b,2024-10-23 21:33:16,-24.25,City Utilities,"[""Utilities"", ""Electric""]",online,False
+tx_937200abe001,2024-10-22 21:40:09,-20.0,ATM Withdrawal,"[""Cash"", ""ATM""]",in store,False
+tx_1685a7370d7c,2024-10-22 19:31:35,-352.69,Marriott Hotels,"[""Travel"", ""Lodging""]",in store,False
+tx_e041aafc050f,2024-10-22 13:19:48,-9.17,Parking Garage,"[""Transportation"", ""Parking""]",online,False
+tx_94275f1cc5c6,2024-10-21 18:39:54,-14.15,Best Buy,"[""Shopping"", ""Electronics""]",in store,False
+tx_5f6695afa297,2024-10-20 06:13:55,-136.83,Apple Services,"[""Technology"", ""Subscriptions""]",online,False
+tx_b73655649ad5,2024-10-19 22:02:16,-23.64,McDonald's,"[""Food"", ""Fast Food""]",in store,False
+tx_6a443572213b,2024-10-19 21:16:13,-15.59,Spotify,"[""Entertainment"", ""Subscriptions""]",online,False
+tx_0113c00d1efd,2024-10-19 20:37:41,-20.62,Chevron,"[""Transportation"", ""Gas & Fuel""]",in store,False
+tx_c7a97625742c,2024-10-18 13:05:49,-18.82,Comcast,"[""Utilities"", ""Internet""]",online,False
+tx_476fbe7384a8,2024-10-18 07:35:57,-9.24,Verizon Wireless,"[""Utilities"", ""Cell Phone""]",in store,False
+tx_1c2d5e2e3372,2024-10-17 21:59:30,-21.62,AT&T Wireless,"[""Utilities"", ""Cell Phone""]",online,False
+tx_4eb510b0d210,2024-10-17 13:48:34,-28.29,Unknown Merchant,"[""Uncategorized""]",online,False
+tx_b52c082f9b1e,2024-10-16 12:54:16,-45.72,Costco,"[""Shopping"", ""Wholesale""]",in store,False
+tx_ce557cfe1eac,2024-10-15 12:36:08,-60.0,ATM Withdrawal,"[""Cash"", ""ATM""]",in store,False
+tx_dcc1f0b3fa0b,2024-10-14 22:27:14,569.84,Transfer to Checking,"[""Transfer"", ""Bank""]",online,False
+tx_6afb9d46ee41,2024-10-14 12:36:55,-27.85,AT&T Wireless,"[""Utilities"", ""Cell Phone""]",in store,False
+tx_95b261a4478a,2024-10-13 12:39:56,-25.94,Parking Garage,"[""Transportation"", ""Parking""]",in store,False
+tx_4dae848672cd,2024-10-13 09:50:19,-64.66,Starbucks,"[""Food"", ""Coffee""]",in store,False
+tx_168b7fc213c6,2024-10-12 22:28:29,-464.05,Southwest Airlines,"[""Travel"", ""Airfare""]",online,False
+tx_5fdf8f4aa34f,2024-10-12 18:12:57,-16.29,Apple Services,"[""Technology"", ""Subscriptions""]",online,False
+tx_905a45569613,2024-10-12 07:36:30,-15.54,Parking Garage,"[""Transportation"", ""Parking""]",in store,False
+tx_c1d621f8aa2b,2024-10-11 21:48:13,-20.22,Parking Garage,"[""Transportation"", ""Parking""]",online,False
+tx_9568f30cdb31,2024-10-11 19:28:43,-47.38,Pharmacy Rx,"[""Healthcare"", ""Pharmacy""]",in store,False
+tx_6416e25fd1c4,2024-10-10 13:05:53,-6.59,Target,"[""Shopping"", ""Retail""]",online,False
+tx_6bf8a9f82252,2024-10-09 12:11:59,-4.84,Pharmacy Rx,"[""Healthcare"", ""Pharmacy""]",in store,False
+tx_71cab984e911,2024-10-08 12:21:49,-22.79,McDonald's,"[""Food"", ""Fast Food""]",in store,False
+tx_8d9ffe7f230c,2024-10-07 12:46:40,-6.89,Walmart Supercenter,"[""Shopping"", ""Retail""]",in store,False
+tx_5058d8ff6ec7,2024-10-07 09:34:32,-38.07,IKEA,"[""Shopping"", ""Home""]",in store,False
+tx_81fd1f858174,2024-10-06 13:29:06,-12.7,Comcast,"[""Utilities"", ""Internet""]",online,False
+tx_5ce86a0870f9,2024-10-06 07:10:05,-14.15,Whole Foods Market,"[""Food"", ""Groceries""]",online,False
+tx_3b0ec64dde15,2024-10-05 20:10:02,-137.38,Southwest Airlines,"[""Travel"", ""Airfare""]",online,False
+tx_4b0d36e23e02,2024-10-05 19:37:20,-10.42,Starbucks,"[""Food"", ""Coffee""]",in store,True
+tx_3b47f4d054a5,2024-10-05 13:25:03,-101.08,Concert Tickets,"[""Entertainment"", ""Tickets""]",online,False
+tx_1026c6526b5d,2024-10-05 12:40:14,-138.82,AT&T Wireless,"[""Utilities"", ""Cell Phone""]",online,False
+tx_d5d258bcaca3,2024-10-05 08:14:04,-9.27,Pharmacy Rx,"[""Healthcare"", ""Pharmacy""]",in store,False
+tx_9598c9f93ccf,2024-10-04 20:15:46,-50.78,McDonald's,"[""Food"", ""Fast Food""]",in store,False
+tx_64b92c3ba93f,2024-10-04 08:30:43,-11.15,Spotify,"[""Entertainment"", ""Subscriptions""]",online,False
+tx_949ead28783e,2024-10-02 05:11:15,-27.61,City Utilities,"[""Utilities"", ""Electric""]",online,False
+tx_01239be391cb,2024-10-01 12:39:59,-15.1,Lyft,"[""Travel"", ""Taxi""]",in store,False
+tx_2a873b441e0f,2024-10-01 08:11:42,101.41,Transfer to Checking,"[""Transfer"", ""Bank""]",online,False
+tx_6f6aa6e70629,2024-09-28 21:39:09,-9.22,Google *Play,"[""Technology"", ""Subscriptions""]",online,False
+tx_ec1ed525aa3a,2024-09-27 12:32:36,-28.71,Spotify,"[""Entertainment"", ""Subscriptions""]",online,False
+tx_08b5aa113f7c,2024-09-27 08:38:41,66.41,Refund - Amazon,"[""Refunds"", ""Online""]",online,True
+tx_dde9c9217e97,2024-09-26 20:40:19,-32.02,McDonald's,"[""Food"", ""Fast Food""]",online,False
+tx_a5f763cb4020,2024-09-26 20:32:51,-191.8,Delta Air Lines,"[""Travel"", ""Airfare""]",in store,False
+tx_96789a53b5b6,2024-09-26 20:16:47,-174.34,Target,"[""Shopping"", ""Retail""]",in store,False
+tx_14a6e3e86de4,2024-09-25 13:29:59,-14.09,Pharmacy Rx,"[""Healthcare"", ""Pharmacy""]",in store,False
+tx_9d7e12a69e75,2024-09-25 04:33:45,-146.36,Gym Membership,"[""Health"", ""Fitness""]",online,False
+tx_5b941fbcff28,2024-09-24 18:00:39,746.01,Transfer to Checking,"[""Transfer"", ""Bank""]",online,False
+tx_e7baeb4bab72,2024-09-24 12:44:59,-51.0,Uber *Trip,"[""Travel"", ""Taxi""]",in store,False
+tx_6f46ba84268b,2024-09-22 13:23:29,-52.2,Delta Air Lines,"[""Travel"", ""Airfare""]",in store,False
+tx_2894761157d4,2024-09-22 12:11:42,610.49,Transfer to Checking,"[""Transfer"", ""Bank""]",online,False
+tx_76fc77f20c84,2024-09-21 12:52:14,-2.38,Local Grocery Store,"[""Food"", ""Groceries""]",in store,False
+tx_fecb1d3d648b,2024-09-20 03:59:52,-120.8,Apple Services,"[""Technology"", ""Subscriptions""]",online,False
+tx_0c7ce6b8e4a3,2024-09-18 21:46:10,106.6,WholePay,"[""Payment"", ""Credit Card""]",online,False
+tx_ee1c5ed9faec,2024-09-18 12:10:46,1192.73,Payment - Thank You,"[""Payment"", ""Credit Card""]",online,False
+tx_acf1dab8509c,2024-09-18 08:11:31,-33.28,City Utilities,"[""Utilities"", ""Electric""]",online,False
+tx_ee44280ab984,2024-09-17 12:08:09,-10.85,Apple Services,"[""Technology"", ""Subscriptions""]",online,False
+tx_82d8ef423961,2024-09-17 09:48:24,-3.93,IKEA,"[""Shopping"", ""Home""]",in store,False
+tx_6ace667b5a00,2024-09-16 20:10:47,-5.93,Starbucks,"[""Food"", ""Coffee""]",online,False
+tx_8ad954461032,2024-09-16 13:35:35,-200.0,ATM Withdrawal,"[""Cash"", ""ATM""]",in store,False
+tx_29a57f4bf4a0,2024-09-16 12:00:40,65.04,Refund - Amazon,"[""Refunds"", ""Online""]",online,False
+tx_7333cfa087f7,2024-09-14 20:30:57,-33.22,Best Buy,"[""Shopping"", ""Electronics""]",online,False
+tx_4fb286abef40,2024-09-14 19:22:20,-33.0,Lyft,"[""Travel"", ""Taxi""]",online,False
+tx_936fe6600c91,2024-09-14 13:06:00,1935.28,Payment - Thank You,"[""Payment"", ""Credit Card""]",online,False
+tx_4b4bc95ab10c,2024-09-14 12:50:44,-381.1,Concert Tickets,"[""Entertainment"", ""Tickets""]",in store,False
+tx_fb11e78ef93b,2024-09-14 01:32:14,-63.08,Airbnb,"[""Travel"", ""Lodging""]",in store,False
+tx_57e8a56af9f6,2024-09-13 21:54:23,-116.82,Delta Air Lines,"[""Travel"", ""Airfare""]",online,False
+tx_dc1409b94a7c,2024-09-13 13:18:42,-309.53,Shell Service Station,"[""Transportation"", ""Gas & Fuel""]",online,False
+tx_930497a3fdcc,2024-09-13 09:24:18,-15.83,Walmart Supercenter,"[""Shopping"", ""Retail""]",online,False
+tx_2102db336a37,2024-09-13 07:42:05,-11.27,Pharmacy Rx,"[""Healthcare"", ""Pharmacy""]",online,False
+tx_068a767f4674,2024-09-12 12:13:41,-27.73,Google *Play,"[""Technology"", ""Subscriptions""]",online,False
+tx_cb37e95751e2,2024-09-11 21:07:43,-28.97,Shell Service Station,"[""Transportation"", ""Gas & Fuel""]",in store,False
+tx_c9ffdbcfeb54,2024-09-10 08:50:28,1939.4,Payment - Thank You,"[""Payment"", ""Credit Card""]",online,False
+tx_8a8ea1d8d7e6,2024-09-08 18:14:52,-10.48,Gym Membership,"[""Health"", ""Fitness""]",in store,False
+tx_49636e0607c1,2024-09-06 12:01:20,-4.88,Best Buy,"[""Shopping"", ""Electronics""]",in store,False
+tx_00d63470c7e2,2024-09-06 07:34:01,-71.99,Southwest Airlines,"[""Travel"", ""Airfare""]",in store,False
+tx_042bea805e6a,2024-09-05 13:32:43,-120.97,Marriott Hotels,"[""Travel"", ""Lodging""]",in store,False
+tx_9306bb3b3f10,2024-09-04 06:44:07,-12.9,Spotify,"[""Entertainment"", ""Subscriptions""]",online,False
+tx_f61f45e98b62,2024-09-03 21:09:16,-400.0,ATM Withdrawal,"[""Cash"", ""ATM""]",in store,True
+tx_5d8626d36e95,2024-09-02 16:25:52,-4.07,Whole Foods Market,"[""Food"", ""Groceries""]",in store,False
+tx_6b4d2202f659,2024-08-31 18:28:17,-9.95,Chevron,"[""Transportation"", ""Gas & Fuel""]",online,False
+tx_c19eec675479,2024-08-29 12:03:23,-6.1,Walmart Supercenter,"[""Shopping"", ""Retail""]",in store,False
+tx_f2a31bd060aa,2024-08-29 02:38:16,-38.77,Comcast,"[""Utilities"", ""Internet""]",online,False
+tx_5c82818ca178,2024-08-25 06:36:05,-43.3,Gym Membership,"[""Health"", ""Fitness""]",online,False
+tx_eeff6c70e1dc,2024-08-24 13:34:36,-7.14,Trader Joe's,"[""Food"", ""Groceries""]",in store,False
+tx_b786b4610713,2024-08-24 12:21:13,-15.36,Costco,"[""Shopping"", ""Wholesale""]",in store,False
+tx_abd4204d23ff,2024-08-22 18:50:07,-6.07,Netflix,"[""Entertainment"", ""Subscriptions""]",online,False
+tx_fc2d3ff7f41c,2024-08-22 08:50:02,-10.39,Google *Play,"[""Technology"", ""Subscriptions""]",online,False
+tx_33d4f25c064c,2024-08-21 12:19:18,-2.55,Parking Garage,"[""Transportation"", ""Parking""]",online,False
+tx_de393f7416b6,2024-08-20 08:59:58,-60.66,Apple Services,"[""Technology"", ""Subscriptions""]",online,False
+tx_5e72106ced25,2024-08-19 21:04:21,-1300.0,Rent - Apt 2B,"[""Housing"", ""Rent""]",in store,False
+tx_c68a6867785f,2024-08-18 12:51:14,-17.5,Trader Joe's,"[""Food"", ""Groceries""]",online,False
+tx_bc850f88497b,2024-08-16 12:30:03,-83.19,Electric Vehicle Charge,"[""Transportation"", ""Gas & Fuel""]",in store,False
+tx_d587ac8bb781,2024-08-16 12:11:11,-541.21,Southwest Airlines,"[""Travel"", ""Airfare""]",in store,False
+tx_5bd4db55511d,2024-08-15 13:09:15,-12.21,Trader Joe's,"[""Food"", ""Groceries""]",in store,False
+tx_c00e120271b5,2024-08-15 12:44:55,-5.73,Walmart Supercenter,"[""Shopping"", ""Retail""]",in store,False
+tx_e96378c4cf04,2024-08-14 13:59:51,-120.41,Airbnb,"[""Travel"", ""Lodging""]",online,False
+tx_1728cb0cc4ec,2024-08-14 12:32:12,-6.21,Comcast,"[""Utilities"", ""Internet""]",in store,False
+tx_2bd3cad6bc90,2024-08-13 20:38:05,-54.93,Amazon Marketplace,"[""Shopping"", ""Online""]",online,False
+tx_36c05e8ac76b,2024-08-12 14:24:43,-23.36,Starbucks,"[""Food"", ""Coffee""]",in store,False
+tx_92140cf766a9,2024-08-12 09:57:27,121.53,Refund - Amazon,"[""Refunds"", ""Online""]",online,False
+tx_4efd3e9cdf67,2024-08-11 20:06:36,-14.53,Trader Joe's,"[""Food"", ""Groceries""]",in store,False
+tx_400c82696a6e,2024-08-11 09:47:52,-334.22,Airbnb,"[""Travel"", ""Lodging""]",in store,False
+tx_024a99530722,2024-08-10 12:55:41,-114.44,Southwest Airlines,"[""Travel"", ""Airfare""]",in store,False
+tx_cb763493a7a3,2024-08-08 22:08:56,-14.06,Whole Foods Market,"[""Food"", ""Groceries""]",in store,False
+tx_a6756cf43997,2024-08-08 12:37:02,-24.15,Comcast,"[""Utilities"", ""Internet""]",in store,False
+tx_b4a8469d01a1,2024-08-07 09:52:49,-18.5,Netflix,"[""Entertainment"", ""Subscriptions""]",online,False
+tx_e48d8b54982a,2024-08-07 06:18:14,-20.05,Unknown Merchant,"[""Uncategorized""]",in store,False
+tx_88eeeb505927,2024-08-06 19:20:45,-543.11,Concert Tickets,"[""Entertainment"", ""Tickets""]",in store,False
+tx_b02a2d41bb17,2024-08-05 06:31:56,-7.25,Netflix,"[""Entertainment"", ""Subscriptions""]",online,False
+tx_df4c46b08ba3,2024-08-04 01:37:03,-17.25,Spotify,"[""Entertainment"", ""Subscriptions""]",online,False
+tx_9919f6e62d99,2024-08-02 20:56:24,-8.51,Best Buy,"[""Shopping"", ""Electronics""]",online,False
+tx_ee756956cb48,2024-08-02 20:16:10,-7.5,Local Grocery Store,"[""Food"", ""Groceries""]",in store,False
+tx_f15b0c0b1b00,2024-07-31 13:32:25,-66.33,Southwest Airlines,"[""Travel"", ""Airfare""]",in store,False
+tx_3589604c4cea,2024-07-31 13:30:15,-17.71,Apple Services,"[""Technology"", ""Subscriptions""]",online,False
+tx_a43a54a9baaf,2024-07-31 09:07:22,-80.0,ATM Withdrawal,"[""Cash"", ""ATM""]",in store,False
+tx_06e5fcf39b3d,2024-07-30 07:08:49,-12.94,AT&T Wireless,"[""Utilities"", ""Cell Phone""]",in store,False
+tx_3f51643ac527,2024-07-29 22:17:08,-151.74,Concert Tickets,"[""Entertainment"", ""Tickets""]",online,False
+tx_da6ee3d58f79,2024-07-29 13:56:15,-22.74,AT&T Wireless,"[""Utilities"", ""Cell Phone""]",online,False
+tx_2ee19f37d6b5,2024-07-28 22:34:36,-15.64,Apple Services,"[""Technology"", ""Subscriptions""]",online,False
+tx_fb1b5e5c252c,2024-07-28 07:47:42,-50.92,Starbucks,"[""Food"", ""Coffee""]",online,False
+tx_0ae1497f9687,2024-07-27 17:51:39,-28.59,Local Grocery Store,"[""Food"", ""Groceries""]",online,False
+tx_8b1baaf5c622,2024-07-26 20:41:37,-13.36,Spotify,"[""Entertainment"", ""Subscriptions""]",online,False
+tx_481cfc80be56,2024-07-26 12:48:14,-141.94,Airbnb,"[""Travel"", ""Lodging""]",online,False
+tx_6db70a886106,2024-07-26 09:06:24,-410.06,Airbnb,"[""Travel"", ""Lodging""]",online,False
+tx_e5ee07453f05,2024-07-25 20:15:06,-364.91,Concert Tickets,"[""Entertainment"", ""Tickets""]",in store,False
+tx_2e52de38ba76,2024-07-25 09:27:22,-9.45,Netflix,"[""Entertainment"", ""Subscriptions""]",online,False
+tx_8c160c450392,2024-07-24 09:04:22,-16.16,Verizon Wireless,"[""Utilities"", ""Cell Phone""]",in store,False
+tx_e5dd1ecc8385,2024-07-24 07:47:35,-19.34,Uber *Trip,"[""Travel"", ""Taxi""]",in store,False
+tx_cc7b94592081,2024-07-23 08:39:21,-9.67,Netflix,"[""Entertainment"", ""Subscriptions""]",online,False
+tx_181a0d21b546,2024-07-23 08:36:03,-26.22,Local Grocery Store,"[""Food"", ""Groceries""]",in store,False
+tx_b0befb73aca1,2024-07-22 19:03:42,-12.17,Starbucks,"[""Food"", ""Coffee""]",in store,False
+tx_960793e7eb2c,2024-07-21 08:37:10,-12.0,Parking Garage,"[""Transportation"", ""Parking""]",in store,False
+tx_a9d5723ae7b8,2024-07-20 08:24:00,-139.17,Apple Services,"[""Technology"", ""Subscriptions""]",online,False
+tx_a513447e0c5c,2024-07-20 08:18:49,-9.28,Google *Play,"[""Technology"", ""Subscriptions""]",online,False
+tx_149779ef2196,2024-07-18 15:51:18,-19.75,Shell Service Station,"[""Transportation"", ""Gas & Fuel""]",in store,False
+tx_3139eb068e1e,2024-07-17 07:38:45,-13.73,Electric Vehicle Charge,"[""Transportation"", ""Gas & Fuel""]",online,False
+tx_3e73cae4acce,2024-07-15 15:07:52,-35.8,Trader Joe's,"[""Food"", ""Groceries""]",in store,False
+tx_09ab8132a85b,2024-07-12 09:28:08,-55.65,Amazon Marketplace,"[""Shopping"", ""Online""]",online,False
+tx_cbba7c480e83,2024-07-11 22:46:38,-4.51,Target,"[""Shopping"", ""Retail""]",online,False
+tx_d51f1a394d56,2024-07-11 13:17:52,37.55,Refund - Amazon,"[""Refunds"", ""Online""]",online,False
+tx_512ee256ef8a,2024-07-09 21:28:14,-21.05,Trader Joe's,"[""Food"", ""Groceries""]",online,False
+tx_3da7a8e06c3d,2024-07-08 08:07:29,-29.88,Trader Joe's,"[""Food"", ""Groceries""]",in store,False
+tx_556af04363c6,2024-07-07 19:43:24,-27.62,Gym Membership,"[""Health"", ""Fitness""]",in store,False
+tx_85c426475750,2024-07-07 09:14:40,-82.58,Airbnb,"[""Travel"", ""Lodging""]",in store,False
+tx_b7b18e343467,2024-07-07 04:55:53,-87.2,Trader Joe's,"[""Food"", ""Groceries""]",in store,False
+tx_9204c66f22f0,2024-07-06 13:11:55,-15.04,McDonald's,"[""Food"", ""Fast Food""]",in store,False
+tx_5ffa3e3a3e2d,2024-07-05 01:37:49,-28.28,Netflix,"[""Entertainment"", ""Subscriptions""]",online,False
+tx_647e47340697,2024-07-04 13:04:07,-8.04,Google *Play,"[""Technology"", ""Subscriptions""]",online,False
+tx_7dbb00b519b0,2024-07-04 04:17:28,-15.2,Spotify,"[""Entertainment"", ""Subscriptions""]",online,False
+tx_d0d24eb5cf1d,2024-07-03 19:13:36,-19.03,City Utilities,"[""Utilities"", ""Electric""]",in store,False
+tx_7b2e311e8453,2024-06-30 13:30:16,-94.74,Concert Tickets,"[""Entertainment"", ""Tickets""]",online,False
+tx_21e6526f4964,2024-06-29 19:11:40,-16.7,Local Grocery Store,"[""Food"", ""Groceries""]",in store,False
+tx_ab79bc2f48d9,2024-06-29 01:20:44,-77.71,Comcast,"[""Utilities"", ""Internet""]",online,False
+tx_3cd0fa2e9731,2024-06-28 07:20:07,-12.66,Spotify,"[""Entertainment"", ""Subscriptions""]",online,False
+tx_a5d414644e84,2024-06-28 04:55:57,-2.66,Pharmacy Rx,"[""Healthcare"", ""Pharmacy""]",online,False
+tx_64ab7b843190,2024-06-26 18:02:54,-11.85,Costco,"[""Shopping"", ""Wholesale""]",in store,False
+tx_8e346b8d7500,2024-06-26 07:55:21,-8.97,Trader Joe's,"[""Food"", ""Groceries""]",in store,False
+tx_d67db7ef9573,2024-06-25 02:28:50,-106.93,Gym Membership,"[""Health"", ""Fitness""]",online,False
+tx_74315cd0e9ba,2024-06-24 22:49:52,-136.58,Parking Garage,"[""Transportation"", ""Parking""]",in store,False
+tx_d747199b9be6,2024-06-23 20:54:35,-15.71,Pharmacy Rx,"[""Healthcare"", ""Pharmacy""]",online,False
+tx_2c3d0e36ea4c,2024-06-23 19:13:46,87.29,Payment - Thank You,"[""Payment"", ""Credit Card""]",online,True
+tx_c9c148a32eeb,2024-06-23 07:09:16,-23.49,Gym Membership,"[""Health"", ""Fitness""]",in store,False
+tx_14690373b802,2024-06-22 21:55:21,-32.63,Parking Garage,"[""Transportation"", ""Parking""]",in store,False
+tx_f3953aacb34f,2024-06-21 21:17:53,-11.14,AT&T Wireless,"[""Utilities"", ""Cell Phone""]",in store,False
+tx_0257cbe36c73,2024-06-21 13:26:50,-21.35,Verizon Wireless,"[""Utilities"", ""Cell Phone""]",in store,False
+tx_25e95d2b8b55,2024-06-21 13:09:08,-9.0,Target,"[""Shopping"", ""Retail""]",in store,False
+tx_4156045ea7d2,2024-06-21 09:09:44,-57.9,Costco,"[""Shopping"", ""Wholesale""]",in store,False
+tx_37053bea43b8,2024-06-20 21:58:44,-27.87,AT&T Wireless,"[""Utilities"", ""Cell Phone""]",in store,False
+tx_f23bd305263d,2024-06-20 12:20:03,1254.17,Payment - Thank You,"[""Payment"", ""Credit Card""]",online,False
+tx_a9d50d1457d9,2024-06-20 07:30:09,-14.18,Apple Services,"[""Technology"", ""Subscriptions""]",online,False
+tx_00e2a07f26aa,2024-06-20 03:34:55,-58.37,Apple Services,"[""Technology"", ""Subscriptions""]",online,False
+tx_6fb84c7e3835,2024-06-19 20:12:02,-60.0,ATM Withdrawal,"[""Cash"", ""ATM""]",in store,True
+tx_edc97ea4bd37,2024-06-18 03:47:53,-97.38,Concert Tickets,"[""Entertainment"", ""Tickets""]",in store,False
+tx_edd2c157ede7,2024-06-17 20:50:30,1159.68,Payment - Thank You,"[""Payment"", ""Credit Card""]",online,False
+tx_1cb577fa397b,2024-06-17 13:55:30,-28.67,Apple Services,"[""Technology"", ""Subscriptions""]",online,False
+tx_712c5ecbc102,2024-06-16 10:06:05,-5.47,Lyft,"[""Travel"", ""Taxi""]",in store,False
+tx_6a00f86be9fc,2024-06-15 18:49:52,-215.19,Marriott Hotels,"[""Travel"", ""Lodging""]",online,False
+tx_0e8d7f0b2806,2024-06-15 13:23:28,-113.62,Concert Tickets,"[""Entertainment"", ""Tickets""]",in store,False
+tx_bb4ccbb7c260,2024-06-13 19:02:27,-14.6,Shell Service Station,"[""Transportation"", ""Gas & Fuel""]",in store,False
+tx_25ea7f1ff1a2,2024-06-12 22:44:22,-53.85,Airbnb,"[""Travel"", ""Lodging""]",in store,False
+tx_92d14d0a4a94,2024-06-12 19:43:40,-8.4,Unknown Merchant,"[""Uncategorized""]",in store,False
+tx_cf2f6b2246b6,2024-06-12 07:06:04,-16.5,Target,"[""Shopping"", ""Retail""]",in store,False
+tx_bbba726f5802,2024-06-11 22:03:06,-8.26,IKEA,"[""Shopping"", ""Home""]",online,False
+tx_55400a8f3fe4,2024-06-11 20:19:58,-10.42,Gym Membership,"[""Health"", ""Fitness""]",online,True
+tx_359d829e7384,2024-06-10 07:03:41,-25.49,Gym Membership,"[""Health"", ""Fitness""]",in store,False
+tx_d47af7373c53,2024-06-09 21:57:49,-29.85,Trader Joe's,"[""Food"", ""Groceries""]",in store,False
+tx_6d4b0ac5c809,2024-06-09 09:02:28,-176.62,Airbnb,"[""Travel"", ""Lodging""]",online,False
+tx_c8d52c3655cd,2024-06-08 20:19:36,-40.0,ATM Withdrawal,"[""Cash"", ""ATM""]",in store,False
+tx_bf73297acae6,2024-06-08 18:19:26,-6.64,Lyft,"[""Travel"", ""Taxi""]",in store,False
+tx_14c0b90f4a2c,2024-06-07 12:49:08,-5.2,Starbucks,"[""Food"", ""Coffee""]",in store,False
+tx_80d183c41735,2024-06-05 12:59:07,-18.04,Netflix,"[""Entertainment"", ""Subscriptions""]",online,False
+tx_ef92f140d72a,2024-06-05 06:51:18,-53.84,AT&T Wireless,"[""Utilities"", ""Cell Phone""]",online,False
+tx_09dcf38689b0,2024-06-04 22:11:43,-27.59,Parking Garage,"[""Transportation"", ""Parking""]",in store,False
+tx_4d03fb9a0587,2024-06-04 21:22:19,-94.92,Marriott Hotels,"[""Travel"", ""Lodging""]",online,False
+tx_f4309a36e5c6,2024-06-04 19:48:46,-117.95,Marriott Hotels,"[""Travel"", ""Lodging""]",in store,False
+tx_fb08777c9e2f,2024-06-04 19:41:31,1959.87,WholePay,"[""Payment"", ""Credit Card""]",online,False
+tx_4ad9b28f14b4,2024-06-04 09:56:23,-18.75,Chevron,"[""Transportation"", ""Gas & Fuel""]",online,False
+tx_7af8aa3ddfff,2024-06-04 08:13:09,-7.66,Spotify,"[""Entertainment"", ""Subscriptions""]",online,False
+tx_12694f2eb95d,2024-06-03 07:34:49,-18.5,Unknown Merchant,"[""Uncategorized""]",online,False
+tx_ae4624d2cb6b,2024-05-31 13:36:00,-18.79,Unknown Merchant,"[""Uncategorized""]",in store,False
+tx_884283690060,2024-05-29 13:43:47,-18.85,Apple Services,"[""Technology"", ""Subscriptions""]",online,False
+tx_9530f16344b5,2024-05-29 09:06:39,-447.88,Airbnb,"[""Travel"", ""Lodging""]",online,False
+tx_58af380489e7,2024-05-29 08:35:19,-20.24,Netflix,"[""Entertainment"", ""Subscriptions""]",online,False
+tx_2d93d79a8c84,2024-05-29 08:05:00,-86.27,Comcast,"[""Utilities"", ""Internet""]",online,False
+tx_bc0176f7e42c,2024-05-28 08:17:46,-11.27,Chevron,"[""Transportation"", ""Gas & Fuel""]",online,False
+tx_336218c82512,2024-05-27 09:15:36,-13.9,City Utilities,"[""Utilities"", ""Electric""]",in store,False
+tx_3cf5a1a506db,2024-05-25 13:56:09,-10.36,Comcast,"[""Utilities"", ""Internet""]",in store,False
+tx_eb2c50685f31,2024-05-25 13:06:01,-3.85,Target,"[""Shopping"", ""Retail""]",in store,False
+tx_607d335537bb,2024-05-25 08:13:29,-51.71,Southwest Airlines,"[""Travel"", ""Airfare""]",in store,False
+tx_248dcd8d6c73,2024-05-25 07:01:48,-8.79,Spotify,"[""Entertainment"", ""Subscriptions""]",online,False
+tx_7cf248ac410d,2024-05-25 01:03:41,-106.99,Gym Membership,"[""Health"", ""Fitness""]",online,False
+tx_6159782b2806,2024-05-23 15:20:59,-13.15,Amazon Marketplace,"[""Shopping"", ""Online""]",online,False
+tx_08045a26d80b,2024-05-22 12:32:24,-15.5,Costco,"[""Shopping"", ""Wholesale""]",in store,False
+tx_a23f387cc48f,2024-05-22 12:26:34,-354.43,Marriott Hotels,"[""Travel"", ""Lodging""]",in store,False
+tx_6609bfa894c5,2024-05-21 19:27:32,-31.9,Electric Vehicle Charge,"[""Transportation"", ""Gas & Fuel""]",in store,False
+tx_619a6e82538a,2024-05-21 08:52:24,-3.06,Pharmacy Rx,"[""Healthcare"", ""Pharmacy""]",in store,False
+tx_28749de9f6f9,2024-05-20 22:54:03,-9.85,Netflix,"[""Entertainment"", ""Subscriptions""]",online,False
+tx_46202b947409,2024-05-20 22:42:25,-13.77,Verizon Wireless,"[""Utilities"", ""Cell Phone""]",online,False
+tx_94e7a0554c87,2024-05-20 02:23:57,-127.47,Apple Services,"[""Technology"", ""Subscriptions""]",online,False
+tx_53761248f773,2024-05-19 22:42:55,-2.2,Shell Service Station,"[""Transportation"", ""Gas & Fuel""]",online,False
+tx_4cf7c51e2769,2024-05-19 19:45:18,1010.38,WholePay,"[""Payment"", ""Credit Card""]",online,False
+tx_53c53d59dc1b,2024-05-19 13:09:19,-36.88,McDonald's,"[""Food"", ""Fast Food""]",in store,False
+tx_90c31b6c52ae,2024-05-19 10:01:13,-26.74,Whole Foods Market,"[""Food"", ""Groceries""]",online,False
+tx_67bc98986934,2024-05-18 13:16:19,-13.77,Pharmacy Rx,"[""Healthcare"", ""Pharmacy""]",online,False
+tx_5f5ce97e3ca8,2024-05-17 21:42:12,-180.57,Southwest Airlines,"[""Travel"", ""Airfare""]",in store,False
+tx_1b4582f97097,2024-05-17 21:40:47,-127.5,Concert Tickets,"[""Entertainment"", ""Tickets""]",in store,False
+tx_1bc785c06131,2024-05-17 14:55:39,-65.4,Walmart Supercenter,"[""Shopping"", ""Retail""]",in store,False
+tx_25f1f150c1f7,2024-05-16 21:52:27,-79.24,Southwest Airlines,"[""Travel"", ""Airfare""]",in store,False
+tx_368ec41f57a7,2024-05-16 19:10:15,-12.0,Chevron,"[""Transportation"", ""Gas & Fuel""]",online,False
+tx_6b6b4309afb0,2024-05-16 18:46:31,-21.46,Spotify,"[""Entertainment"", ""Subscriptions""]",online,False
+tx_945bcbcf831d,2024-05-16 12:03:14,1107.14,WholePay,"[""Payment"", ""Credit Card""]",online,False
+tx_3b766d24a828,2024-05-15 22:44:56,1315.9,WholePay,"[""Payment"", ""Credit Card""]",online,False
+tx_37aa9f403a1a,2024-05-15 09:22:20,-160.19,Concert Tickets,"[""Entertainment"", ""Tickets""]",in store,False
+tx_5dfcf82e2257,2024-05-13 09:57:21,-19.34,Apple Services,"[""Technology"", ""Subscriptions""]",online,False
+tx_c1c50c3640df,2024-05-12 09:55:24,-20.52,Chevron,"[""Transportation"", ""Gas & Fuel""]",in store,False
+tx_f0f1f1f473c5,2024-05-11 13:56:29,-393.14,Unknown Merchant,"[""Uncategorized""]",in store,True
+tx_01b4b734cefd,2024-05-11 09:41:50,-26.19,Best Buy,"[""Shopping"", ""Electronics""]",online,False
+tx_657f6136937b,2024-05-10 17:34:00,-15.05,Amazon Marketplace,"[""Shopping"", ""Online""]",online,False
+tx_7e1fadfcabd2,2024-05-09 22:25:32,-5.52,Amazon Marketplace,"[""Shopping"", ""Online""]",online,False
+tx_6546761c88ff,2024-05-09 13:49:06,-5.92,Parking Garage,"[""Transportation"", ""Parking""]",in store,False
+tx_0ad4a0854cdf,2024-05-09 13:13:55,-83.41,Airbnb,"[""Travel"", ""Lodging""]",in store,False
+tx_5f4693b107e9,2024-05-07 13:26:07,-15.68,Amazon Marketplace,"[""Shopping"", ""Online""]",online,False
+tx_b850b7c4076c,2024-05-07 12:19:45,-27.11,Google *Play,"[""Technology"", ""Subscriptions""]",online,False
+tx_24578971b2e1,2024-05-06 08:30:53,243.0,Payment - Thank You,"[""Payment"", ""Credit Card""]",online,False
+tx_b75115febf4d,2024-05-05 22:42:44,149.09,Refund - Amazon,"[""Refunds"", ""Online""]",online,False
+tx_3ab4ea51083e,2024-05-05 06:11:43,-101.16,AT&T Wireless,"[""Utilities"", ""Cell Phone""]",online,False
+tx_6be06f1725a2,2024-05-05 04:15:07,-19.26,Netflix,"[""Entertainment"", ""Subscriptions""]",online,False
+tx_fcbc583350e7,2024-05-04 12:51:05,-19.12,Trader Joe's,"[""Food"", ""Groceries""]",in store,False
+tx_d0453dabbcbd,2024-05-04 01:47:47,-10.89,Spotify,"[""Entertainment"", ""Subscriptions""]",online,False
+tx_56b01bf23845,2024-05-03 21:28:16,-16.14,Gym Membership,"[""Health"", ""Fitness""]",online,False
+tx_304151071a9d,2024-05-03 18:47:59,-28.4,Google *Play,"[""Technology"", ""Subscriptions""]",online,False
+tx_85560fb66282,2024-05-02 13:29:13,-7.57,Trader Joe's,"[""Food"", ""Groceries""]",in store,False
+tx_ab444cdd2422,2024-05-01 09:04:10,-50.43,Target,"[""Shopping"", ""Retail""]",in store,True
+tx_95c58febb232,2024-04-30 13:16:54,57.53,Refund - Amazon,"[""Refunds"", ""Online""]",online,False
+tx_56d1a29ea7fb,2024-04-30 08:38:03,-16.65,Verizon Wireless,"[""Utilities"", ""Cell Phone""]",in store,False
+tx_39c1a92b8649,2024-04-30 07:32:49,-6.5,Uber *Trip,"[""Travel"", ""Taxi""]",online,False
+tx_601a5b8bbd70,2024-04-29 04:23:37,-112.11,Comcast,"[""Utilities"", ""Internet""]",online,False
+tx_7dea23f0b48a,2024-04-28 20:51:20,-32.63,Electric Vehicle Charge,"[""Transportation"", ""Gas & Fuel""]",in store,False
+tx_98952639dce2,2024-04-28 18:11:49,-25.23,Unknown Merchant,"[""Uncategorized""]",in store,False
+tx_4fd27519a0bc,2024-04-28 09:25:28,-63.93,Marriott Hotels,"[""Travel"", ""Lodging""]",in store,False
+tx_a2a6388e1678,2024-04-26 13:07:49,-10.38,Netflix,"[""Entertainment"", ""Subscriptions""]",online,False
+tx_752b021368e8,2024-04-26 07:51:52,-18.2,Costco,"[""Shopping"", ""Wholesale""]",in store,False
+tx_dd0670f1e5c1,2024-04-25 22:57:39,-9.68,City Utilities,"[""Utilities"", ""Electric""]",in store,False
+tx_85d9e9025687,2024-04-25 19:59:04,-111.56,Concert Tickets,"[""Entertainment"", ""Tickets""]",in store,False
+tx_d9f914c36b06,2024-04-25 12:21:24,-6.65,Comcast,"[""Utilities"", ""Internet""]",online,False
+tx_ec3aa47369eb,2024-04-25 09:33:16,-24.87,IKEA,"[""Shopping"", ""Home""]",in store,False
+tx_434f29277159,2024-04-25 08:39:40,-2.41,Unknown Merchant,"[""Uncategorized""]",online,False
+tx_bfd06e208468,2024-04-25 02:20:29,-113.43,Gym Membership,"[""Health"", ""Fitness""]",online,False
+tx_0f95c955bb18,2024-04-24 21:23:24,-1350.0,Rent - Apt 2B,"[""Housing"", ""Rent""]",in store,False
+tx_89027a59df15,2024-04-24 19:02:36,-32.81,City Utilities,"[""Utilities"", ""Electric""]",in store,False
+tx_56854d45d835,2024-04-24 18:07:16,1047.26,WholePay,"[""Payment"", ""Credit Card""]",online,False
+tx_f33502d2f3c2,2024-04-24 12:34:19,-29.44,AT&T Wireless,"[""Utilities"", ""Cell Phone""]",in store,False
+tx_c96ab725f57e,2024-04-21 12:49:05,-2.97,Local Grocery Store,"[""Food"", ""Groceries""]",in store,False
+tx_d5c3b4c55b8e,2024-04-21 09:16:29,-56.27,Electric Vehicle Charge,"[""Transportation"", ""Gas & Fuel""]",in store,False
+tx_f8c05132db42,2024-04-20 18:02:58,1924.31,WholePay,"[""Payment"", ""Credit Card""]",online,False
+tx_43d8765d6034,2024-04-20 12:47:35,-29.69,Local Grocery Store,"[""Food"", ""Groceries""]",online,False
+tx_b76a57c597ce,2024-04-20 06:35:24,-67.11,Apple Services,"[""Technology"", ""Subscriptions""]",online,False
+tx_15bd964ef35d,2024-04-18 19:16:42,102.58,Refund - Amazon,"[""Refunds"", ""Online""]",online,False
+tx_8d4718ac6585,2024-04-18 13:14:52,-18.32,Trader Joe's,"[""Food"", ""Groceries""]",in store,False
+tx_ba3631dd8880,2024-04-16 13:39:28,-27.59,Chevron,"[""Transportation"", ""Gas & Fuel""]",in store,False
+tx_1481809f80ad,2024-04-16 12:40:51,-16.67,City Utilities,"[""Utilities"", ""Electric""]",in store,False
+tx_c80906b2317f,2024-04-15 21:11:57,440.35,WholePay,"[""Payment"", ""Credit Card""]",online,False
+tx_f3ec5aa2f21e,2024-04-15 13:28:01,-67.0,Concert Tickets,"[""Entertainment"", ""Tickets""]",in store,False
+tx_34af318b4e94,2024-04-14 21:17:12,1784.06,WholePay,"[""Payment"", ""Credit Card""]",online,False
+tx_e0711637bec4,2024-04-14 18:57:36,-23.17,Shell Service Station,"[""Transportation"", ""Gas & Fuel""]",in store,False
+tx_bbdb11373e86,2024-04-13 20:07:11,-77.86,Concert Tickets,"[""Entertainment"", ""Tickets""]",in store,False
+tx_f3fc29a5e6dc,2024-04-12 22:36:30,467.76,WholePay,"[""Payment"", ""Credit Card""]",online,False
+tx_4954e303d0fd,2024-04-12 17:02:37,373.12,Refund - Amazon,"[""Refunds"", ""Online""]",in store,True
+tx_f9295af15bc2,2024-04-12 13:28:47,-256.52,Concert Tickets,"[""Entertainment"", ""Tickets""]",in store,False
+tx_bf121add8631,2024-04-11 12:01:02,-42.01,Uber *Trip,"[""Travel"", ""Taxi""]",in store,False
+tx_654d1c7496ac,2024-04-11 09:03:06,-6.77,Trader Joe's,"[""Food"", ""Groceries""]",in store,False
+tx_4c092aa96516,2024-04-11 08:23:43,-60.98,Marriott Hotels,"[""Travel"", ""Lodging""]",in store,False
+tx_737ae8417ace,2024-04-08 19:15:09,-26.67,Spotify,"[""Entertainment"", ""Subscriptions""]",online,False
+tx_23367f82d8e9,2024-04-08 13:52:45,-15.26,Parking Garage,"[""Transportation"", ""Parking""]",in store,False
+tx_e17c8363be49,2024-04-08 13:11:13,-31.21,Parking Garage,"[""Transportation"", ""Parking""]",in store,False
+tx_1ae4fe6fa097,2024-04-08 12:35:18,-110.27,Concert Tickets,"[""Entertainment"", ""Tickets""]",in store,False
+tx_b25a6792d65e,2024-04-07 13:35:50,-64.44,Amazon Marketplace,"[""Shopping"", ""Online""]",online,False
+tx_532566f2f870,2024-04-06 20:26:11,-41.65,Pharmacy Rx,"[""Healthcare"", ""Pharmacy""]",in store,False
+tx_535ffc8b6351,2024-04-05 13:37:24,-389.64,Concert Tickets,"[""Entertainment"", ""Tickets""]",online,False
+tx_bd42d08f76e8,2024-04-05 12:09:06,-11.03,AT&T Wireless,"[""Utilities"", ""Cell Phone""]",online,False
+tx_5f4c39ffb0ec,2024-04-05 08:30:55,-118.22,AT&T Wireless,"[""Utilities"", ""Cell Phone""]",online,False
+tx_25f931651e3d,2024-04-05 03:25:53,-23.1,Netflix,"[""Entertainment"", ""Subscriptions""]",online,False
+tx_7bc738f15ab2,2024-04-04 06:53:37,-23.42,Spotify,"[""Entertainment"", ""Subscriptions""]",online,False
+tx_0d3471d6484a,2024-04-04 04:15:50,-1250.0,Rent - Apt 2B,"[""Housing"", ""Rent""]",in store,False
+tx_394503886681,2024-04-02 21:38:38,-109.0,Airbnb,"[""Travel"", ""Lodging""]",in store,False
+tx_c188cae401cc,2024-04-02 07:44:00,-6.46,Chevron,"[""Transportation"", ""Gas & Fuel""]",online,False
+tx_5c9b3aae595c,2024-04-01 18:21:51,-23.31,Spotify,"[""Entertainment"", ""Subscriptions""]",online,False
+tx_f5d76509d6cc,2024-04-01 12:17:07,-200.0,ATM Withdrawal,"[""Cash"", ""ATM""]",in store,True
+tx_934ca6798eee,2024-04-01 09:50:07,-18.11,Starbucks,"[""Food"", ""Coffee""]",in store,False
+tx_255c3b0273ae,2024-03-31 08:25:30,-23.88,Netflix,"[""Entertainment"", ""Subscriptions""]",online,False
+tx_f0962cd667dc,2024-03-30 07:43:54,-24.17,IKEA,"[""Shopping"", ""Home""]",in store,False
+tx_5b55ce4f960c,2024-03-29 13:39:11,-18.08,Electric Vehicle Charge,"[""Transportation"", ""Gas & Fuel""]",online,False
+tx_5d51ec8cfa17,2024-03-29 13:17:53,-50.51,Chevron,"[""Transportation"", ""Gas & Fuel""]",online,False
+tx_3383485cba06,2024-03-29 07:31:33,-11.23,Spotify,"[""Entertainment"", ""Subscriptions""]",online,False
+tx_46711b3cd71b,2024-03-29 06:15:39,-84.12,Comcast,"[""Utilities"", ""Internet""]",online,False
+tx_eb7a063391b7,2024-03-28 09:57:32,-13.31,Parking Garage,"[""Transportation"", ""Parking""]",in store,False
+tx_933caa1ba4cd,2024-03-28 08:20:00,-114.22,Delta Air Lines,"[""Travel"", ""Airfare""]",in store,False
+tx_5160f2651c11,2024-03-26 13:48:23,-9.97,Local Grocery Store,"[""Food"", ""Groceries""]",in store,False
+tx_b514e4c1eab9,2024-03-25 20:10:41,-9.73,Target,"[""Shopping"", ""Retail""]",in store,False
+tx_efe9c10c5039,2024-03-25 12:56:15,-25.0,IKEA,"[""Shopping"", ""Home""]",in store,False
+tx_922179b08e32,2024-03-25 09:55:58,-27.94,Uber *Trip,"[""Travel"", ""Taxi""]",in store,False
+tx_6ce4bf8c632e,2024-03-25 08:38:46,-127.61,Gym Membership,"[""Health"", ""Fitness""]",online,False
+tx_1f3ab1f2158e,2024-03-24 07:25:21,-14.36,Local Grocery Store,"[""Food"", ""Groceries""]",in store,False
+tx_6e33a189e5f8,2024-03-22 22:22:43,-15.37,Gym Membership,"[""Health"", ""Fitness""]",in store,False
+tx_6cbe5d1d443a,2024-03-22 12:07:53,-39.65,Pharmacy Rx,"[""Healthcare"", ""Pharmacy""]",in store,False
+tx_c0e1df36139e,2024-03-21 13:51:36,-10.07,Shell Service Station,"[""Transportation"", ""Gas & Fuel""]",in store,False
+tx_f942fd3ede52,2024-03-20 22:55:14,-25.34,Comcast,"[""Utilities"", ""Internet""]",in store,False
+tx_27fea34a5014,2024-03-20 09:14:53,-9.6,Shell Service Station,"[""Transportation"", ""Gas & Fuel""]",online,False
+tx_81dcbc8ea63a,2024-03-20 08:35:20,-12.54,Best Buy,"[""Shopping"", ""Electronics""]",online,False
+tx_1eb9b40dc9d1,2024-03-20 02:58:50,-110.59,Apple Services,"[""Technology"", ""Subscriptions""]",online,False
+tx_babaa6891eab,2024-03-19 22:41:48,-18.64,Comcast,"[""Utilities"", ""Internet""]",in store,False
+tx_24234a52c9fe,2024-03-19 19:00:35,-22.92,Verizon Wireless,"[""Utilities"", ""Cell Phone""]",in store,False
+tx_c42110d084d1,2024-03-18 08:50:21,-19.07,Shell Service Station,"[""Transportation"", ""Gas & Fuel""]",in store,False
+tx_4211d69a87f0,2024-03-16 20:22:54,-6.17,Whole Foods Market,"[""Food"", ""Groceries""]",online,False
+tx_d24cbf63d9c2,2024-03-16 13:46:51,-9.52,Gym Membership,"[""Health"", ""Fitness""]",online,False
+tx_d34c72250c30,2024-03-16 13:30:49,-19.41,Parking Garage,"[""Transportation"", ""Parking""]",online,False
+tx_a04b555acefd,2024-03-14 20:04:36,-160.65,Electric Vehicle Charge,"[""Transportation"", ""Gas & Fuel""]",in store,False
+tx_423f5fabeeac,2024-03-14 18:00:54,-25.85,Costco,"[""Shopping"", ""Wholesale""]",in store,False
+tx_138949b325a6,2024-03-13 21:06:29,-4.29,Uber *Trip,"[""Travel"", ""Taxi""]",in store,False
+tx_809669832663,2024-03-13 13:44:15,-29.36,McDonald's,"[""Food"", ""Fast Food""]",in store,False
+tx_f02d037aaaec,2024-03-12 22:01:03,-3.99,Local Grocery Store,"[""Food"", ""Groceries""]",in store,False
+tx_a64cbdffcab8,2024-03-12 19:24:26,-12.51,McDonald's,"[""Food"", ""Fast Food""]",in store,False
+tx_e4413450c710,2024-03-12 10:07:02,-15.72,Uber *Trip,"[""Travel"", ""Taxi""]",online,False
+tx_b1bfd0ec3b7c,2024-03-12 08:28:23,-14.01,AT&T Wireless,"[""Utilities"", ""Cell Phone""]",in store,False
+tx_dc360590ab3f,2024-03-10 18:46:46,340.83,WholePay,"[""Payment"", ""Credit Card""]",online,False
+tx_f8d854b120bd,2024-03-09 20:22:26,1243.5,WholePay,"[""Payment"", ""Credit Card""]",online,True
+tx_df8c0eb9e7f5,2024-03-09 13:27:38,-7.42,IKEA,"[""Shopping"", ""Home""]",in store,False
+tx_333790b873ac,2024-03-09 13:07:49,-5.91,Gym Membership,"[""Health"", ""Fitness""]",in store,False
+tx_87c7d196f521,2024-03-08 13:55:13,-76.81,Marriott Hotels,"[""Travel"", ""Lodging""]",online,False
+tx_b817638f31df,2024-03-08 13:35:20,-16.54,Walmart Supercenter,"[""Shopping"", ""Retail""]",in store,False
+tx_68ecc44dc1c9,2024-03-07 22:26:48,-24.45,Amazon Marketplace,"[""Shopping"", ""Online""]",online,False
+tx_ba62fd57c09e,2024-03-05 08:57:23,-21.78,Netflix,"[""Entertainment"", ""Subscriptions""]",online,False
+tx_f58e980545c0,2024-03-04 13:45:50,-5.27,Walmart Supercenter,"[""Shopping"", ""Retail""]",online,False
+tx_deffb532e60f,2024-03-04 12:24:18,-10.13,Whole Foods Market,"[""Food"", ""Groceries""]",online,False
+tx_7974ecae23f5,2024-03-04 09:49:36,-28.82,McDonald's,"[""Food"", ""Fast Food""]",in store,False
+tx_7c2a08fd1b2b,2024-03-03 12:18:04,-2.76,Target,"[""Shopping"", ""Retail""]",in store,False
+tx_55b3ee63c8b8,2024-03-02 13:05:54,-275.19,Airbnb,"[""Travel"", ""Lodging""]",in store,False
+tx_d1c28faab07b,2024-03-02 12:04:01,-21.37,Uber *Trip,"[""Travel"", ""Taxi""]",in store,False
+tx_dad0fbfa53ab,2024-03-01 20:22:56,-9.95,City Utilities,"[""Utilities"", ""Electric""]",in store,False
+tx_8509c5ef6a64,2024-03-01 12:15:30,-16.61,Spotify,"[""Entertainment"", ""Subscriptions""]",online,False
+tx_83114058fbf0,2024-02-29 19:06:44,-50.83,Southwest Airlines,"[""Travel"", ""Airfare""]",online,False
+tx_ac33aeb46fd7,2024-02-29 13:13:09,-302.14,Marriott Hotels,"[""Travel"", ""Lodging""]",in store,False
+tx_d9e986ac2abb,2024-02-29 12:33:32,-4.21,Shell Service Station,"[""Transportation"", ""Gas & Fuel""]",online,False
+tx_92dd12189ad5,2024-02-28 22:57:09,-5.23,Gym Membership,"[""Health"", ""Fitness""]",online,False
+tx_f5eb8d9536a4,2024-02-28 18:25:32,59.4,Refund - Amazon,"[""Refunds"", ""Online""]",online,False
+tx_29c8725dfcc6,2024-02-27 13:37:25,810.17,Transfer to Checking,"[""Transfer"", ""Bank""]",online,False
+tx_fc19bbfc3fd6,2024-02-26 13:08:59,-9.36,Amazon Marketplace,"[""Shopping"", ""Online""]",online,False
+tx_a75de49a52e2,2024-02-25 21:37:37,1054.06,WholePay,"[""Payment"", ""Credit Card""]",online,False
+tx_043da3e0f2c2,2024-02-25 13:20:43,-84.66,Airbnb,"[""Travel"", ""Lodging""]",in store,False
+tx_988f034bbd8a,2024-02-25 12:23:59,1294.26,WholePay,"[""Payment"", ""Credit Card""]",online,False
+tx_ce1a2d91bdff,2024-02-25 02:16:32,-37.96,Gym Membership,"[""Health"", ""Fitness""]",online,False
+tx_63e689505994,2024-02-24 20:49:28,-6.04,Walmart Supercenter,"[""Shopping"", ""Retail""]",in store,True
+tx_4c44a59bea6a,2024-02-23 13:50:17,-8.76,AT&T Wireless,"[""Utilities"", ""Cell Phone""]",in store,False
+tx_28bbc140b6eb,2024-02-22 19:25:07,-21.22,Unknown Merchant,"[""Uncategorized""]",in store,False
+tx_3ec7789a1e8a,2024-02-22 13:49:00,-11.35,Apple Services,"[""Technology"", ""Subscriptions""]",online,False
+tx_72c67ec74a47,2024-02-22 12:01:54,-60.0,ATM Withdrawal,"[""Cash"", ""ATM""]",in store,False
+tx_3b92397c792e,2024-02-20 20:18:29,-26.09,Shell Service Station,"[""Transportation"", ""Gas & Fuel""]",in store,False
+tx_741ea14ce0dc,2024-02-20 02:42:51,-142.9,Apple Services,"[""Technology"", ""Subscriptions""]",online,False
+tx_bde508c7e9d7,2024-02-19 18:07:31,-40.27,Electric Vehicle Charge,"[""Transportation"", ""Gas & Fuel""]",in store,False
+tx_76b0df9485ce,2024-02-19 12:37:14,-72.54,Marriott Hotels,"[""Travel"", ""Lodging""]",online,True
+tx_324e5d761976,2024-02-19 12:31:29,-0.8,IKEA,"[""Shopping"", ""Home""]",in store,False
+tx_ab21d06d8188,2024-02-19 08:26:19,-17.32,Spotify,"[""Entertainment"", ""Subscriptions""]",online,False
+tx_6abaee906465,2024-02-18 20:13:48,-8.65,Netflix,"[""Entertainment"", ""Subscriptions""]",online,False
+tx_ba286a3875af,2024-02-18 13:45:05,-9.46,Lyft,"[""Travel"", ""Taxi""]",online,False
+tx_85d84d149301,2024-02-17 07:56:37,1307.73,WholePay,"[""Payment"", ""Credit Card""]",online,False
+tx_9cabda49544f,2024-02-16 12:54:29,-8.71,Parking Garage,"[""Transportation"", ""Parking""]",in store,False
+tx_4d1e1be32483,2024-02-16 08:38:47,-35.72,Walmart Supercenter,"[""Shopping"", ""Retail""]",online,False
+tx_44d6c51bed3f,2024-02-12 19:31:24,626.31,Payment - Thank You,"[""Payment"", ""Credit Card""]",online,False
+tx_0fd653e5bc1b,2024-02-12 13:30:34,-24.09,Uber *Trip,"[""Travel"", ""Taxi""]",in store,False
+tx_50e221af60ba,2024-02-10 12:55:04,-102.13,Southwest Airlines,"[""Travel"", ""Airfare""]",online,False
+tx_61fd2d981a9c,2024-02-10 11:14:41,-167.36,Concert Tickets,"[""Entertainment"", ""Tickets""]",online,False
+tx_e3855434ba0c,2024-02-09 22:53:00,-12.14,Amazon Marketplace,"[""Shopping"", ""Online""]",online,False
+tx_88b52d296068,2024-02-07 21:28:24,-14.72,McDonald's,"[""Food"", ""Fast Food""]",in store,False
+tx_c4d8c35bfbb0,2024-02-07 13:10:56,-9.8,Starbucks,"[""Food"", ""Coffee""]",online,False
+tx_f26b49218978,2024-02-05 09:31:07,-7.91,Uber *Trip,"[""Travel"", ""Taxi""]",online,False
+tx_20977ae55bf9,2024-02-05 06:38:19,-26.67,Netflix,"[""Entertainment"", ""Subscriptions""]",online,False
+tx_62e4dea63225,2024-02-03 07:59:34,-23.09,Local Grocery Store,"[""Food"", ""Groceries""]",online,False
+tx_939345fec92a,2024-02-02 20:53:37,-18.84,Apple Services,"[""Technology"", ""Subscriptions""]",online,False
+tx_3b173c22f187,2024-02-01 23:49:32,-25.27,Whole Foods Market,"[""Food"", ""Groceries""]",in store,False
+tx_19c08ed96068,2024-01-31 20:38:16,-30.45,Unknown Merchant,"[""Uncategorized""]",in store,True
+tx_c546be282b23,2024-01-31 20:24:58,-545.43,Airbnb,"[""Travel"", ""Lodging""]",in store,False
+tx_b4999d46ae18,2024-01-31 09:19:21,-44.0,McDonald's,"[""Food"", ""Fast Food""]",online,False
+tx_5867961c99f9,2024-01-30 20:09:44,-3.44,Starbucks,"[""Food"", ""Coffee""]",in store,False
+tx_6492e29aad0f,2024-01-26 21:39:49,-17.39,Costco,"[""Shopping"", ""Wholesale""]",online,False
+tx_0ddc132c9247,2024-01-25 21:42:31,-2.31,Amazon Marketplace,"[""Shopping"", ""Online""]",online,False
+tx_1b943f470f7c,2024-01-25 14:35:47,-6.15,Chevron,"[""Transportation"", ""Gas & Fuel""]",in store,False
+tx_38e000f055c9,2024-01-25 09:43:50,-23.8,Shell Service Station,"[""Transportation"", ""Gas & Fuel""]",in store,False
+tx_c43c73efebf5,2024-01-23 08:31:04,-72.5,Airbnb,"[""Travel"", ""Lodging""]",in store,False
+tx_8499712cc458,2024-01-22 20:36:36,-27.84,Comcast,"[""Utilities"", ""Internet""]",online,False
+tx_26b067ad79d1,2024-01-21 22:48:05,-60.11,Trader Joe's,"[""Food"", ""Groceries""]",in store,False
+tx_de0547e59821,2024-01-21 20:24:06,-26.81,Electric Vehicle Charge,"[""Transportation"", ""Gas & Fuel""]",online,False
+tx_4394d95feede,2024-01-20 19:14:08,-23.27,Costco,"[""Shopping"", ""Wholesale""]",in store,False
+tx_f5c48dd744a7,2024-01-20 18:43:58,-8.09,Electric Vehicle Charge,"[""Transportation"", ""Gas & Fuel""]",in store,False
+tx_9cb820f3ce4f,2024-01-20 02:57:38,-34.18,Apple Services,"[""Technology"", ""Subscriptions""]",online,False
+tx_83580cbe477c,2024-01-19 21:21:17,-212.94,Marriott Hotels,"[""Travel"", ""Lodging""]",online,False
+tx_afd26de2ec30,2024-01-19 14:49:08,-20.59,Electric Vehicle Charge,"[""Transportation"", ""Gas & Fuel""]",in store,False
+tx_f6f4d7eea01d,2024-01-19 13:02:05,-15.21,Lyft,"[""Travel"", ""Taxi""]",online,False
+tx_66f4860e5fe5,2024-01-18 19:53:33,-3.59,Walmart Supercenter,"[""Shopping"", ""Retail""]",in store,False
+tx_8fe36938e528,2024-01-16 13:19:17,-27.42,Spotify,"[""Entertainment"", ""Subscriptions""]",online,False
+tx_43cd28d84d5d,2024-01-15 13:14:24,-1200.0,Rent - Apt 2B,"[""Housing"", ""Rent""]",online,False
+tx_a4c566c61af7,2024-01-14 13:44:23,-5.57,Uber *Trip,"[""Travel"", ""Taxi""]",in store,False
+tx_b46ceb4313bd,2024-01-14 12:34:00,894.4,Payment - Thank You,"[""Payment"", ""Credit Card""]",online,False
+tx_b02ef2294ce7,2024-01-14 08:02:35,1503.22,WholePay,"[""Payment"", ""Credit Card""]",online,False
+tx_625077069d51,2024-01-13 22:15:45,1213.64,WholePay,"[""Payment"", ""Credit Card""]",online,False
+tx_51e82a62fb3c,2024-01-13 18:16:13,-4.7,Walmart Supercenter,"[""Shopping"", ""Retail""]",in store,False
+tx_b891c563506b,2024-01-13 13:10:45,-2.04,Target,"[""Shopping"", ""Retail""]",in store,False
+tx_b86498346680,2024-01-13 07:28:29,-11.01,Local Grocery Store,"[""Food"", ""Groceries""]",online,True
+tx_8a30d1445b20,2024-01-11 08:23:49,-16.02,Lyft,"[""Travel"", ""Taxi""]",in store,False
+tx_f39a121df00f,2024-01-10 22:49:47,-21.36,Netflix,"[""Entertainment"", ""Subscriptions""]",online,False
+tx_847fdab42652,2024-01-10 21:37:06,-38.64,Starbucks,"[""Food"", ""Coffee""]",in store,False
+tx_c7e0fde60807,2024-01-10 21:30:28,250.05,WholePay,"[""Payment"", ""Credit Card""]",online,False
+tx_deb8412d14f6,2024-01-07 22:19:59,-34.91,IKEA,"[""Shopping"", ""Home""]",online,False
+tx_8e1ab7673b97,2024-01-07 18:55:27,-20.0,ATM Withdrawal,"[""Cash"", ""ATM""]",in store,False
+tx_65c2920672d4,2024-01-07 13:11:08,-41.62,Costco,"[""Shopping"", ""Wholesale""]",online,False
+tx_622b14a1a5d5,2024-01-06 19:44:27,-25.23,Spotify,"[""Entertainment"", ""Subscriptions""]",online,False
+tx_22f5dc27078e,2024-01-05 13:19:25,345.92,Payment - Thank You,"[""Payment"", ""Credit Card""]",online,False
+tx_41cf37b2125c,2024-01-04 03:59:13,-67.59,Concert Tickets,"[""Entertainment"", ""Tickets""]",online,False
+tx_3afa5c06f496,2024-01-02 13:35:33,-405.24,Marriott Hotels,"[""Travel"", ""Lodging""]",in store,False
+tx_d003e64bcfd3,2024-01-01 07:08:37,-72.89,Amazon Marketplace,"[""Shopping"", ""Online""]",online,False

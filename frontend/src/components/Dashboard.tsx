@@ -1,0 +1,79 @@
+'use client';
+
+import { useState } from 'react';
+import EnhancedSidebar from './EnhancedSidebar';
+import TransactionPreview from './TransactionPreview';
+import AIInsightsFeed from './AIInsightsFeed';
+import RightColumnTools from './RightColumnTools';
+
+export default function Dashboard() {
+  const [showTransactions, setShowTransactions] = useState(false);
+
+  return (
+    <div className="min-h-screen bg-white flex">
+      {/* Left Sidebar */}
+      <EnhancedSidebar onViewTransactions={() => setShowTransactions(true)} />
+
+      {/* Main Content Area */}
+      <main className="flex-1 flex">
+        {/* Center Column - Insights & Activity */}
+        <div className="flex-1 p-8 overflow-y-auto">
+          <AIInsightsFeed />
+        </div>
+
+        {/* Right Panel - Tools & Simulations */}
+        <RightColumnTools />
+      </main>
+
+      {/* Transaction Modal */}
+      {showTransactions && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in" onClick={() => setShowTransactions(false)}>
+          <div className="bg-white rounded-3xl p-8 w-full max-w-7xl h-[90vh] shadow-2xl border border-gray-200 flex flex-col animate-slide-up" onClick={(e) => e.stopPropagation()}>
+            <div className="flex justify-between items-center mb-6 flex-shrink-0">
+              <h2 className="text-3xl font-bold text-gray-900" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                All Transactions
+              </h2>
+              <button
+                onClick={() => setShowTransactions(false)}
+                className="text-gray-400 hover:text-gray-600 transition-colors"
+              >
+                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            <div className="flex-1 overflow-y-auto">
+              <TransactionPreview onContinue={() => setShowTransactions(false)} showContinueButton={false} />
+            </div>
+          </div>
+        </div>
+      )}
+
+      <style jsx>{`
+        @keyframes fade-in {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+
+        @keyframes slide-up {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        .animate-fade-in {
+          animation: fade-in 0.3s ease-out;
+        }
+
+        .animate-slide-up {
+          animation: slide-up 0.4s ease-out;
+        }
+      `}</style>
+    </div>
+  );
+}

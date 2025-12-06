@@ -25,15 +25,6 @@ async def root():
 async def health_check():
     return {"status": "healthy"}
 
-@app.get("/api/example")
-async def example_endpoint():
-    # Example of using environment variable
-    api_key = os.getenv("API_KEY", "not-set")
-    return {
-        "message": "Example endpoint",
-        "api_key_status": "configured" if api_key != "not-set" else "not configured"
-    }
-
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
