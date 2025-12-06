@@ -9,6 +9,8 @@ interface Insight {
   headline: string;
   description: string;
   timestamp: string;
+  priority_score?: number;
+  trigger_type?: string;
 }
 
 interface SpendingCategory {
@@ -17,57 +19,6 @@ interface SpendingCategory {
   color: string;
   icon: string;
 }
-
-const mockInsights: Insight[] = [
-  {
-    id: '1',
-    type: 'win',
-    emoji: '🎉',
-    headline: 'Groceries spending down!',
-    description: 'You spent 18% less on groceries this month compared to your average. That\'s $127 saved that could go toward your Emergency Fund goal.',
-    timestamp: '2 hours ago',
-  },
-  {
-    id: '2',
-    type: 'alert',
-    emoji: '📺',
-    headline: 'Netflix subscription increased',
-    description: 'Your Netflix subscription rate increased from $15.99 to $22.99 per month. This adds $84 to your annual entertainment expenses.',
-    timestamp: '5 hours ago',
-  },
-  {
-    id: '3',
-    type: 'anomaly',
-    emoji: '⚠️',
-    headline: 'Unusual charge detected',
-    description: 'We noticed an unusual $847 charge at United Airlines. This is 3.2x higher than your typical travel spending. Please verify this transaction.',
-    timestamp: '1 day ago',
-  },
-  {
-    id: '4',
-    type: 'win',
-    emoji: '💰',
-    headline: 'Income increase detected',
-    description: 'Your latest payroll deposit was $245 higher than usual. Consider allocating this extra $245 to your Vacation to Japan goal to reach it faster.',
-    timestamp: '2 days ago',
-  },
-  {
-    id: '5',
-    type: 'alert',
-    emoji: '🔔',
-    headline: 'Mortgage payment due soon',
-    description: 'Your $1,345 mortgage payment is scheduled for tomorrow. Make sure you have sufficient funds in your checking account.',
-    timestamp: '2 days ago',
-  },
-  {
-    id: '6',
-    type: 'win',
-    emoji: '📊',
-    headline: 'Best saving month yet!',
-    description: 'You saved $892 this month, which is your highest savings amount in the past 6 months. You\'re on track to exceed your annual savings goal.',
-    timestamp: '3 days ago',
-  },
-];
 
 const spendingCategories: SpendingCategory[] = [
   { name: 'Housing', amount: 1850, color: '#14b8a6', icon: '🏠' },
@@ -80,11 +31,40 @@ const spendingCategories: SpendingCategory[] = [
 ];
 
 export default function AIInsightsFeed() {
-  const [insights, setInsights] = useState(mockInsights);
+  const [insights, setInsights] = useState<Insight[]>([]);
   const [dismissedIds, setDismissedIds] = useState<string[]>([]);
   const [visibleInsights, setVisibleInsights] = useState<string[]>([]);
   const [hoveredSegment, setHoveredSegment] = useState<string | null>(null);
   const [chartAnimated, setChartAnimated] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  // Fetch insights from backend
+  useEffect(() => {
+    const fetchInsights = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+        const response = await fetch(`${apiUrl}/api/insights?user_name=Aarav&top_n=7`);
+
+        if (!response.ok) {
+          throw new Error(`Failed to fetch insights: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        setInsights(data);
+      } catch (err) {
+        console.error('Error fetching insights:', err);
+        setError(err instanceof Error ? err.message : 'Failed to load insights');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchInsights();
+  }, []);
 
   // Staggered animation effect
   useEffect(() => {
@@ -193,6 +173,29 @@ export default function AIInsightsFeed() {
       {/* AI Insights Feed */}
       <div className="space-y-4">
         <h2 className="text-2xl font-bold text-gray-900 mb-4">AI Insights</h2>
+
+        {/* Loading State */}
+        {loading && (
+          <div className="flex items-center justify-center py-12">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-600"></div>
+            <p className="ml-4 text-gray-600">Analyzing your spending patterns...</p>
+          </div>
+        )}
+
+        {/* Error State */}
+        {error && (
+          <div className="bg-red-50 border border-red-200 rounded-2xl p-6">
+            <p className="text-red-800">Error: {error}</p>
+            <p className="text-sm text-red-600 mt-2">Please make sure the backend server is running on port 8000.</p>
+          </div>
+        )}
+
+        {/* Insights */}
+        {!loading && !error && insights.length === 0 && (
+          <div className="bg-gray-50 border border-gray-200 rounded-2xl p-6 text-center">
+            <p className="text-gray-600">No insights available at the moment.</p>
+          </div>
+        )}
 
         {insights.map((insight) => {
           const isVisible = visibleInsights.includes(insight.id);
