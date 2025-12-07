@@ -20,17 +20,54 @@ interface ChatMessage {
   cardData?: any;
 }
 
-interface Subscription {
-  id: string;
-  name: string;
-  logo?: string;
-  initials: string;
+interface PriceIncrease {
+  old_price: number;
+  new_price: number;
+  percent_change: number;
+  detected_date: string;
+}
+
+interface SubscriptionCharge {
+  date: string;
   amount: number;
-  frequency: 'monthly' | 'annual';
-  nextCharge: string;
-  isGrayCharge?: boolean;
-  priceIncrease?: { old: number; new: number };
-  status: 'active' | 'flagged' | 'dismissed';
+}
+
+interface Subscription {
+  merchant_name: string;
+  original_merchant_name: string;
+  frequency: string;
+  frequency_days: number;
+  current_amount: number;
+  average_amount: number;
+  min_amount: number;
+  max_amount: number;
+  first_charge_date: string;
+  last_charge_date: string;
+  next_predicted_date: string | null;
+  transaction_count: number;
+  charges: SubscriptionCharge[];
+  monthly_cost: number;
+  annual_cost: number;
+  confidence_score: number;
+  interval_regularity: number;
+  amount_consistency: number;
+  is_gray_charge: boolean;
+  has_price_increase: boolean;
+  is_trial_conversion: boolean;
+  needs_attention: boolean;
+  price_increase: PriceIncrease | null;
+  // UI state
+  status?: 'active' | 'flagged' | 'dismissed';
+}
+
+interface SubscriptionSummary {
+  total_subscriptions: number;
+  total_monthly_cost: number;
+  total_annual_cost: number;
+  gray_charges_count: number;
+  price_increases_count: number;
+  trial_conversions_count: number;
+  subscriptions: Subscription[];
 }
 
 export default function RightColumnTools() {
@@ -51,65 +88,28 @@ export default function RightColumnTools() {
   const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
 
-  const [subscriptions, setSubscriptions] = useState<Subscription[]>([
-    {
-      id: '1',
-      name: 'Netflix',
-      initials: 'NF',
-      amount: 22.99,
-      frequency: 'monthly',
-      nextCharge: 'Dec 15, 2025',
-      priceIncrease: { old: 15.99, new: 22.99 },
-      status: 'active',
-    },
-    {
-      id: '2',
-      name: 'Spotify Premium',
-      initials: 'SP',
-      amount: 10.99,
-      frequency: 'monthly',
-      nextCharge: 'Dec 8, 2025',
-      status: 'active',
-    },
-    {
-      id: '3',
-      name: 'Adobe Creative Cloud',
-      initials: 'AD',
-      amount: 54.99,
-      frequency: 'monthly',
-      nextCharge: 'Dec 20, 2025',
-      isGrayCharge: true,
-      status: 'active',
-    },
-    {
-      id: '4',
-      name: 'Amazon Prime',
-      initials: 'AM',
-      amount: 14.99,
-      frequency: 'monthly',
-      nextCharge: 'Dec 12, 2025',
-      status: 'active',
-    },
-    {
-      id: '5',
-      name: 'NYT Digital',
-      initials: 'NY',
-      amount: 17.00,
-      frequency: 'monthly',
-      nextCharge: 'Dec 18, 2025',
-      status: 'active',
-    },
-    {
-      id: '6',
-      name: 'Gym Membership',
-      initials: 'GM',
-      amount: 45.00,
-      frequency: 'monthly',
-      nextCharge: 'Dec 1, 2025',
-      isGrayCharge: true,
-      status: 'active',
-    },
-  ]);
+  const [subscriptionSummary, setSubscriptionSummary] = useState<SubscriptionSummary | null>(null);
+  const [subscriptions, setSubscriptions] = useState<Subscription[]>([]);
+  const [loadingSubscriptions, setLoadingSubscriptions] = useState(true);
+
+  // Fetch subscriptions from API
+  useEffect(() => {
+    const fetchSubscriptions = async () => {
+      try {
+        const response = await fetch('http://localhost:8000/api/subscriptions');
+        const data: SubscriptionSummary = await response.json();
+        setSubscriptionSummary(data);
+        // Add status field for UI management
+        setSubscriptions(data.subscriptions.map(sub => ({ ...sub, status: 'active' as const })));
+        setLoadingSubscriptions(false);
+      } catch (error) {
+        console.error('Error fetching subscriptions:', error);
+        setLoadingSubscriptions(false);
+      }
+    };
+
+    fetchSubscriptions();
+  }, []);
 
   const suggestedQuestions = [
     "What did I spend on Uber?",
@@ -118,18 +118,31 @@ export default function RightColumnTools() {
     "What's my biggest expense?",
   ];
 
-  const handleSubscriptionAction = (id: string, action: 'dismiss' | 'flag') => {
+  const handleSubscriptionAction = (merchantName: string, action: 'dismiss' | 'flag') => {
     setSubscriptions(subscriptions.map(sub =>
-      sub.id === id ? { ...sub, status: action === 'dismiss' ? 'dismissed' : 'flagged' } : sub
+      sub.merchant_name === merchantName ? { ...sub, status: action === 'dismiss' ? 'dismissed' : 'flagged' } : sub
     ));
   };
 
   const activeSubscriptions = subscriptions.filter(s => s.status === 'active');
   const flaggedSubscriptions = subscriptions.filter(s => s.status === 'flagged');
-  const totalMonthlyCost = activeSubscriptions.reduce((sum, sub) => {
-    const monthlyAmount = sub.frequency === 'annual' ? sub.amount / 12 : sub.amount;
-    return sum + monthlyAmount;
-  }, 0);
+  const totalMonthlyCost = subscriptionSummary?.total_monthly_cost || 0;
+
+  // Helper function to get initials from merchant name
+  const getInitials = (name: string) => {
+    const words = name.split(' ');
+    if (words.length >= 2) {
+      return (words[0][0] + words[1][0]).toUpperCase();
+    }
+    return name.substring(0, 2).toUpperCase();
+  };
+
+  // Helper function to format date
+  const formatDate = (dateString: string | null) => {
+    if (!dateString) return 'Unknown';
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  };
 
   // Animate gauge on data load
   useEffect(() => {
@@ -337,8 +350,8 @@ export default function RightColumnTools() {
   };
 
   return (
-    <aside className="w-80 bg-gray-50 border-l border-gray-200 p-6 overflow-y-auto">
-      <h3 className="text-lg font-bold text-gray-900 mb-4 text-center">Tools & Insights</h3>
+    <aside className="w-96 bg-gray-50 border-l border-gray-200 p-6 overflow-y-auto">
+      <h3 className="text-lg font-bold text-gray-900 mb-6 text-center">Tools & Insights</h3>
 
       {/* Investment Capacity Predictor */}
       <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm mb-6">
@@ -434,125 +447,229 @@ export default function RightColumnTools() {
       {/* Subscription Manager */}
       <div className="bg-white rounded-xl p-4 border border-gray-200 shadow-sm">
         <h4 className="font-bold text-gray-900 mb-3 flex items-center gap-2">
-          <span>💳</span> Subscriptions
+          <span>💳</span> Recurring Charges
         </h4>
 
-        {/* Summary Banner */}
-        <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-lg p-3 mb-4 border border-purple-200">
-          <p className="text-xs text-gray-600 mb-1">Total Monthly Cost</p>
-          <p className="text-2xl font-bold text-purple-600">
-            ${totalMonthlyCost.toFixed(2)}
-          </p>
-          <p className="text-xs text-gray-500 mt-1">
-            {activeSubscriptions.length} active subscription{activeSubscriptions.length !== 1 ? 's' : ''}
-          </p>
-        </div>
+        {loadingSubscriptions ? (
+          <div className="flex items-center justify-center py-8">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-600"></div>
+          </div>
+        ) : (
+          <>
+            {/* Summary Banner */}
+            <div className="bg-gradient-to-br from-purple-50 via-pink-50 to-purple-50 rounded-xl p-5 mb-6 border-2 border-purple-200 shadow-sm">
+              <div className="flex items-start justify-between mb-3">
+                <div className="flex-1">
+                  <p className="text-sm font-semibold text-gray-700 mb-1">Total Monthly Cost</p>
+                  <p className="text-3xl font-bold text-purple-600 mb-1">
+                    ${totalMonthlyCost.toFixed(2)}
+                  </p>
+                  <p className="text-xs text-gray-500">
+                    ${(totalMonthlyCost * 12).toLocaleString()}/year
+                  </p>
+                </div>
+                {subscriptionSummary && (
+                  <div className="bg-white rounded-lg px-3 py-2 border border-purple-200">
+                    <p className="text-xs text-gray-500 mb-0.5">Detected</p>
+                    <p className="text-xl font-bold text-purple-600">{subscriptionSummary.total_subscriptions}</p>
+                  </div>
+                )}
+              </div>
 
-        {/* Active Subscriptions */}
-        <div className="space-y-2 mb-4 max-h-96 overflow-y-auto">
-          {activeSubscriptions.map((sub) => (
-            <div
-              key={sub.id}
-              className={`relative bg-gray-50 rounded-lg p-3 border transition-all ${
-                sub.isGrayCharge ? 'border-amber-400 bg-amber-50/50' : 'border-gray-200'
-              }`}
-            >
-              {/* Warning Badge */}
-              {sub.isGrayCharge && (
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-amber-500 text-white text-[10px] px-2 py-0.5 rounded-full font-medium shadow-sm animate-pulse-subtle whitespace-nowrap">
-                  ⚠️ Gray
+              {/* Status badges */}
+              {subscriptionSummary && (subscriptionSummary.gray_charges_count > 0 || subscriptionSummary.price_increases_count > 0 || subscriptionSummary.trial_conversions_count > 0) && (
+                <div className="flex flex-wrap gap-2 pt-3 border-t border-purple-200">
+                  {subscriptionSummary.gray_charges_count > 0 && (
+                    <span className="text-xs bg-amber-100 text-amber-700 px-3 py-1.5 rounded-lg font-semibold border border-amber-300">
+                      ⚠️ {subscriptionSummary.gray_charges_count} Gray Charge{subscriptionSummary.gray_charges_count > 1 ? 's' : ''}
+                    </span>
+                  )}
+                  {subscriptionSummary.price_increases_count > 0 && (
+                    <span className="text-xs bg-red-100 text-red-700 px-3 py-1.5 rounded-lg font-semibold border border-red-300">
+                      ↑ {subscriptionSummary.price_increases_count} Price Increase{subscriptionSummary.price_increases_count > 1 ? 's' : ''}
+                    </span>
+                  )}
+                  {subscriptionSummary.trial_conversions_count > 0 && (
+                    <span className="text-xs bg-blue-100 text-blue-700 px-3 py-1.5 rounded-lg font-semibold border border-blue-300">
+                      🆕 {subscriptionSummary.trial_conversions_count} New Trial{subscriptionSummary.trial_conversions_count > 1 ? 's' : ''}
+                    </span>
+                  )}
                 </div>
               )}
 
-              <div className="flex items-start gap-3">
-                {/* Logo/Initials */}
-                <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
-                  {sub.initials}
+              <div className="flex items-center gap-2 mt-3 text-xs text-gray-600">
+                <span className="flex items-center gap-1">
+                  <div className="w-2 h-2 rounded-full bg-green-500"></div>
+                  {activeSubscriptions.length} Active
+                </span>
+                {flaggedSubscriptions.length > 0 && (
+                  <>
+                    <span>•</span>
+                    <span className="flex items-center gap-1">
+                      <div className="w-2 h-2 rounded-full bg-red-500"></div>
+                      {flaggedSubscriptions.length} To Cancel
+                    </span>
+                  </>
+                )}
+              </div>
+            </div>
+          </>
+        )}
+
+        {/* Active Subscriptions */}
+        {!loadingSubscriptions && (
+          <div className="space-y-3 mb-6">
+            {activeSubscriptions.map((sub) => (
+              <div
+                key={sub.merchant_name}
+                className={`relative bg-gray-50 rounded-xl p-4 border transition-all ${
+                  sub.is_gray_charge ? 'border-amber-400 bg-amber-50/50' :
+                  sub.is_trial_conversion ? 'border-blue-400 bg-blue-50/50' :
+                  sub.has_price_increase ? 'border-red-300 bg-red-50/30' :
+                  'border-gray-200'
+                }`}
+              >
+                {/* Warning/Status Badges */}
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 flex gap-1">
+                  {sub.is_gray_charge && (
+                    <div className="bg-amber-500 text-white text-[10px] px-2 py-0.5 rounded-full font-medium shadow-sm animate-pulse-subtle whitespace-nowrap">
+                      ⚠️ Gray Charge
+                    </div>
+                  )}
+                  {sub.is_trial_conversion && (
+                    <div className="bg-blue-500 text-white text-[10px] px-2 py-0.5 rounded-full font-medium shadow-sm whitespace-nowrap">
+                      🆕 New Trial
+                    </div>
+                  )}
                 </div>
 
-                <div className="flex-1 min-w-0">
-                  {/* Name and Amount */}
-                  <div className="flex items-start justify-between mb-1">
-                    <h5 className="font-semibold text-gray-900 text-sm truncate">{sub.name}</h5>
-                    <div className="flex items-center gap-1">
-                      {sub.priceIncrease && (
-                        <div className="group relative">
-                          <svg className="w-4 h-4 text-red-500" fill="currentColor" viewBox="0 0 20 20">
-                            <path fillRule="evenodd" d="M5.293 7.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 5.414V17a1 1 0 11-2 0V5.414L6.707 7.707a1 1 0 01-1.414 0z" clipRule="evenodd" />
-                          </svg>
-                          {/* Tooltip */}
-                          <div className="absolute bottom-full right-0 mb-2 hidden group-hover:block w-32 bg-gray-900 text-white text-xs rounded px-2 py-1 z-10">
-                            Was ${sub.priceIncrease.old}, now ${sub.priceIncrease.new}
+                <div className="flex items-start gap-4">
+                  {/* Logo/Initials */}
+                  <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center text-white font-bold text-base flex-shrink-0 shadow-md">
+                    {getInitials(sub.merchant_name)}
+                  </div>
+
+                  <div className="flex-1 min-w-0">
+                    {/* Name and Amount */}
+                    <div className="flex items-start justify-between mb-2">
+                      <div className="flex-1 min-w-0">
+                        <h5 className="font-bold text-gray-900 text-base truncate capitalize mb-1">
+                          {sub.original_merchant_name}
+                        </h5>
+                        <div className="flex items-center gap-1.5">
+                          <div className="w-full bg-gray-200 rounded-full h-1.5">
+                            <div
+                              className="bg-gradient-to-r from-green-500 to-emerald-500 h-1.5 rounded-full transition-all duration-500"
+                              style={{ width: `${sub.confidence_score}%` }}
+                            ></div>
                           </div>
+                          <span className="text-xs text-gray-600 font-medium whitespace-nowrap">
+                            {sub.confidence_score.toFixed(0)}%
+                          </span>
                         </div>
-                      )}
-                      <span className="font-bold text-gray-900 text-sm">${sub.amount}</span>
+                      </div>
+                      <div className="flex items-center gap-1.5 ml-3">
+                        {sub.has_price_increase && sub.price_increase && (
+                          <div className="group relative">
+                            <svg className="w-5 h-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+                              <path fillRule="evenodd" d="M5.293 7.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 5.414V17a1 1 0 11-2 0V5.414L6.707 7.707a1 1 0 01-1.414 0z" clipRule="evenodd" />
+                            </svg>
+                            {/* Tooltip */}
+                            <div className="absolute bottom-full right-0 mb-2 hidden group-hover:block w-48 bg-gray-900 text-white text-xs rounded-lg px-3 py-2 z-10 shadow-xl">
+                              <div className="font-semibold mb-1">Price Increased</div>
+                              <div>${sub.price_increase.old_price} → ${sub.price_increase.new_price} (+{sub.price_increase.percent_change.toFixed(1)}%)</div>
+                            </div>
+                          </div>
+                        )}
+                        <span className="font-bold text-purple-600 text-lg">${sub.monthly_cost.toFixed(2)}</span>
+                        <span className="text-xs text-gray-500 font-medium">/mo</span>
+                      </div>
                     </div>
-                  </div>
 
-                  {/* Frequency and Next Charge */}
-                  <div className="flex items-center gap-2 text-xs text-gray-600 mb-2">
-                    <span className="capitalize">{sub.frequency}</span>
-                    <span>•</span>
-                    <span>Next: {sub.nextCharge}</span>
-                  </div>
+                    {/* Frequency and Details */}
+                    <div className="flex items-center gap-2 text-sm text-gray-600 mb-3">
+                      <span className="capitalize font-medium">{sub.frequency}</span>
+                      <span>•</span>
+                      <span>{sub.transaction_count} charges</span>
+                      <span>•</span>
+                      <span className="text-xs">Next: {formatDate(sub.next_predicted_date)}</span>
+                    </div>
 
-                  {/* Actions */}
-                  <div className="flex gap-2">
-                    <button
-                      onClick={() => handleSubscriptionAction(sub.id, 'dismiss')}
-                      className="flex-1 text-xs py-1 px-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition-colors"
-                    >
-                      Dismiss
-                    </button>
-                    <button
-                      onClick={() => handleSubscriptionAction(sub.id, 'flag')}
-                      className="flex-1 text-xs py-1 px-2 bg-red-100 text-red-700 rounded hover:bg-red-200 transition-colors"
-                    >
-                      Flag for Cancellation
-                    </button>
+                    {/* Actions */}
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => handleSubscriptionAction(sub.merchant_name, 'dismiss')}
+                        className="flex-1 text-sm py-2 px-3 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors font-medium"
+                      >
+                        Dismiss
+                      </button>
+                      <button
+                        onClick={() => handleSubscriptionAction(sub.merchant_name, 'flag')}
+                        className="flex-1 text-sm py-2 px-3 bg-red-100 text-red-700 rounded-lg hover:bg-red-200 transition-colors font-medium"
+                      >
+                        Cancel
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
 
         {/* To Cancel Section */}
         {flaggedSubscriptions.length > 0 && (
-          <div className="border-t border-gray-200 pt-4">
-            <h5 className="text-sm font-semibold text-gray-900 mb-3">
-              To Cancel ({flaggedSubscriptions.length})
-            </h5>
-            <div className="space-y-2">
+          <div className="border-t border-gray-200 pt-6 mt-6">
+            <div className="flex items-center justify-between mb-4">
+              <h5 className="text-base font-bold text-gray-900">
+                Marked for Cancellation
+              </h5>
+              <span className="bg-red-100 text-red-700 text-xs font-bold px-2.5 py-1 rounded-full">
+                {flaggedSubscriptions.length}
+              </span>
+            </div>
+            <div className="space-y-3">
               {flaggedSubscriptions.map((sub) => (
                 <div
-                  key={sub.id}
-                  className="bg-red-50 rounded-lg p-3 border border-red-200 opacity-75"
+                  key={sub.merchant_name}
+                  className="bg-red-50 rounded-xl p-4 border border-red-200"
                 >
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-gray-400 rounded-lg flex items-center justify-center text-white font-bold text-xs flex-shrink-0">
-                      {sub.initials}
+                  <div className="flex items-center gap-4">
+                    <div className="w-10 h-10 bg-gray-400 rounded-xl flex items-center justify-center text-white font-bold text-sm flex-shrink-0 opacity-50">
+                      {getInitials(sub.merchant_name)}
                     </div>
                     <div className="flex-1">
-                      <p className="font-semibold text-gray-900 text-sm line-through">
-                        {sub.name}
+                      <p className="font-bold text-gray-900 text-base line-through capitalize mb-1">
+                        {sub.original_merchant_name}
                       </p>
-                      <p className="text-xs text-gray-600">
-                        ${sub.amount}/{sub.frequency === 'monthly' ? 'mo' : 'yr'}
-                      </p>
+                      <div className="flex items-center gap-2 text-sm text-gray-600">
+                        <span className="font-semibold">${sub.monthly_cost.toFixed(2)}/mo</span>
+                        <span>•</span>
+                        <span className="capitalize">{sub.frequency}</span>
+                      </div>
                     </div>
                     <button
                       onClick={() => setSubscriptions(subscriptions.map(s =>
-                        s.id === sub.id ? { ...s, status: 'active' } : s
+                        s.merchant_name === sub.merchant_name ? { ...s, status: 'active' } : s
                       ))}
-                      className="text-xs text-red-600 hover:text-red-700 font-medium"
+                      className="text-sm text-red-600 hover:text-red-700 font-semibold px-3 py-2 hover:bg-red-100 rounded-lg transition-colors"
                     >
                       Undo
                     </button>
                   </div>
                 </div>
               ))}
+              <div className="bg-green-50 border border-green-200 rounded-xl p-4 mt-4">
+                <p className="text-sm font-semibold text-green-800 mb-1">
+                  💰 Potential Monthly Savings
+                </p>
+                <p className="text-2xl font-bold text-green-600">
+                  ${flaggedSubscriptions.reduce((sum, s) => sum + s.monthly_cost, 0).toFixed(2)}
+                </p>
+                <p className="text-xs text-green-700 mt-1">
+                  ${(flaggedSubscriptions.reduce((sum, s) => sum + s.monthly_cost, 0) * 12).toFixed(2)}/year if cancelled
+                </p>
+              </div>
             </div>
           </div>
         )}

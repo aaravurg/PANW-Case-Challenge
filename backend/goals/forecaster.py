@@ -36,10 +36,12 @@ from dateutil.relativedelta import relativedelta
 from typing import List, Tuple, Optional
 import warnings
 
-from models import (
+from app.models import (
     Transaction, Goal, GoalForecast, GoalProjection,
-    MonthlyProjection, GapAnalysis
+    MonthlyProjection, GapAnalysis, SpendingBreakdown, RealisticAnalysis,
+    GoalCompetitionAnalysis, CompetingGoal
 )
+from spending.classifier import SpendingClassifier
 
 # Try to import Prophet, but gracefully handle if not installed
 PROPHET_AVAILABLE = False
@@ -383,14 +385,156 @@ class GoalForecaster:
 
         return forecast_path
 
-    def forecast_goal(self, goal: Goal) -> GoalForecast:
+    def analyze_goal_competition(
+        self,
+        current_goal: Goal,
+        all_goals: List[Goal],
+        avg_monthly_savings: float
+    ) -> Optional[GoalCompetitionAnalysis]:
+        """
+        Analyze how this goal competes with other active goals for savings
+
+        PRIORITY-BASED ALLOCATION:
+        - High priority goals get savings allocated first
+        - Medium priority goals get what's left after high priority
+        - Low priority goals get what's left after medium priority
+
+        This shows whether THIS goal can be funded after higher-priority goals
+        take their share.
+
+        Args:
+            current_goal: The goal being forecasted
+            all_goals: All goals (including current one)
+            avg_monthly_savings: Available monthly savings capacity
+
+        Returns:
+            GoalCompetitionAnalysis if there are competing goals, None otherwise
+        """
+        # Filter out current goal and inactive goals
+        competing_goals = [
+            g for g in all_goals
+            if g.id != current_goal.id and g.is_active
+        ]
+
+        if not competing_goals:
+            return None
+
+        # Priority mapping for sorting
+        priority_order = {"high": 0, "medium": 1, "low": 2}
+
+        # Calculate required monthly savings for each competing goal
+        competing_goal_data = []
+
+        for goal in competing_goals:
+            # Calculate months remaining
+            deadline_date = datetime.fromisoformat(goal.deadline.replace('Z', '+00:00'))
+            today = datetime.now()
+            months_remaining = (
+                (deadline_date.year - today.year) * 12 +
+                deadline_date.month - today.month
+            )
+            months_remaining = max(months_remaining, 0.5)
+
+            # Calculate required monthly savings
+            required_monthly = (goal.target_amount - goal.current_savings) / months_remaining
+
+            competing_goal_data.append({
+                'goal': CompetingGoal(
+                    goal_name=goal.goal_name,
+                    target_amount=goal.target_amount,
+                    deadline=goal.deadline,
+                    required_monthly_savings=round(required_monthly, 2),
+                    priority_level=goal.priority_level or "medium"
+                ),
+                'priority_order': priority_order.get(goal.priority_level or "medium", 1),
+                'required': required_monthly
+            })
+
+        # Sort by priority (high first, then medium, then low)
+        competing_goal_data.sort(key=lambda x: x['priority_order'])
+
+        # Get current goal's priority for comparison
+        current_priority = priority_order.get(current_goal.priority_level or "medium", 1)
+
+        # Calculate how much is committed BEFORE this goal's priority level
+        # (only count higher-priority goals)
+        total_committed = 0
+        for cg_data in competing_goal_data:
+            # Only count goals with HIGHER priority (lower number = higher priority)
+            if cg_data['priority_order'] < current_priority:
+                total_committed += cg_data['required']
+
+        # Extract just the CompetingGoal objects for return (keep sorted by priority)
+        competing_goals_sorted = [cg['goal'] for cg in competing_goal_data]
+
+        # Calculate remaining available savings AFTER higher priority goals
+        remaining_savings = avg_monthly_savings - total_committed
+        is_overcommitted = remaining_savings < 0
+        overcommitment = abs(remaining_savings) if is_overcommitted else 0
+
+        return GoalCompetitionAnalysis(
+            total_available_savings=round(avg_monthly_savings, 2),
+            competing_goals=competing_goals_sorted,  # Sorted by priority
+            total_committed_savings=round(total_committed, 2),  # Only higher-priority goals
+            remaining_available_savings=round(remaining_savings, 2),
+            is_overcommitted=is_overcommitted,
+            overcommitment_amount=round(overcommitment, 2)
+        )
+
+    def forecast_goal(self, goal: Goal, all_goals: Optional[List[Goal]] = None) -> GoalForecast:
         """
         Complete forecast generation for a goal
 
         Returns GoalForecast with all analysis and recommendations
         """
-        # Generate forecast
-        forecast_df, avg_monthly_savings, used_prophet = self.generate_forecast(goal)
+        # Analyze spending breakdown by necessity
+        classifier = SpendingClassifier(self.transactions)
+        spending_analysis = classifier.analyze_spending_breakdown()
+
+        # Calculate competition FIRST to get actual available savings
+        competition_analysis = None
+        actual_available_savings = None
+
+        if all_goals and len(all_goals) > 1:
+            # We need to calculate this early to know the actual available savings
+            # First, generate a preliminary forecast to get avg_monthly_savings
+            preliminary_forecast_df, preliminary_avg_savings, _ = self.generate_forecast(goal)
+
+            # Analyze competition with the preliminary savings
+            competition_analysis = self.analyze_goal_competition(
+                goal,
+                all_goals,
+                preliminary_avg_savings
+            )
+
+            # The actual available savings for THIS goal is what remains after higher-priority goals
+            actual_available_savings = competition_analysis.remaining_available_savings
+
+            # Adjust the goal's effective income based on what's actually available
+            # This is the key: reduce income by what's committed to higher priorities
+            committed_to_higher_priority = competition_analysis.total_committed_savings
+            effective_income = goal.monthly_income - committed_to_higher_priority
+
+            # Create a modified goal with adjusted income for realistic forecasting
+            modified_goal = Goal(
+                id=goal.id,
+                goal_name=goal.goal_name,
+                target_amount=goal.target_amount,
+                deadline=goal.deadline,
+                current_savings=goal.current_savings,
+                priority_level=goal.priority_level,
+                created_at=goal.created_at,
+                user_id=goal.user_id,
+                monthly_income=effective_income,  # Reduced by commitments
+                income_type=goal.income_type,
+                is_active=goal.is_active
+            )
+
+            # Generate forecast with the ADJUSTED income
+            forecast_df, avg_monthly_savings, used_prophet = self.generate_forecast(modified_goal)
+        else:
+            # No competition, use normal forecast
+            forecast_df, avg_monthly_savings, used_prophet = self.generate_forecast(goal)
 
         # Calculate deadline info
         deadline_date = datetime.fromisoformat(goal.deadline.replace('Z', '+00:00'))
@@ -436,6 +580,28 @@ class GoalForecaster:
             months_remaining
         )
 
+        # Calculate required monthly savings
+        required_monthly_savings = (
+            (goal.target_amount - goal.current_savings) / months_remaining
+            if months_remaining > 0
+            else goal.target_amount - goal.current_savings
+        )
+
+        # Analyze realistic achievability
+        realistic_analysis = None
+        if gap_analysis:  # Only if goal is off track
+            realistic_data = classifier.calculate_realistic_savings_potential(
+                goal.monthly_income,
+                required_monthly_savings
+            )
+            realistic_analysis = RealisticAnalysis(**realistic_data)
+
+        # Create spending breakdown
+        spending_breakdown = SpendingBreakdown(**spending_analysis)
+
+        # Note: competition_analysis is already calculated earlier if needed
+        # (before generating the adjusted forecast)
+
         # Create forecast path
         forecast_path = self.create_forecast_path(cumulative_proj, deadline_date)
 
@@ -460,6 +626,9 @@ class GoalForecaster:
             probability=probability,
             on_track=on_track,
             gap_analysis=gap_analysis,
+            spending_breakdown=spending_breakdown,
+            realistic_analysis=realistic_analysis,
+            competition_analysis=competition_analysis,
             recommendations=[],  # Will be filled by recommendation engine
             forecast_path=forecast_path
         )

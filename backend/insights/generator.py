@@ -3,9 +3,9 @@ import os
 import json
 from typing import List, Tuple
 from datetime import datetime
-from models import Trigger, Insight
-from priority_scorer import PriorityScorer
-from insight_details_builder import InsightDetailsBuilder
+from app.models import Trigger, Insight
+from insights.priority_scorer import PriorityScorer
+from insights.details_builder import InsightDetailsBuilder
 
 
 class InsightGenerator:
@@ -92,7 +92,7 @@ class InsightGenerator:
         """Call Gemini API to generate insights with comprehensive context"""
 
         # TEMPORARILY DISABLED - Using fallback insights instead of calling Gemini
-        return self._generate_fallback_insights(trigger_data)
+        # return self._generate_fallback_insights(trigger_data)
 
         # Build context string
         context = f"User has {account_age_months} months of transaction history." if account_age_months else "New user."

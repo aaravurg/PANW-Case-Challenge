@@ -40,6 +40,20 @@ interface GoalForecast {
     required_monthly_savings: number;
     current_monthly_savings: number;
   } | null;
+  competition_analysis?: {
+    total_available_savings: number;
+    competing_goals: Array<{
+      goal_name: string;
+      target_amount: number;
+      deadline: string;
+      required_monthly_savings: number;
+      priority_level: string;
+    }>;
+    total_committed_savings: number;
+    remaining_available_savings: number;
+    is_overcommitted: boolean;
+    overcommitment_amount: number;
+  } | null;
   recommendations: Array<{
     action: string;
     category: string;
@@ -362,6 +376,11 @@ export default function GoalDashboard() {
                       deadline={forecast.deadline}
                       status={forecast.status}
                       goalName={forecast.goal_name}
+                      projection={forecast.projection}
+                      gapAnalysis={forecast.gap_analysis}
+                      monthlyIncome={selectedGoal?.monthly_income || 0}
+                      competitionAnalysis={forecast.competition_analysis}
+                      currentGoalPriority={selectedGoal?.priority_level || 'medium'}
                     />
                   </div>
                 </div>

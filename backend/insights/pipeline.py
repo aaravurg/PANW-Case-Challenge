@@ -1,9 +1,9 @@
 from typing import List
-from models import Transaction, Insight
-from data_aggregator import DataAggregator
-from comprehensive_trigger_detector import ComprehensiveTriggerDetector
-from comprehensive_priority_scorer import ComprehensivePriorityScorer
-from insight_generator import InsightGenerator
+from app.models import Transaction, Insight
+from spending.aggregator import DataAggregator
+from insights.comprehensive_trigger_detector import ComprehensiveTriggerDetector
+from insights.comprehensive_priority_scorer import ComprehensivePriorityScorer
+from insights.generator import InsightGenerator
 
 
 class InsightsPipeline:

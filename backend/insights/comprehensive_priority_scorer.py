@@ -1,5 +1,5 @@
 from typing import List, Tuple, Set
-from models import Trigger
+from app.models import Trigger
 import re
 
 

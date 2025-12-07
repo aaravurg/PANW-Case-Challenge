@@ -5,9 +5,9 @@ Test script for goal forecasting functionality
 import pandas as pd
 import json
 from datetime import datetime, timedelta
-from models import Transaction, Goal
-from goal_forecaster import GoalForecaster
-from recommendation_engine import RecommendationEngine
+from app.models import Transaction, Goal
+from goals.forecaster import GoalForecaster
+from goals.recommendations import RecommendationEngine
 
 def load_test_transactions():
     """Load sample transactions"""
@@ -76,12 +76,31 @@ def test_forecasting():
     print(f"   - Expected Total: ${forecast1.projection.expected_total:,.2f}")
     print(f"   - Expected Monthly Savings: ${forecast1.projection.expected_monthly_savings:,.2f}")
 
+    # Show spending breakdown
+    if forecast1.spending_breakdown:
+        print(f"\n   Spending Breakdown:")
+        print(f"   - Necessary (rent, groceries, utilities): ${forecast1.spending_breakdown.monthly_necessary:,.2f} ({forecast1.spending_breakdown.necessary_percent}%)")
+        print(f"   - Discretionary (dining, entertainment): ${forecast1.spending_breakdown.monthly_discretionary:,.2f} ({forecast1.spending_breakdown.discretionary_percent}%)")
+        print(f"   - Total Spending: ${forecast1.spending_breakdown.monthly_total:,.2f}")
+        print(f"   - Max Realistic Cuts (70% of discretionary): ${forecast1.spending_breakdown.max_realistic_cuts:,.2f}")
+
     if forecast1.gap_analysis:
         print(f"\n   Gap Analysis:")
         print(f"   - Shortfall: ${forecast1.gap_analysis.shortfall:,.2f}")
         print(f"   - Monthly Gap: ${forecast1.gap_analysis.monthly_gap:,.2f}")
         print(f"   - Current Monthly Savings: ${forecast1.gap_analysis.current_monthly_savings:,.2f}")
         print(f"   - Required Monthly Savings: ${forecast1.gap_analysis.required_monthly_savings:,.2f}")
+
+    # Show realistic achievability
+    if forecast1.realistic_analysis:
+        print(f"\n   Realistic Analysis:")
+        print(f"   - Achievability: {forecast1.realistic_analysis.achievability.upper()}")
+        print(f"   - Is Achievable: {'Yes' if forecast1.realistic_analysis.is_achievable else 'No'}")
+        print(f"   - Required Cuts: ${forecast1.realistic_analysis.required_cuts:,.2f}")
+        print(f"   - Max Realistic Cuts: ${forecast1.realistic_analysis.max_realistic_cuts:,.2f}")
+        if not forecast1.realistic_analysis.is_achievable:
+            print(f"   - Shortfall Even After Max Cuts: ${forecast1.realistic_analysis.shortfall:,.2f}")
+            print(f"   - ⚠️  This goal requires lifestyle changes beyond cutting discretionary spending")
 
         # Test recommendations
         print(f"\n   Generating recommendations...")

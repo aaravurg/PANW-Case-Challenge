@@ -7,10 +7,10 @@ This runs without needing the Anthropic API key
 import pandas as pd
 import json
 from datetime import datetime
-from models import Transaction
-from data_aggregator import DataAggregator
-from trigger_detector import TriggerDetector
-from priority_scorer import PriorityScorer
+from app.models import Transaction
+from spending.aggregator import DataAggregator
+from insights.trigger_detector import TriggerDetector
+from insights.priority_scorer import PriorityScorer
 
 def test_pipeline():
     print("=" * 70)

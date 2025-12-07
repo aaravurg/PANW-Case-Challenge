@@ -5,7 +5,7 @@ This provides CRUD operations for goals until a proper database is implemented
 
 from typing import Dict, List, Optional
 from datetime import datetime
-from models import Goal
+from app.models import Goal
 import uuid
 
 

@@ -1,4 +1,4 @@
-from models import Trigger, InsightDetails, TransactionSummary
+from app.models import Trigger, InsightDetails, TransactionSummary
 from typing import List
 import pandas as pd
 

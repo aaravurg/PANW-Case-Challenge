@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
 from typing import Dict, List, Tuple
-from models import Transaction
+from app.models import Transaction
 import json
 import re
 

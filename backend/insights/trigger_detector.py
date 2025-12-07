@@ -1,6 +1,6 @@
 from typing import List
-from models import Trigger, AggregatedStats
-from data_aggregator import DataAggregator
+from app.models import Trigger, AggregatedStats
+from spending.aggregator import DataAggregator
 
 
 class TriggerDetector:

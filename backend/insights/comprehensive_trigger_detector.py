@@ -1,6 +1,6 @@
 from typing import List, Dict
-from models import Trigger
-from data_aggregator import DataAggregator
+from app.models import Trigger
+from spending.aggregator import DataAggregator
 import numpy as np
 
 

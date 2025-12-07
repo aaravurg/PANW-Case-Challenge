@@ -5,7 +5,7 @@ to help users reach their savings goals
 
 import pandas as pd
 from typing import List, Dict, Tuple
-from models import Transaction, GoalRecommendation, GapAnalysis
+from app.models import Transaction, GoalRecommendation, GapAnalysis
 
 
 class RecommendationEngine:

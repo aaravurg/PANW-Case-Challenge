@@ -7,14 +7,29 @@ import json
 from typing import List
 from datetime import datetime
 
-from models import Transaction, Insight, Goal, GoalForecast
-from insights_pipeline import InsightsPipeline
-from goal_storage import get_goal_storage
-from goal_forecaster import GoalForecaster
-from recommendation_engine import RecommendationEngine
+from app.models import Transaction, Insight, Goal, GoalForecast, SubscriptionSummary
+from insights.pipeline import InsightsPipeline
+from goals.storage import get_goal_storage
+from goals.forecaster import GoalForecaster
+from goals.recommendations import RecommendationEngine
+from spending.subscription_detector import SubscriptionDetector
 
 # Load environment variables from root .env file
-load_dotenv(os.path.join(os.path.dirname(__file__), '..', '.env'))
+# Note: .env is in project root, need to go up 2 levels from app/main.py
+env_path = os.path.join(os.path.dirname(__file__), '..', '..', '.env')
+env_path_resolved = os.path.abspath(env_path)
+load_dotenv(env_path)
+
+# Debug: Check if .env loaded correctly
+print(f"\n{'='*80}")
+print(f"🔍 Environment Debug Info:")
+print(f"  .env path: {env_path_resolved}")
+print(f"  .env exists: {os.path.exists(env_path_resolved)}")
+print(f"  GEMINI_API_KEY loaded: {'Yes ✅' if os.getenv('GEMINI_API_KEY') else 'No ❌'}")
+if os.getenv('GEMINI_API_KEY'):
+    key = os.getenv('GEMINI_API_KEY')
+    print(f"  API key preview: {key[:10]}...")
+print(f"{'='*80}\n")
 
 app = FastAPI(title="PANW Case Challenge API")
 
@@ -56,10 +71,18 @@ async def get_insights(user_name: str = "Aarav", top_n: int = 7, buffer: int = 5
     - user_name: Name for personalization (default: "Aarav")
     - top_n: Number of insights to display initially (default: 7)
     - buffer: Additional insights to keep in queue for when user deletes insights (default: 5)
+
+    Note: Returns empty list if GEMINI_API_KEY is not configured (insights paused)
     """
+    # Check if API key is configured - if not, return empty list (insights paused)
+    if not os.getenv("GEMINI_API_KEY"):
+        print("⏸️  Insights paused: GEMINI_API_KEY not configured")
+        return []
+
     try:
         # Load transaction data from CSV
-        csv_path = os.path.join(os.path.dirname(__file__), '..', 'sample_transactions_1000_sorted.csv')
+        # Note: CSV is in project root, need to go up 2 levels from app/main.py
+        csv_path = os.path.join(os.path.dirname(__file__), '..', '..', 'sample_transactions_1000_sorted.csv')
 
         if not os.path.exists(csv_path):
             raise HTTPException(status_code=404, detail="Transaction data not found")
@@ -113,7 +136,7 @@ async def get_insights(user_name: str = "Aarav", top_n: int = 7, buffer: int = 5
 async def get_transactions_summary():
     """Get a summary of transaction data"""
     try:
-        csv_path = os.path.join(os.path.dirname(__file__), '..', 'sample_transactions_1000_sorted.csv')
+        csv_path = os.path.join(os.path.dirname(__file__), '..', '..', 'sample_transactions_1000_sorted.csv')
 
         if not os.path.exists(csv_path):
             raise HTTPException(status_code=404, detail="Transaction data not found")
@@ -140,7 +163,7 @@ async def get_transactions_summary():
 
 def load_transactions() -> List[Transaction]:
     """Helper function to load transactions from CSV"""
-    csv_path = os.path.join(os.path.dirname(__file__), '..', 'sample_transactions_1000_sorted.csv')
+    csv_path = os.path.join(os.path.dirname(__file__), '..', '..', 'sample_transactions_1000_sorted.csv')
 
     if not os.path.exists(csv_path):
         raise HTTPException(status_code=404, detail="Transaction data not found")
@@ -283,9 +306,12 @@ async def get_goal_forecast(goal_id: str, user_id: str = "default_user"):
         # Load transactions
         transactions = load_transactions()
 
-        # Create forecaster and generate forecast
+        # Get all active goals for competition analysis
+        all_goals = storage.get_all_goals(user_id=user_id)
+
+        # Create forecaster and generate forecast (with all goals for competition analysis)
         forecaster = GoalForecaster(transactions)
-        forecast = forecaster.forecast_goal(goal)
+        forecast = forecaster.forecast_goal(goal, all_goals=all_goals)
 
         # If off-track, generate recommendations
         if forecast.gap_analysis is not None:
@@ -388,6 +414,51 @@ async def delete_goal(goal_id: str, user_id: str = "default_user"):
         raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error deleting goal: {str(e)}")
+
+
+# ============================================================================
+# SUBSCRIPTION DETECTION ENDPOINTS
+# ============================================================================
+
+@app.get("/api/subscriptions", response_model=SubscriptionSummary)
+async def detect_subscriptions():
+    """
+    Detect recurring subscriptions and gray charges from transaction history
+
+    This endpoint analyzes the complete transaction history to detect:
+    1. Recurring subscriptions with regular intervals and consistent amounts
+    2. Gray charges (potentially forgotten/sneaky subscriptions)
+    3. Price increases (recent charges higher than historical average)
+    4. Trial conversions (recently started subscriptions)
+
+    The detection is purely algorithmic - no ML required:
+    - Groups transactions by normalized merchant name
+    - Analyzes interval regularity (CV < 20%)
+    - Matches to frequency buckets (weekly, monthly, quarterly, annual)
+    - Checks amount consistency (CV < 15%)
+    - Calculates confidence scores based on pattern strength
+    - Normalizes all costs to monthly/annual for comparison
+
+    Returns:
+    - Complete list of detected subscriptions
+    - Summary statistics (total monthly/annual costs)
+    - Flags for subscriptions needing attention
+    """
+    try:
+        # Load transactions
+        transactions = load_transactions()
+
+        # Create detector and run detection
+        detector = SubscriptionDetector(transactions)
+        summary = detector.detect_subscriptions()
+
+        return summary
+
+    except Exception as e:
+        print(f"Error detecting subscriptions: {e}")
+        import traceback
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail=f"Error detecting subscriptions: {str(e)}")
 
 
 if __name__ == "__main__":
