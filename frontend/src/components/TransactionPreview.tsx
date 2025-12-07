@@ -46,12 +46,21 @@ export default function TransactionPreview({ onContinue, showContinueButton = tr
             return val;
           });
 
+          // Parse category - handle both JSON array and simple string
+          let category: string[];
+          try {
+            category = JSON.parse(values[4]);
+          } catch {
+            // If it's not valid JSON, treat it as a simple string and wrap in array
+            category = [values[4]];
+          }
+
           return {
             transaction_id: values[0],
             date: values[1],
             amount: parseFloat(values[2]),
             merchant_name: values[3],
-            category: JSON.parse(values[4]),
+            category,
             payment_channel: values[5],
             pending: values[6] === 'True',
           };

@@ -4,9 +4,10 @@ import { useState } from 'react';
 
 interface SidebarProps {
   onViewTransactions: () => void;
+  onViewGoals?: () => void;
 }
 
-export default function Sidebar({ onViewTransactions }: SidebarProps) {
+export default function Sidebar({ onViewTransactions, onViewGoals }: SidebarProps) {
   const [activeItem, setActiveItem] = useState('dashboard');
 
   const navItems = [
@@ -14,7 +15,7 @@ export default function Sidebar({ onViewTransactions }: SidebarProps) {
     { id: 'transactions', label: 'View Transactions', icon: 'list', onClick: onViewTransactions },
     { id: 'analytics', label: 'Analytics', icon: 'chart' },
     { id: 'budget', label: 'Budget', icon: 'calculator' },
-    { id: 'goals', label: 'Goals', icon: 'target' },
+    { id: 'goals', label: 'Goals', icon: 'target', onClick: onViewGoals },
     { id: 'settings', label: 'Settings', icon: 'settings' },
   ];
 

@@ -4,51 +4,59 @@ import { useState, useEffect } from 'react';
 
 interface EnhancedSidebarProps {
   onViewTransactions: () => void;
+  onViewGoals?: () => void;
 }
 
 interface Goal {
   id: string;
-  name: string;
-  targetAmount: number;
-  currentAmount: number;
-  timeframe: string;
-  reason: string;
+  goal_name: string;
+  target_amount: number;
+  deadline: string;
+  current_savings: number;
+  priority_level: string;
+  created_at: string;
+  monthly_income: number;
+  income_type: string;
 }
 
-export default function EnhancedSidebar({ onViewTransactions }: EnhancedSidebarProps) {
-  const [showGoalModal, setShowGoalModal] = useState(false);
-  const [showGoalAnalysis, setShowGoalAnalysis] = useState(false);
+export default function EnhancedSidebar({ onViewTransactions, onViewGoals }: EnhancedSidebarProps) {
   const [showDNAAnalysis, setShowDNAAnalysis] = useState(false);
   const [showImpulseAnalysis, setShowImpulseAnalysis] = useState(false);
   const [impulsePrice, setImpulsePrice] = useState('');
   const [laborHours, setLaborHours] = useState(0);
   const [animatedHours, setAnimatedHours] = useState(0);
 
-  const [goals, setGoals] = useState<Goal[]>([
-    {
-      id: '1',
-      name: 'Emergency Fund',
-      targetAmount: 10000,
-      currentAmount: 6500,
-      timeframe: '6 months',
-      reason: 'Financial security',
-    },
-    {
-      id: '2',
-      name: 'Vacation to Japan',
-      targetAmount: 5000,
-      currentAmount: 2800,
-      timeframe: '1 year',
-      reason: 'Travel dreams',
-    },
-  ]);
+  const [goals, setGoals] = useState<Goal[]>([]);
+  const API_BASE_URL = 'http://localhost:8000';
 
-  const [newGoal, setNewGoal] = useState({
-    name: '',
-    targetAmount: '',
-    timeframe: '',
-    reason: '',
-  });
+  // Load goals from API
+  useEffect(() => {
+    loadGoals();
+
+    // Refresh goals every 5 seconds to pick up new goals created in the dashboard
+    const interval = setInterval(loadGoals, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const loadGoals = async () => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/goals`);
+      if (!response.ok) {
+        throw new Error('Failed to load goals');
+      }
+      const data = await response.json();
+
+      // Sort goals by deadline (closest first)
+      const sortedGoals = data.sort((a: Goal, b: Goal) => {
+        return new Date(a.deadline).getTime() - new Date(b.deadline).getTime();
+      });
+
+      // Take only the first 2 goals for the sidebar
+      setGoals(sortedGoals.slice(0, 2));
+    } catch (err) {
+      console.error('Error loading goals:', err);
+    }
+  };
 
   const hourlyWage = 25; // Mock hourly wage
 
@@ -84,22 +92,6 @@ export default function EnhancedSidebar({ onViewTransactions }: EnhancedSidebarP
     } else {
       setLaborHours(0);
       setAnimatedHours(0);
-    }
-  };
-
-  const handleCreateGoal = () => {
-    if (newGoal.name && newGoal.targetAmount && newGoal.timeframe && newGoal.reason) {
-      const goal: Goal = {
-        id: Date.now().toString(),
-        name: newGoal.name,
-        targetAmount: parseFloat(newGoal.targetAmount),
-        currentAmount: 0,
-        timeframe: newGoal.timeframe,
-        reason: newGoal.reason,
-      };
-      setGoals([goal, ...goals.slice(0, 1)]); // Keep max 2 goals
-      setShowGoalModal(false);
-      setNewGoal({ name: '', targetAmount: '', timeframe: '', reason: '' });
     }
   };
 
@@ -142,16 +134,16 @@ export default function EnhancedSidebar({ onViewTransactions }: EnhancedSidebarP
           <h3 className="text-lg font-bold text-gray-900">Goal Tracker</h3>
           <div className="flex items-center gap-2">
             <button
-              onClick={() => setShowGoalAnalysis(true)}
+              onClick={onViewGoals}
               className="text-teal-600 hover:text-teal-700 transition-colors"
-              title="Expand analysis"
+              title="View Goals Dashboard"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
               </svg>
             </button>
             <button
-              onClick={() => setShowGoalModal(true)}
+              onClick={onViewGoals}
               className="text-teal-600 hover:text-teal-700 transition-colors"
               title="Add new goal"
             >
@@ -163,62 +155,94 @@ export default function EnhancedSidebar({ onViewTransactions }: EnhancedSidebarP
         </div>
 
         <div className="space-y-4">
-          {goals.map((goal) => {
-            const progress = (goal.currentAmount / goal.targetAmount) * 100;
-            const status = getStatusBadge(progress);
-            const radius = 45;
-            const circumference = 2 * Math.PI * radius;
-            const offset = circumference - (progress / 100) * circumference;
+          {goals.length === 0 ? (
+            <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm text-center">
+              <p className="text-gray-500 text-sm mb-3">No goals yet</p>
+              <button
+                onClick={onViewGoals}
+                className="text-teal-600 hover:text-teal-700 font-medium text-sm"
+              >
+                Create your first goal
+              </button>
+            </div>
+          ) : (
+            goals.map((goal, index) => {
+              const progress = (goal.current_savings / goal.target_amount) * 100;
+              const status = getStatusBadge(progress);
+              const radius = 45;
+              const circumference = 2 * Math.PI * radius;
+              const offset = circumference - (progress / 100) * circumference;
 
-            return (
-              <div key={goal.id} className="bg-white rounded-xl p-4 border border-gray-200 shadow-sm">
-                <div className="flex items-center gap-4">
-                  {/* Progress Ring */}
-                  <div className="relative w-24 h-24 flex-shrink-0">
-                    <svg className="transform -rotate-90 w-24 h-24">
-                      <circle
-                        cx="48"
-                        cy="48"
-                        r={radius}
-                        stroke="currentColor"
-                        strokeWidth="6"
-                        fill="none"
-                        className="text-gray-200"
-                      />
-                      <circle
-                        cx="48"
-                        cy="48"
-                        r={radius}
-                        stroke="currentColor"
-                        strokeWidth="6"
-                        fill="none"
-                        strokeDasharray={circumference}
-                        strokeDashoffset={offset}
-                        className={`${getProgressColor(progress)} transition-all duration-1000 ease-out`}
-                        strokeLinecap="round"
-                      />
-                    </svg>
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <span className="text-lg font-bold text-gray-900">{Math.round(progress)}%</span>
+              // Calculate days until deadline
+              const today = new Date();
+              const deadline = new Date(goal.deadline);
+              const daysUntil = Math.ceil((deadline.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+
+              return (
+                <div key={goal.id} className="bg-white rounded-xl p-4 border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
+                  <div className="flex items-center gap-4">
+                    {/* Progress Ring */}
+                    <div className="relative w-24 h-24 flex-shrink-0">
+                      <svg className="transform -rotate-90 w-24 h-24">
+                        <circle
+                          cx="48"
+                          cy="48"
+                          r={radius}
+                          stroke="currentColor"
+                          strokeWidth="6"
+                          fill="none"
+                          className="text-gray-200"
+                        />
+                        <circle
+                          cx="48"
+                          cy="48"
+                          r={radius}
+                          stroke="currentColor"
+                          strokeWidth="6"
+                          fill="none"
+                          strokeDasharray={circumference}
+                          strokeDashoffset={offset}
+                          className={`${getProgressColor(progress)} transition-all duration-1000 ease-out`}
+                          strokeLinecap="round"
+                        />
+                      </svg>
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <span className="text-lg font-bold text-gray-900">{Math.round(progress)}%</span>
+                      </div>
                     </div>
-                  </div>
 
-                  {/* Goal Info */}
-                  <div className="flex-1 min-w-0">
-                    <h4 className="font-semibold text-gray-900 truncate">{goal.name}</h4>
-                    <p className="text-sm text-gray-600">
-                      ${goal.currentAmount.toLocaleString()} / ${goal.targetAmount.toLocaleString()}
-                    </p>
-                    <p className="text-xs text-gray-500 mt-1">{goal.timeframe}</p>
-                    <div className={`inline-flex items-center gap-1 mt-2 px-2 py-1 rounded-full text-xs font-medium text-white ${status.color} animate-pulse-subtle`}>
-                      <span className="w-1.5 h-1.5 bg-white rounded-full"></span>
-                      {status.text}
+                    {/* Goal Info */}
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-start justify-between mb-1">
+                        <h4 className="font-semibold text-gray-900 truncate">{goal.goal_name}</h4>
+                        {index === 0 && (
+                          <span className="ml-2 px-2 py-0.5 bg-blue-100 text-blue-700 text-xs font-medium rounded whitespace-nowrap">
+                            Next
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-sm text-gray-600">
+                        ${goal.current_savings.toLocaleString()} / ${goal.target_amount.toLocaleString()}
+                      </p>
+                      <p className="text-xs text-gray-500 mt-1">
+                        {daysUntil > 0 ? (
+                          <span className={daysUntil < 30 ? 'text-red-600 font-medium' : daysUntil < 90 ? 'text-orange-600 font-medium' : ''}>
+                            {daysUntil} day{daysUntil !== 1 ? 's' : ''} left
+                          </span>
+                        ) : (
+                          <span className="text-red-600 font-medium">Deadline passed</span>
+                        )}
+                      </p>
+                      <div className={`inline-flex items-center gap-1 mt-2 px-2 py-1 rounded-full text-xs font-medium text-white ${status.color} animate-pulse-subtle`}>
+                        <span className="w-1.5 h-1.5 bg-white rounded-full"></span>
+                        {status.text}
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })
+          )}
         </div>
       </div>
 
@@ -289,28 +313,6 @@ export default function EnhancedSidebar({ onViewTransactions }: EnhancedSidebarP
         </div>
       )}
 
-      {/* Goal Analysis Modal */}
-      {showGoalAnalysis && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl p-8 w-full max-w-6xl h-[85vh] shadow-2xl animate-slide-up overflow-y-auto">
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-3xl font-bold text-gray-900">Goal Tracker Analysis</h2>
-              <button
-                onClick={() => setShowGoalAnalysis(false)}
-                className="text-gray-400 hover:text-gray-600 transition-colors"
-              >
-                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
-            <div className="flex items-center justify-center h-[60vh] text-gray-400">
-              <p className="text-xl">Goal analysis content will go here...</p>
-            </div>
-          </div>
-        </div>
-      )}
-
       {/* Impulse Analysis Modal */}
       {showImpulseAnalysis && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
@@ -328,76 +330,6 @@ export default function EnhancedSidebar({ onViewTransactions }: EnhancedSidebarP
             </div>
             <div className="flex items-center justify-center h-[60vh] text-gray-400">
               <p className="text-xl">Impulse analysis content will go here...</p>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Goal Creation Modal */}
-      {showGoalModal && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl p-6 w-full max-w-md shadow-2xl animate-slide-up">
-            <h3 className="text-2xl font-bold text-gray-900 mb-4">Create New Goal</h3>
-
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Goal Name</label>
-                <input
-                  type="text"
-                  value={newGoal.name}
-                  onChange={(e) => setNewGoal({ ...newGoal, name: e.target.value })}
-                  placeholder="e.g., New Car"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-400"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Target Amount</label>
-                <input
-                  type="number"
-                  value={newGoal.targetAmount}
-                  onChange={(e) => setNewGoal({ ...newGoal, targetAmount: e.target.value })}
-                  placeholder="e.g., 15000"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-400"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Timeframe</label>
-                <input
-                  type="text"
-                  value={newGoal.timeframe}
-                  onChange={(e) => setNewGoal({ ...newGoal, timeframe: e.target.value })}
-                  placeholder="e.g., 2 years"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-400"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Reason</label>
-                <textarea
-                  value={newGoal.reason}
-                  onChange={(e) => setNewGoal({ ...newGoal, reason: e.target.value })}
-                  placeholder="Why is this goal important to you?"
-                  rows={3}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-400 resize-none"
-                />
-              </div>
-            </div>
-
-            <div className="flex gap-3 mt-6">
-              <button
-                onClick={() => setShowGoalModal(false)}
-                className="flex-1 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors font-medium"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleCreateGoal}
-                className="flex-1 px-4 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition-colors font-medium"
-              >
-                Create Goal
-              </button>
             </div>
           </div>
         </div>

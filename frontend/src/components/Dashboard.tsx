@@ -5,14 +5,19 @@ import EnhancedSidebar from './EnhancedSidebar';
 import TransactionPreview from './TransactionPreview';
 import AIInsightsFeed from './AIInsightsFeed';
 import RightColumnTools from './RightColumnTools';
+import GoalDashboard from './GoalDashboard';
 
 export default function Dashboard() {
   const [showTransactions, setShowTransactions] = useState(false);
+  const [showGoals, setShowGoals] = useState(false);
 
   return (
     <div className="min-h-screen bg-white flex">
       {/* Left Sidebar */}
-      <EnhancedSidebar onViewTransactions={() => setShowTransactions(true)} />
+      <EnhancedSidebar
+        onViewTransactions={() => setShowTransactions(true)}
+        onViewGoals={() => setShowGoals(true)}
+      />
 
       {/* Main Content Area */}
       <main className="flex-1 flex">
@@ -44,6 +49,32 @@ export default function Dashboard() {
             </div>
             <div className="flex-1 overflow-y-auto">
               <TransactionPreview onContinue={() => setShowTransactions(false)} showContinueButton={false} />
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Goals Dashboard Modal */}
+      {showGoals && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in" onClick={() => setShowGoals(false)}>
+          <div className="bg-gray-50 rounded-3xl w-full max-w-7xl h-[90vh] shadow-2xl border border-gray-200 flex flex-col animate-slide-up overflow-hidden" onClick={(e) => e.stopPropagation()}>
+            <div className="bg-white px-8 py-6 border-b border-gray-200 flex-shrink-0">
+              <div className="flex justify-between items-center">
+                <h2 className="text-3xl font-bold text-gray-900" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                  Savings Goals Forecast
+                </h2>
+                <button
+                  onClick={() => setShowGoals(false)}
+                  className="text-gray-400 hover:text-gray-600 transition-colors"
+                >
+                  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <div className="flex-1 overflow-y-auto">
+              <GoalDashboard />
             </div>
           </div>
         </div>

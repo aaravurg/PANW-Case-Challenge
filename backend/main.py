@@ -7,8 +7,11 @@ import json
 from typing import List
 from datetime import datetime
 
-from models import Transaction, Insight
+from models import Transaction, Insight, Goal, GoalForecast
 from insights_pipeline import InsightsPipeline
+from goal_storage import get_goal_storage
+from goal_forecaster import GoalForecaster
+from recommendation_engine import RecommendationEngine
 
 # Load environment variables from root .env file
 load_dotenv(os.path.join(os.path.dirname(__file__), '..', '.env'))
@@ -30,9 +33,9 @@ pipeline = None
 def get_pipeline():
     global pipeline
     if pipeline is None:
-        api_key = os.getenv("GROQ_API_KEY")
+        api_key = os.getenv("GEMINI_API_KEY")
         if not api_key:
-            raise HTTPException(status_code=500, detail="GROQ_API_KEY not configured")
+            raise HTTPException(status_code=500, detail="GEMINI_API_KEY not configured")
         pipeline = InsightsPipeline(anthropic_api_key=api_key)
     return pipeline
 
@@ -45,13 +48,14 @@ async def health_check():
     return {"status": "healthy"}
 
 @app.get("/api/insights", response_model=List[Insight])
-async def get_insights(user_name: str = "Aarav", top_n: int = 7):
+async def get_insights(user_name: str = "Aarav", top_n: int = 7, buffer: int = 5):
     """
     Generate intelligent spending insights from transaction data
 
     Query Parameters:
     - user_name: Name for personalization (default: "Aarav")
-    - top_n: Number of insights to return (default: 7)
+    - top_n: Number of insights to display initially (default: 7)
+    - buffer: Additional insights to keep in queue for when user deletes insights (default: 5)
     """
     try:
         # Load transaction data from CSV
@@ -66,8 +70,12 @@ async def get_insights(user_name: str = "Aarav", top_n: int = 7):
         # Convert to Transaction objects
         transactions = []
         for _, row in df.iterrows():
-            # Parse category JSON
-            category = json.loads(row['category']) if isinstance(row['category'], str) else row['category']
+            # Parse category - handle both JSON array and simple string
+            try:
+                category = json.loads(row['category']) if isinstance(row['category'], str) else row['category']
+            except json.JSONDecodeError:
+                # If it's not valid JSON, treat it as a simple string and wrap in array
+                category = [row['category']]
 
             # Parse date
             date = pd.to_datetime(row['date'])
@@ -85,12 +93,12 @@ async def get_insights(user_name: str = "Aarav", top_n: int = 7):
 
         print(f"Loaded {len(transactions)} transactions")
 
-        # Run insights pipeline
+        # Run insights pipeline - request extra insights for queue
         insights_pipeline = get_pipeline()
         insights = insights_pipeline.generate_insights(
             transactions=transactions,
             user_name=user_name,
-            top_n=top_n
+            top_n=top_n + buffer  # Request extra insights for the queue
         )
 
         return insights
@@ -124,6 +132,263 @@ async def get_transactions_summary():
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error getting summary: {str(e)}")
+
+
+# ============================================================================
+# GOAL FORECASTING ENDPOINTS
+# ============================================================================
+
+def load_transactions() -> List[Transaction]:
+    """Helper function to load transactions from CSV"""
+    csv_path = os.path.join(os.path.dirname(__file__), '..', 'sample_transactions_1000_sorted.csv')
+
+    if not os.path.exists(csv_path):
+        raise HTTPException(status_code=404, detail="Transaction data not found")
+
+    df = pd.read_csv(csv_path)
+    transactions = []
+
+    for _, row in df.iterrows():
+        try:
+            category = json.loads(row['category']) if isinstance(row['category'], str) else row['category']
+        except json.JSONDecodeError:
+            category = [row['category']]
+
+        date = pd.to_datetime(row['date'])
+
+        transaction = Transaction(
+            transaction_id=row['transaction_id'],
+            date=date,
+            amount=float(row['amount']),
+            merchant_name=row['merchant_name'],
+            category=category,
+            payment_channel=row['payment_channel'],
+            pending=bool(row['pending'])
+        )
+        transactions.append(transaction)
+
+    return transactions
+
+
+@app.post("/api/goals", response_model=Goal)
+async def create_goal(
+    goal_name: str,
+    target_amount: float,
+    deadline: str,
+    monthly_income: float,
+    current_savings: float = 0.0,
+    priority_level: str = "medium",
+    income_type: str = "fixed",
+    user_id: str = "default_user"
+):
+    """
+    Create a new savings goal
+
+    Parameters:
+    - goal_name: Name of the goal (e.g., "Tesla Down Payment")
+    - target_amount: Target amount to save
+    - deadline: Deadline date in ISO format (e.g., "2024-12-31")
+    - monthly_income: User's monthly income (required for forecasting)
+    - current_savings: Amount already saved (default: 0)
+    - priority_level: Priority level - "high", "medium", or "low" (default: "medium")
+    - income_type: Income stability - "fixed" or "variable" (default: "fixed")
+    - user_id: User identifier (default: "default_user")
+    """
+    try:
+        storage = get_goal_storage()
+        goal = storage.create_goal(
+            goal_name=goal_name,
+            target_amount=target_amount,
+            deadline=deadline,
+            monthly_income=monthly_income,
+            current_savings=current_savings,
+            priority_level=priority_level,
+            income_type=income_type,
+            user_id=user_id
+        )
+        return goal
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error creating goal: {str(e)}")
+
+
+@app.get("/api/goals", response_model=List[Goal])
+async def get_goals(user_id: str = "default_user"):
+    """
+    Get all goals for a user
+
+    Parameters:
+    - user_id: User identifier (default: "default_user")
+    """
+    try:
+        storage = get_goal_storage()
+        goals = storage.get_all_goals(user_id=user_id)
+        return goals
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error fetching goals: {str(e)}")
+
+
+@app.get("/api/goals/{goal_id}", response_model=Goal)
+async def get_goal(goal_id: str, user_id: str = "default_user"):
+    """
+    Get a specific goal by ID
+
+    Parameters:
+    - goal_id: Goal identifier
+    - user_id: User identifier (default: "default_user")
+    """
+    try:
+        storage = get_goal_storage()
+        goal = storage.get_goal(goal_id, user_id=user_id)
+
+        if goal is None:
+            raise HTTPException(status_code=404, detail="Goal not found")
+
+        return goal
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error fetching goal: {str(e)}")
+
+
+@app.get("/api/goals/{goal_id}/forecast", response_model=GoalForecast)
+async def get_goal_forecast(goal_id: str, user_id: str = "default_user"):
+    """
+    Get forecast for a specific goal with recommendations
+
+    This endpoint:
+    1. Loads the user's transaction history
+    2. Calculates monthly SPENDING from transactions
+    3. Uses Prophet (or linear fallback) to forecast future SPENDING
+    4. Converts spending forecast to savings using user's income
+    5. Determines probability of reaching goal
+    6. Generates spending cut recommendations if off-track
+
+    The forecasting approach:
+    - Prophet models spending variability and seasonality
+    - Savings = Income - Predicted Spending
+    - Confidence intervals are inverted (lower spending = higher savings)
+
+    Parameters:
+    - goal_id: Goal identifier
+    - user_id: User identifier (default: "default_user")
+    """
+    try:
+        # Get the goal
+        storage = get_goal_storage()
+        goal = storage.get_goal(goal_id, user_id=user_id)
+
+        if goal is None:
+            raise HTTPException(status_code=404, detail="Goal not found")
+
+        # Load transactions
+        transactions = load_transactions()
+
+        # Create forecaster and generate forecast
+        forecaster = GoalForecaster(transactions)
+        forecast = forecaster.forecast_goal(goal)
+
+        # If off-track, generate recommendations
+        if forecast.gap_analysis is not None:
+            rec_engine = RecommendationEngine(transactions)
+            recommendations = rec_engine.generate_recommendations(
+                gap_analysis=forecast.gap_analysis,
+                max_recommendations=3
+            )
+            forecast.recommendations = recommendations
+
+        return forecast
+
+    except HTTPException:
+        raise
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    except Exception as e:
+        print(f"Error generating forecast: {e}")
+        import traceback
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail=f"Error generating forecast: {str(e)}")
+
+
+@app.put("/api/goals/{goal_id}", response_model=Goal)
+async def update_goal(
+    goal_id: str,
+    user_id: str = "default_user",
+    goal_name: str = None,
+    target_amount: float = None,
+    deadline: str = None,
+    current_savings: float = None,
+    priority_level: str = None,
+    monthly_income: float = None,
+    income_type: str = None
+):
+    """
+    Update an existing goal
+
+    Parameters:
+    - goal_id: Goal identifier
+    - user_id: User identifier (default: "default_user")
+    - goal_name: New goal name (optional)
+    - target_amount: New target amount (optional)
+    - deadline: New deadline (optional)
+    - current_savings: New current savings amount (optional)
+    - priority_level: New priority level (optional)
+    - monthly_income: New monthly income (optional)
+    - income_type: New income type - "fixed" or "variable" (optional)
+    """
+    try:
+        storage = get_goal_storage()
+
+        # Build updates dict
+        updates = {}
+        if goal_name is not None:
+            updates['goal_name'] = goal_name
+        if target_amount is not None:
+            updates['target_amount'] = target_amount
+        if deadline is not None:
+            updates['deadline'] = deadline
+        if current_savings is not None:
+            updates['current_savings'] = current_savings
+        if priority_level is not None:
+            updates['priority_level'] = priority_level
+        if monthly_income is not None:
+            updates['monthly_income'] = monthly_income
+        if income_type is not None:
+            updates['income_type'] = income_type
+
+        goal = storage.update_goal(goal_id, user_id=user_id, **updates)
+
+        if goal is None:
+            raise HTTPException(status_code=404, detail="Goal not found")
+
+        return goal
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error updating goal: {str(e)}")
+
+
+@app.delete("/api/goals/{goal_id}")
+async def delete_goal(goal_id: str, user_id: str = "default_user"):
+    """
+    Delete a goal
+
+    Parameters:
+    - goal_id: Goal identifier
+    - user_id: User identifier (default: "default_user")
+    """
+    try:
+        storage = get_goal_storage()
+        success = storage.delete_goal(goal_id, user_id=user_id)
+
+        if not success:
+            raise HTTPException(status_code=404, detail="Goal not found")
+
+        return {"message": "Goal deleted successfully", "goal_id": goal_id}
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error deleting goal: {str(e)}")
+
 
 if __name__ == "__main__":
     import uvicorn
