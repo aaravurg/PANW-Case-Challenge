@@ -138,7 +138,6 @@ async def create_goal(
 
 @app.get("/api/goals", response_model=List[Goal])
 async def get_goals(user_id: str = DEFAULT_USER_ID):
-    """Get all goals for a user."""
     try:
         storage = get_goal_storage()
         goals = storage.get_all_goals(user_id=user_id)
@@ -150,7 +149,6 @@ async def get_goals(user_id: str = DEFAULT_USER_ID):
 
 @app.get("/api/goals/{goal_id}", response_model=Goal)
 async def get_goal(goal_id: str, user_id: str = DEFAULT_USER_ID):
-    """Get a specific goal by ID."""
     try:
         storage = get_goal_storage()
         goal = storage.get_goal(goal_id, user_id=user_id)
@@ -168,10 +166,6 @@ async def get_goal(goal_id: str, user_id: str = DEFAULT_USER_ID):
 
 @app.get("/api/goals/{goal_id}/forecast", response_model=GoalForecast)
 async def get_goal_forecast(goal_id: str, user_id: str = DEFAULT_USER_ID):
-    """
-    Get forecast for a goal with ML-powered predictions and recommendations.
-    Uses Prophet for spending forecasts and derives savings projections.
-    """
     try:
         storage = get_goal_storage()
         goal = storage.get_goal(goal_id, user_id=user_id)
@@ -216,7 +210,6 @@ async def update_goal(
     monthly_income: float = None,
     income_type: str = None
 ):
-    """Update an existing goal with partial fields."""
     try:
         storage = get_goal_storage()
 
@@ -251,7 +244,6 @@ async def update_goal(
 
 @app.delete("/api/goals/{goal_id}")
 async def delete_goal(goal_id: str, user_id: str = DEFAULT_USER_ID):
-    """Delete a goal by ID."""
     try:
         storage = get_goal_storage()
         success = storage.delete_goal(goal_id, user_id=user_id)
@@ -266,17 +258,8 @@ async def delete_goal(goal_id: str, user_id: str = DEFAULT_USER_ID):
         logger.error(f"Error deleting goal: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail=f"Error deleting goal: {str(e)}")
 
-
-# ============================================================================
-# SUBSCRIPTION DETECTION ENDPOINTS
-# ============================================================================
-
 @app.get("/api/subscriptions", response_model=SubscriptionSummary)
 async def detect_subscriptions():
-    """
-    Detect recurring subscriptions using pattern analysis.
-    Identifies gray charges, price increases, and trial conversions.
-    """
     try:
         transactions = load_transactions_from_csv()
         detector = SubscriptionDetector(transactions)
@@ -287,17 +270,8 @@ async def detect_subscriptions():
         logger.error(f"Error detecting subscriptions: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail=f"Error detecting subscriptions: {str(e)}")
 
-
-# ============================================================================
-# INVESTMENT CAPACITY PREDICTOR ENDPOINTS
-# ============================================================================
-
 @app.post("/api/investment-capacity", response_model=InvestmentCapacityResponse)
 async def calculate_investment_capacity(request: InvestmentCapacityRequest):
-    """
-    Calculate monthly investable surplus after expenses and goal commitments.
-    Provides educational content on investment options for beginners.
-    """
     try:
         transactions = load_transactions_from_csv()
         storage = get_goal_storage()
@@ -315,37 +289,22 @@ async def calculate_investment_capacity(request: InvestmentCapacityRequest):
         logger.error(f"Error calculating investment capacity: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail=f"Error calculating investment capacity: {str(e)}")
 
-
-# ============================================================================
-# NATURAL LANGUAGE COACH ENDPOINTS
-# ============================================================================
-
 class ChatMessage(BaseModel):
-    """Individual message in chat history"""
     role: str
     content: Any
 
-
 class ChatRequest(BaseModel):
-    """Request model for natural language coach chat"""
-    message: str  # User's message
-    conversation_history: Optional[List[Dict[str, Any]]] = []  # Previous messages
-    user_id: str = "default_user"  # User identifier for fetching goals
-
+    message: str
+    conversation_history: Optional[List[Dict[str, Any]]] = []
+    user_id: str = "default_user"
 
 class ChatResponse(BaseModel):
-    """Response model for natural language coach chat"""
-    response: str  # Assistant's response text
-    function_calls: List[Dict[str, Any]]  # Functions that were called
-    conversation_history: List[Dict[str, Any]]  # Updated conversation history
-
+    response: str
+    function_calls: List[Dict[str, Any]]
+    conversation_history: List[Dict[str, Any]]
 
 @app.post("/api/coach/chat", response_model=ChatResponse)
 async def chat_with_coach(request: ChatRequest):
-    """
-    Natural language interface for querying financial data.
-    Uses Gemini function calling to interpret questions and execute data queries.
-    """
     if not os.getenv("GEMINI_CHATBOT_API_KEY"):
         raise HTTPException(
             status_code=503,
