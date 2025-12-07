@@ -2,6 +2,11 @@
 
 A full-stack application built with Next.js (frontend) and FastAPI (backend) for financial analytics, spending insights, and savings goals.
 
+## Demo
+
+Watch the project demo and walkthrough on YouTube:
+[YouTube Recording](https://youtu.be/XxLfbW9oWWM)
+
 ## Project Overview
 
 This project provides:
@@ -150,11 +155,6 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 ### Backend
 - [FastAPI](https://fastapi.tiangolo.com/) - Modern Python web framework
 - Feature-based architecture for scalability
-
-## Demo
-
-Watch the project demo and walkthrough:
-[YouTube Recording](https://youtu.be/XxLfbW9oWWM)
 
 ## Development
 
