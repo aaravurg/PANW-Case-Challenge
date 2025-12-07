@@ -13,14 +13,36 @@ This project provides:
 
 ```
 PANW-Case-Challenge/
-├── frontend/          # Next.js application
-├── backend/           # FastAPI server
-│   ├── app/          # Core application (FastAPI app, models)
-│   ├── goals/        # Savings goals feature
-│   ├── insights/     # Spending insights feature
-│   ├── spending/     # Spending analytics
-│   └── tests/        # Test suite
-└── README.md         # This file
+├── frontend/              # Next.js application
+│   ├── src/
+│   │   ├── app/          # Next.js App Router (pages, layouts, globals)
+│   │   ├── components/   # React components
+│   │   │   ├── AIInsightsFeed.tsx
+│   │   │   ├── BankLogin.tsx
+│   │   │   ├── Dashboard.tsx
+│   │   │   ├── EnhancedSidebar.tsx
+│   │   │   ├── GoalCreationForm.tsx
+│   │   │   ├── GoalDashboard.tsx
+│   │   │   ├── GoalProgressChart.tsx
+│   │   │   ├── NLCoach.tsx
+│   │   │   ├── RightColumnTools.tsx
+│   │   │   ├── TransactionPreview.tsx
+│   │   │   └── ...
+│   │   └── lib/          # Utilities and API client
+│   ├── public/           # Static assets
+│   ├── package.json
+│   └── tsconfig.json
+│
+├── backend/              # FastAPI server
+│   ├── app/             # Core application (FastAPI app, models)
+│   ├── goals/           # Savings goals feature (forecasting, storage, recommendations)
+│   ├── insights/        # Spending insights feature (pipeline, triggers, scoring)
+│   ├── spending/        # Spending analytics (classification, aggregation)
+│   ├── tests/           # Test suite
+│   ├── run.py           # Entry point for running the server
+│   └── requirements.txt
+│
+└── README.md            # This file
 ```
 
 ## Getting Started
@@ -30,6 +52,33 @@ PANW-Case-Challenge/
 - Python 3.8+ (for backend)
 - Node.js 16+ (for frontend)
 - npm, yarn, pnpm, or bun (for frontend)
+- Google Gemini API key (for LLM features)
+
+### Environment Setup
+
+Before running the application, you need to configure your environment variables:
+
+1. Copy the `.env.example` file to `.env` in the root directory:
+```bash
+cp .env.example .env
+```
+
+2. Edit the `.env` file and add your API keys:
+```bash
+# API Keys - Required for LLM functionality
+GEMINI_API_KEY=your-gemini-api-key-here
+GEMINI_CHATBOT_API_KEY=your-gemini-chatbot-api-key-here
+
+# Frontend Configuration
+NEXT_PUBLIC_API_URL=http://localhost:8000
+```
+
+3. **Get your Gemini API Key**:
+   - Visit [Google AI Studio](https://aistudio.google.com/app/apikey)
+   - Create or use an existing API key
+   - Replace `your-gemini-api-key-here` and `your-gemini-chatbot-api-key-here` with your actual API key
+
+**Important**: Without setting up the Gemini API keys, the LLM-powered features (AI insights, NL coach, recommendations) will not work.
 
 ### Backend Setup
 
