@@ -39,12 +39,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Initialize insights pipeline (lazy loading)
 _insights_pipeline = None
 
-
 def get_pipeline():
-    """Get or create insights pipeline instance."""
     global _insights_pipeline
     if _insights_pipeline is None:
         try:
@@ -64,17 +61,6 @@ async def health_check():
 
 @app.get("/api/insights", response_model=List[Insight])
 async def get_insights(user_name: str = "Aarav", top_n: int = 7, buffer: int = 5):
-    """
-    Generate intelligent spending insights from transaction data.
-
-    Args:
-        user_name: Name for personalization
-        top_n: Number of insights to display
-        buffer: Additional insights for queue
-
-    Returns:
-        List of insights or empty list if API key not configured
-    """
     if not os.getenv("GEMINI_API_KEY"):
         logger.warning("Insights paused: GEMINI_API_KEY not configured")
         return []
@@ -98,7 +84,6 @@ async def get_insights(user_name: str = "Aarav", top_n: int = 7, buffer: int = 5
 
 @app.get("/api/transactions/summary")
 async def get_transactions_summary():
-    """Get summary statistics for transaction data."""
     try:
         transactions = load_transactions_from_csv()
 
@@ -122,11 +107,6 @@ async def get_transactions_summary():
         logger.error(f"Error getting summary: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail=f"Error getting summary: {str(e)}")
 
-
-# ============================================================================
-# GOAL FORECASTING ENDPOINTS
-# ============================================================================
-
 @app.post("/api/goals", response_model=Goal)
 async def create_goal(
     goal_name: str,
@@ -138,7 +118,6 @@ async def create_goal(
     income_type: str = "fixed",
     user_id: str = DEFAULT_USER_ID
 ):
-    """Create a new savings goal."""
     try:
         storage = get_goal_storage()
         goal = storage.create_goal(
