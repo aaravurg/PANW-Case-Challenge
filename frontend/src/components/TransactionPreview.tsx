@@ -150,9 +150,9 @@ export default function TransactionPreview({ onContinue, showContinueButton = tr
   }
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col max-h-[85vh]">
       {/* Statistics Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6 flex-shrink-0">
         <div className="bg-gradient-to-br from-teal-50 to-teal-100 rounded-xl p-4 border border-teal-200">
           <p className="text-teal-600 text-sm font-medium mb-1">Total Transactions</p>
           <p className="text-3xl font-bold text-teal-900">{totalTransactions.toLocaleString()}</p>
@@ -176,7 +176,7 @@ export default function TransactionPreview({ onContinue, showContinueButton = tr
       </div>
 
       {/* Filters */}
-      <div className="flex flex-col sm:flex-row gap-3 mb-4">
+      <div className="flex flex-col sm:flex-row gap-3 mb-4 flex-shrink-0">
         <div className="flex-1">
           <input
             type="text"
@@ -199,15 +199,15 @@ export default function TransactionPreview({ onContinue, showContinueButton = tr
       </div>
 
       {/* Results count */}
-      <div className="mb-3">
+      <div className="mb-3 flex-shrink-0">
         <p className="text-sm text-gray-600">
           Showing <span className="font-semibold text-gray-900">{filteredTransactions.length}</span> of <span className="font-semibold text-gray-900">{totalTransactions}</span> transactions
         </p>
       </div>
 
       {/* Transaction Table */}
-      <div className="flex-1 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
-        <div className="overflow-x-auto overflow-y-auto h-full">
+      <div className="flex-1 rounded-xl border border-gray-200 bg-white shadow-sm min-h-0 overflow-auto">
+        <div className="h-full">
           <table className="w-full">
             <thead className="sticky top-0 bg-gray-50 border-b border-gray-200 z-10">
               <tr>
@@ -271,7 +271,7 @@ export default function TransactionPreview({ onContinue, showContinueButton = tr
       {showContinueButton && (
         <button
           onClick={onContinue}
-          className="mt-6 w-full bg-gradient-to-r from-teal-500 to-cyan-500 text-white py-3 rounded-xl font-semibold text-base shadow-lg hover:shadow-xl hover:scale-[1.01] transition-all duration-200"
+          className="mt-6 w-full bg-gradient-to-r from-teal-500 to-cyan-500 text-white py-3 rounded-xl font-semibold text-base shadow-lg hover:shadow-xl hover:scale-[1.01] transition-all duration-200 flex-shrink-0"
         >
           Continue to Dashboard
         </button>

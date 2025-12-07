@@ -1,3 +1,4 @@
+import logging
 from typing import List
 from app.models import Transaction, Insight
 from spending.aggregator import DataAggregator
@@ -5,14 +6,13 @@ from insights.comprehensive_trigger_detector import ComprehensiveTriggerDetector
 from insights.comprehensive_priority_scorer import ComprehensivePriorityScorer
 from insights.generator import InsightGenerator
 
+logger = logging.getLogger(__name__)
+
 
 class InsightsPipeline:
     """
-    Orchestrates the complete Intelligent Spending Insights pipeline:
-    Stage 1: Comprehensive Multi-Dimensional Data Aggregation
-    Stage 2: Comprehensive Trigger Detection (All Timeframes & Patterns)
-    Stage 3: Priority Scoring and Deduplication
-    Stage 4: LLM Text Generation with Enhanced Context
+    Orchestrates the intelligent spending insights pipeline.
+    Aggregates data, detects patterns, scores priorities, and generates insights.
     """
 
     def __init__(self, anthropic_api_key: str = None):

@@ -2,16 +2,16 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 import os
-import pandas as pd
-import json
 from typing import List, Optional, Dict, Any
-from datetime import datetime
 from pydantic import BaseModel
 
 from app.models import (
     Transaction, Insight, Goal, GoalForecast, SubscriptionSummary,
     InvestmentCapacityRequest, InvestmentCapacityResponse
 )
+from app.config import CORS_ORIGINS, ENV_FILE, DEFAULT_USER_ID
+from app.utils import load_transactions_from_csv, validate_api_key
+from app.logger import setup_logging, get_logger
 from insights.pipeline import InsightsPipeline
 from goals.storage import get_goal_storage
 from goals.forecaster import GoalForecaster
@@ -20,45 +20,39 @@ from spending.subscription_detector import SubscriptionDetector
 from app.investment_calculator import InvestmentCapacityCalculator
 from nlp_coach.coach import NaturalLanguageCoach
 
-# Load environment variables from root .env file
-# Note: .env is in project root, need to go up 2 levels from app/main.py
-env_path = os.path.join(os.path.dirname(__file__), '..', '..', '.env')
-env_path_resolved = os.path.abspath(env_path)
-load_dotenv(env_path)
+# Setup logging
+setup_logging()
+logger = get_logger(__name__)
 
-# Debug: Check if .env loaded correctly
-print(f"\n{'='*80}")
-print(f"🔍 Environment Debug Info:")
-print(f"  .env path: {env_path_resolved}")
-print(f"  .env exists: {os.path.exists(env_path_resolved)}")
-print(f"  GEMINI_API_KEY loaded: {'Yes ✅' if os.getenv('GEMINI_API_KEY') else 'No ❌'}")
-if os.getenv('GEMINI_API_KEY'):
-    key = os.getenv('GEMINI_API_KEY')
-    print(f"  API key preview: {key[:10]}...")
-print(f"{'='*80}\n")
+# Load environment variables
+load_dotenv(ENV_FILE)
+logger.info(f"Environment loaded from {ENV_FILE}")
 
 app = FastAPI(title="PANW Case Challenge API")
 
 # Configure CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],  # Next.js default port
+    allow_origins=CORS_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Initialize insights pipeline
-pipeline = None
+# Initialize insights pipeline (lazy loading)
+_insights_pipeline = None
+
 
 def get_pipeline():
-    global pipeline
-    if pipeline is None:
-        api_key = os.getenv("GEMINI_API_KEY")
-        if not api_key:
-            raise HTTPException(status_code=500, detail="GEMINI_API_KEY not configured")
-        pipeline = InsightsPipeline(anthropic_api_key=api_key)
-    return pipeline
+    """Get or create insights pipeline instance."""
+    global _insights_pipeline
+    if _insights_pipeline is None:
+        try:
+            api_key = validate_api_key("GEMINI_API_KEY")
+            _insights_pipeline = InsightsPipeline(anthropic_api_key=api_key)
+        except ValueError as e:
+            raise HTTPException(status_code=500, detail=str(e))
+    return _insights_pipeline
 
 @app.get("/")
 async def root():
@@ -71,133 +65,67 @@ async def health_check():
 @app.get("/api/insights", response_model=List[Insight])
 async def get_insights(user_name: str = "Aarav", top_n: int = 7, buffer: int = 5):
     """
-    Generate intelligent spending insights from transaction data
+    Generate intelligent spending insights from transaction data.
 
-    Query Parameters:
-    - user_name: Name for personalization (default: "Aarav")
-    - top_n: Number of insights to display initially (default: 7)
-    - buffer: Additional insights to keep in queue for when user deletes insights (default: 5)
+    Args:
+        user_name: Name for personalization
+        top_n: Number of insights to display
+        buffer: Additional insights for queue
 
-    Note: Returns empty list if GEMINI_API_KEY is not configured (insights paused)
+    Returns:
+        List of insights or empty list if API key not configured
     """
-    # Check if API key is configured - if not, return empty list (insights paused)
     if not os.getenv("GEMINI_API_KEY"):
-        print("⏸️  Insights paused: GEMINI_API_KEY not configured")
+        logger.warning("Insights paused: GEMINI_API_KEY not configured")
         return []
 
     try:
-        # Load transaction data from CSV
-        # Note: CSV is in project root, need to go up 2 levels from app/main.py
-        csv_path = os.path.join(os.path.dirname(__file__), '..', '..', 'sample_transactions_1000_sorted.csv')
-
-        if not os.path.exists(csv_path):
-            raise HTTPException(status_code=404, detail="Transaction data not found")
-
-        # Read CSV
-        df = pd.read_csv(csv_path)
-
-        # Convert to Transaction objects
-        transactions = []
-        for _, row in df.iterrows():
-            # Parse category - handle both JSON array and simple string
-            try:
-                category = json.loads(row['category']) if isinstance(row['category'], str) else row['category']
-            except json.JSONDecodeError:
-                # If it's not valid JSON, treat it as a simple string and wrap in array
-                category = [row['category']]
-
-            # Parse date
-            date = pd.to_datetime(row['date'])
-
-            transaction = Transaction(
-                transaction_id=row['transaction_id'],
-                date=date,
-                amount=float(row['amount']),
-                merchant_name=row['merchant_name'],
-                category=category,
-                payment_channel=row['payment_channel'],
-                pending=bool(row['pending'])
-            )
-            transactions.append(transaction)
-
-        print(f"Loaded {len(transactions)} transactions")
-
-        # Run insights pipeline - request extra insights for queue
+        transactions = load_transactions_from_csv()
         insights_pipeline = get_pipeline()
         insights = insights_pipeline.generate_insights(
             transactions=transactions,
             user_name=user_name,
-            top_n=top_n + buffer  # Request extra insights for the queue
+            top_n=top_n + buffer
         )
-
         return insights
 
+    except FileNotFoundError as e:
+        logger.error(f"Transaction data not found: {e}")
+        raise HTTPException(status_code=404, detail="Transaction data not found")
     except Exception as e:
-        print(f"Error generating insights: {e}")
-        import traceback
-        traceback.print_exc()
+        logger.error(f"Error generating insights: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail=f"Error generating insights: {str(e)}")
 
 @app.get("/api/transactions/summary")
 async def get_transactions_summary():
-    """Get a summary of transaction data"""
+    """Get summary statistics for transaction data."""
     try:
-        csv_path = os.path.join(os.path.dirname(__file__), '..', '..', 'sample_transactions_1000_sorted.csv')
+        transactions = load_transactions_from_csv()
 
-        if not os.path.exists(csv_path):
-            raise HTTPException(status_code=404, detail="Transaction data not found")
-
-        df = pd.read_csv(csv_path)
+        dates = [t.date for t in transactions]
+        spending = sum(t.amount for t in transactions if t.amount < 0)
+        income = sum(t.amount for t in transactions if t.amount > 0)
 
         return {
-            "total_transactions": len(df),
+            "total_transactions": len(transactions),
             "date_range": {
-                "start": df['date'].min(),
-                "end": df['date'].max()
+                "start": min(dates).isoformat() if dates else None,
+                "end": max(dates).isoformat() if dates else None
             },
-            "total_spending": float(df[df['amount'] < 0]['amount'].sum()),
-            "total_income": float(df[df['amount'] > 0]['amount'].sum())
+            "total_spending": spending,
+            "total_income": income
         }
 
+    except FileNotFoundError:
+        raise HTTPException(status_code=404, detail="Transaction data not found")
     except Exception as e:
+        logger.error(f"Error getting summary: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail=f"Error getting summary: {str(e)}")
 
 
 # ============================================================================
 # GOAL FORECASTING ENDPOINTS
 # ============================================================================
-
-def load_transactions() -> List[Transaction]:
-    """Helper function to load transactions from CSV"""
-    csv_path = os.path.join(os.path.dirname(__file__), '..', '..', 'sample_transactions_1000_sorted.csv')
-
-    if not os.path.exists(csv_path):
-        raise HTTPException(status_code=404, detail="Transaction data not found")
-
-    df = pd.read_csv(csv_path)
-    transactions = []
-
-    for _, row in df.iterrows():
-        try:
-            category = json.loads(row['category']) if isinstance(row['category'], str) else row['category']
-        except json.JSONDecodeError:
-            category = [row['category']]
-
-        date = pd.to_datetime(row['date'])
-
-        transaction = Transaction(
-            transaction_id=row['transaction_id'],
-            date=date,
-            amount=float(row['amount']),
-            merchant_name=row['merchant_name'],
-            category=category,
-            payment_channel=row['payment_channel'],
-            pending=bool(row['pending'])
-        )
-        transactions.append(transaction)
-
-    return transactions
-
 
 @app.post("/api/goals", response_model=Goal)
 async def create_goal(
@@ -208,21 +136,9 @@ async def create_goal(
     current_savings: float = 0.0,
     priority_level: str = "medium",
     income_type: str = "fixed",
-    user_id: str = "default_user"
+    user_id: str = DEFAULT_USER_ID
 ):
-    """
-    Create a new savings goal
-
-    Parameters:
-    - goal_name: Name of the goal (e.g., "Tesla Down Payment")
-    - target_amount: Target amount to save
-    - deadline: Deadline date in ISO format (e.g., "2024-12-31")
-    - monthly_income: User's monthly income (required for forecasting)
-    - current_savings: Amount already saved (default: 0)
-    - priority_level: Priority level - "high", "medium", or "low" (default: "medium")
-    - income_type: Income stability - "fixed" or "variable" (default: "fixed")
-    - user_id: User identifier (default: "default_user")
-    """
+    """Create a new savings goal."""
     try:
         storage = get_goal_storage()
         goal = storage.create_goal(
@@ -237,34 +153,25 @@ async def create_goal(
         )
         return goal
     except Exception as e:
+        logger.error(f"Error creating goal: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail=f"Error creating goal: {str(e)}")
 
 
 @app.get("/api/goals", response_model=List[Goal])
-async def get_goals(user_id: str = "default_user"):
-    """
-    Get all goals for a user
-
-    Parameters:
-    - user_id: User identifier (default: "default_user")
-    """
+async def get_goals(user_id: str = DEFAULT_USER_ID):
+    """Get all goals for a user."""
     try:
         storage = get_goal_storage()
         goals = storage.get_all_goals(user_id=user_id)
         return goals
     except Exception as e:
+        logger.error(f"Error fetching goals: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail=f"Error fetching goals: {str(e)}")
 
 
 @app.get("/api/goals/{goal_id}", response_model=Goal)
-async def get_goal(goal_id: str, user_id: str = "default_user"):
-    """
-    Get a specific goal by ID
-
-    Parameters:
-    - goal_id: Goal identifier
-    - user_id: User identifier (default: "default_user")
-    """
+async def get_goal(goal_id: str, user_id: str = DEFAULT_USER_ID):
+    """Get a specific goal by ID."""
     try:
         storage = get_goal_storage()
         goal = storage.get_goal(goal_id, user_id=user_id)
@@ -276,50 +183,29 @@ async def get_goal(goal_id: str, user_id: str = "default_user"):
     except HTTPException:
         raise
     except Exception as e:
+        logger.error(f"Error fetching goal: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail=f"Error fetching goal: {str(e)}")
 
 
 @app.get("/api/goals/{goal_id}/forecast", response_model=GoalForecast)
-async def get_goal_forecast(goal_id: str, user_id: str = "default_user"):
+async def get_goal_forecast(goal_id: str, user_id: str = DEFAULT_USER_ID):
     """
-    Get forecast for a specific goal with recommendations
-
-    This endpoint:
-    1. Loads the user's transaction history
-    2. Calculates monthly SPENDING from transactions
-    3. Uses Prophet (or linear fallback) to forecast future SPENDING
-    4. Converts spending forecast to savings using user's income
-    5. Determines probability of reaching goal
-    6. Generates spending cut recommendations if off-track
-
-    The forecasting approach:
-    - Prophet models spending variability and seasonality
-    - Savings = Income - Predicted Spending
-    - Confidence intervals are inverted (lower spending = higher savings)
-
-    Parameters:
-    - goal_id: Goal identifier
-    - user_id: User identifier (default: "default_user")
+    Get forecast for a goal with ML-powered predictions and recommendations.
+    Uses Prophet for spending forecasts and derives savings projections.
     """
     try:
-        # Get the goal
         storage = get_goal_storage()
         goal = storage.get_goal(goal_id, user_id=user_id)
 
         if goal is None:
             raise HTTPException(status_code=404, detail="Goal not found")
 
-        # Load transactions
-        transactions = load_transactions()
-
-        # Get all active goals for competition analysis
+        transactions = load_transactions_from_csv()
         all_goals = storage.get_all_goals(user_id=user_id)
 
-        # Create forecaster and generate forecast (with all goals for competition analysis)
         forecaster = GoalForecaster(transactions)
         forecast = forecaster.forecast_goal(goal, all_goals=all_goals)
 
-        # If off-track, generate recommendations
         if forecast.gap_analysis is not None:
             rec_engine = RecommendationEngine(transactions)
             recommendations = rec_engine.generate_recommendations(
@@ -335,16 +221,14 @@ async def get_goal_forecast(goal_id: str, user_id: str = "default_user"):
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
     except Exception as e:
-        print(f"Error generating forecast: {e}")
-        import traceback
-        traceback.print_exc()
+        logger.error(f"Error generating forecast: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail=f"Error generating forecast: {str(e)}")
 
 
 @app.put("/api/goals/{goal_id}", response_model=Goal)
 async def update_goal(
     goal_id: str,
-    user_id: str = "default_user",
+    user_id: str = DEFAULT_USER_ID,
     goal_name: str = None,
     target_amount: float = None,
     deadline: str = None,
@@ -353,24 +237,10 @@ async def update_goal(
     monthly_income: float = None,
     income_type: str = None
 ):
-    """
-    Update an existing goal
-
-    Parameters:
-    - goal_id: Goal identifier
-    - user_id: User identifier (default: "default_user")
-    - goal_name: New goal name (optional)
-    - target_amount: New target amount (optional)
-    - deadline: New deadline (optional)
-    - current_savings: New current savings amount (optional)
-    - priority_level: New priority level (optional)
-    - monthly_income: New monthly income (optional)
-    - income_type: New income type - "fixed" or "variable" (optional)
-    """
+    """Update an existing goal with partial fields."""
     try:
         storage = get_goal_storage()
 
-        # Build updates dict
         updates = {}
         if goal_name is not None:
             updates['goal_name'] = goal_name
@@ -396,18 +266,13 @@ async def update_goal(
     except HTTPException:
         raise
     except Exception as e:
+        logger.error(f"Error updating goal: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail=f"Error updating goal: {str(e)}")
 
 
 @app.delete("/api/goals/{goal_id}")
-async def delete_goal(goal_id: str, user_id: str = "default_user"):
-    """
-    Delete a goal
-
-    Parameters:
-    - goal_id: Goal identifier
-    - user_id: User identifier (default: "default_user")
-    """
+async def delete_goal(goal_id: str, user_id: str = DEFAULT_USER_ID):
+    """Delete a goal by ID."""
     try:
         storage = get_goal_storage()
         success = storage.delete_goal(goal_id, user_id=user_id)
@@ -419,6 +284,7 @@ async def delete_goal(goal_id: str, user_id: str = "default_user"):
     except HTTPException:
         raise
     except Exception as e:
+        logger.error(f"Error deleting goal: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail=f"Error deleting goal: {str(e)}")
 
 
@@ -429,41 +295,17 @@ async def delete_goal(goal_id: str, user_id: str = "default_user"):
 @app.get("/api/subscriptions", response_model=SubscriptionSummary)
 async def detect_subscriptions():
     """
-    Detect recurring subscriptions and gray charges from transaction history
-
-    This endpoint analyzes the complete transaction history to detect:
-    1. Recurring subscriptions with regular intervals and consistent amounts
-    2. Gray charges (potentially forgotten/sneaky subscriptions)
-    3. Price increases (recent charges higher than historical average)
-    4. Trial conversions (recently started subscriptions)
-
-    The detection is purely algorithmic - no ML required:
-    - Groups transactions by normalized merchant name
-    - Analyzes interval regularity (CV < 20%)
-    - Matches to frequency buckets (weekly, monthly, quarterly, annual)
-    - Checks amount consistency (CV < 15%)
-    - Calculates confidence scores based on pattern strength
-    - Normalizes all costs to monthly/annual for comparison
-
-    Returns:
-    - Complete list of detected subscriptions
-    - Summary statistics (total monthly/annual costs)
-    - Flags for subscriptions needing attention
+    Detect recurring subscriptions using pattern analysis.
+    Identifies gray charges, price increases, and trial conversions.
     """
     try:
-        # Load transactions
-        transactions = load_transactions()
-
-        # Create detector and run detection
+        transactions = load_transactions_from_csv()
         detector = SubscriptionDetector(transactions)
         summary = detector.detect_subscriptions()
-
         return summary
 
     except Exception as e:
-        print(f"Error detecting subscriptions: {e}")
-        import traceback
-        traceback.print_exc()
+        logger.error(f"Error detecting subscriptions: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail=f"Error detecting subscriptions: {str(e)}")
 
 
@@ -474,43 +316,15 @@ async def detect_subscriptions():
 @app.post("/api/investment-capacity", response_model=InvestmentCapacityResponse)
 async def calculate_investment_capacity(request: InvestmentCapacityRequest):
     """
-    Calculate how much money is available to invest each month
-
-    This endpoint helps users understand their investable surplus by:
-    1. Starting with monthly take-home income (estimated from gross if needed)
-    2. Subtracting average monthly spending from transaction history
-    3. Subtracting monthly commitments to active savings goals
-    4. Providing educational content on beginner-friendly investment options
-
-    The calculation:
-    - If gross income is provided, applies a simplified 25% effective tax rate
-    - Analyzes the last 3 months of transaction history for spending patterns
-    - Sums required monthly savings for all active goals
-    - Returns the investable surplus along with investment education
-
-    Request Body:
-    - monthly_income: User's monthly income
-    - is_gross_income: True if gross income, False if net/take-home (default: True)
-    - user_id: User identifier for fetching goals (default: "default_user")
-
-    Returns:
-    - breakdown: Complete flow from income → take-home → spending → goals → investable surplus
-    - investment_options: List of 4 beginner-friendly options (HYSA, CDs, Index Funds, Roth IRA)
-    - calculation_period: Description of transaction analysis period
-    - active_goals_count: Number of active goals factored into calculation
+    Calculate monthly investable surplus after expenses and goal commitments.
+    Provides educational content on investment options for beginners.
     """
     try:
-        # Load transactions
-        transactions = load_transactions()
-
-        # Load active goals for the user
+        transactions = load_transactions_from_csv()
         storage = get_goal_storage()
         goals = storage.get_all_goals(user_id=request.user_id)
 
-        # Create calculator
         calculator = InvestmentCapacityCalculator(transactions, goals)
-
-        # Calculate investment capacity
         result = calculator.calculate(
             monthly_income=request.monthly_income,
             is_gross_income=request.is_gross_income
@@ -519,9 +333,7 @@ async def calculate_investment_capacity(request: InvestmentCapacityRequest):
         return result
 
     except Exception as e:
-        print(f"Error calculating investment capacity: {e}")
-        import traceback
-        traceback.print_exc()
+        logger.error(f"Error calculating investment capacity: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail=f"Error calculating investment capacity: {str(e)}")
 
 
@@ -552,49 +364,21 @@ class ChatResponse(BaseModel):
 @app.post("/api/coach/chat", response_model=ChatResponse)
 async def chat_with_coach(request: ChatRequest):
     """
-    Chat with the Natural Language Coach to ask questions about your finances.
-
-    This endpoint uses Claude's function calling to interpret natural language queries
-    and execute precise operations against your transaction history.
-
-    Examples:
-    - "How much did I spend on coffee last month?"
-    - "What are my top 5 spending categories?"
-    - "Am I spending more this month than last month?"
-    - "Show me my recurring subscriptions"
-    - "How am I progressing on my savings goals?"
-
-    Request Body:
-    - message: Your question in plain English
-    - conversation_history: Previous messages for context (optional)
-    - user_id: User identifier (default: "default_user")
-
-    Returns:
-    - response: Conversational answer to your question
-    - function_calls: List of data queries that were executed
-    - conversation_history: Updated conversation history for follow-ups
-
-    Note: Requires GEMINI_CHATBOT_API_KEY environment variable to be set
+    Natural language interface for querying financial data.
+    Uses Gemini function calling to interpret questions and execute data queries.
     """
-    # Check if API key is configured
     if not os.getenv("GEMINI_CHATBOT_API_KEY"):
         raise HTTPException(
             status_code=503,
-            detail="Natural Language Coach is not configured. GEMINI_CHATBOT_API_KEY environment variable is missing."
+            detail="Natural Language Coach not configured. GEMINI_CHATBOT_API_KEY missing."
         )
 
     try:
-        # Load transactions
-        transactions = load_transactions()
-
-        # Load goals
+        transactions = load_transactions_from_csv()
         storage = get_goal_storage()
         goals = storage.get_all_goals(user_id=request.user_id)
 
-        # Initialize coach
         coach = NaturalLanguageCoach(transactions, goals)
-
-        # Process chat message
         result = coach.chat(
             user_message=request.message,
             conversation_history=request.conversation_history
@@ -609,9 +393,7 @@ async def chat_with_coach(request: ChatRequest):
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
     except Exception as e:
-        print(f"Error in natural language coach: {e}")
-        import traceback
-        traceback.print_exc()
+        logger.error(f"Error in natural language coach: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail=f"Error processing chat: {str(e)}")
 
 

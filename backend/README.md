@@ -40,3 +40,8 @@ The API will be available at `http://localhost:8000`
 Once running, visit:
 - Swagger UI: `http://localhost:8000/docs`
 - ReDoc: `http://localhost:8000/redoc`
+
+## Youtube Recording Link
+
+Here is the link to my recording: 
+https://youtu.be/XxLfbW9oWWM 

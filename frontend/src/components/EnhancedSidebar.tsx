@@ -20,8 +20,6 @@ interface Goal {
 }
 
 export default function EnhancedSidebar({ onViewTransactions, onViewGoals }: EnhancedSidebarProps) {
-  const [showDNAAnalysis, setShowDNAAnalysis] = useState(false);
-
   const [goals, setGoals] = useState<Goal[]>([]);
   const API_BASE_URL = 'http://localhost:8000';
 
@@ -67,23 +65,46 @@ export default function EnhancedSidebar({ onViewTransactions, onViewGoals }: Enh
 
   return (
     <aside className="w-80 bg-gradient-to-b from-gray-50 to-white border-r border-gray-200 p-6 overflow-y-auto">
-      {/* Financial DNA Card */}
+      {/* Financial Illustration */}
       <div className="mb-6">
-        <div className="mb-2">
-          <h3 className="text-sm font-semibold text-gray-600 text-center">Financial DNA</h3>
-        </div>
-        <div
-          className="cursor-pointer transition-transform hover:scale-[1.02] active:scale-[0.98]"
-          onClick={() => setShowDNAAnalysis(true)}
-        >
-          <div className="h-48 bg-gradient-to-br from-purple-500 via-pink-500 to-teal-500 rounded-2xl p-6 text-white shadow-xl animate-gradient-shift border-2 border-white/30">
-            <div className="flex flex-col items-center justify-center h-full text-center">
-              <div className="text-6xl mb-3">🎯</div>
-              <h3 className="text-xl font-bold mb-1">The Weekend Warrior</h3>
-              <p className="text-sm text-white/80">Your Financial DNA</p>
-              <p className="text-xs text-white/60 mt-2">Click to view full analysis</p>
-            </div>
-          </div>
+        <div className="bg-gradient-to-br from-teal-500 to-cyan-600 rounded-2xl p-8 shadow-lg">
+          <svg viewBox="0 0 200 140" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-auto">
+            {/* Piggy Bank */}
+            <ellipse cx="100" cy="110" rx="45" ry="8" fill="white" opacity="0.2"/>
+            <ellipse cx="100" cy="80" rx="35" ry="30" fill="white" opacity="0.9"/>
+            <circle cx="100" cy="75" r="28" fill="white"/>
+            <circle cx="108" cy="72" r="3" fill="#0f766e"/>
+            <path d="M85 75 Q80 70, 78 68" stroke="#0f766e" strokeWidth="2" strokeLinecap="round" fill="none"/>
+            <ellipse cx="100" cy="95" rx="8" ry="6" fill="#fbbf24"/>
+            <rect x="96" y="40" width="8" height="12" rx="4" fill="#fbbf24"/>
+
+            {/* Coins */}
+            <g opacity="0.9">
+              <circle cx="50" cy="50" r="12" fill="#fbbf24"/>
+              <circle cx="50" cy="50" r="10" fill="#fcd34d" stroke="#f59e0b" strokeWidth="1"/>
+              <text x="50" y="54" fontSize="10" fill="#92400e" fontWeight="bold" textAnchor="middle">$</text>
+            </g>
+
+            <g opacity="0.9">
+              <circle cx="150" cy="45" r="10" fill="#fbbf24"/>
+              <circle cx="150" cy="45" r="8" fill="#fcd34d" stroke="#f59e0b" strokeWidth="1"/>
+              <text x="150" y="48" fontSize="8" fill="#92400e" fontWeight="bold" textAnchor="middle">$</text>
+            </g>
+
+            <g opacity="0.9">
+              <circle cx="140" cy="95" r="9" fill="#fbbf24"/>
+              <circle cx="140" cy="95" r="7" fill="#fcd34d" stroke="#f59e0b" strokeWidth="1"/>
+              <text x="140" y="98" fontSize="7" fill="#92400e" fontWeight="bold" textAnchor="middle">$</text>
+            </g>
+
+            {/* Growth Chart */}
+            <g transform="translate(30, 10)">
+              <path d="M0 30 L8 25 L16 28 L24 20 L32 15" stroke="#10b981" strokeWidth="3" strokeLinecap="round" fill="none"/>
+              <circle cx="32" cy="15" r="3" fill="#10b981"/>
+              <path d="M32 15 L36 10" stroke="#10b981" strokeWidth="2" strokeLinecap="round"/>
+              <path d="M32 15 L38 14" stroke="#10b981" strokeWidth="2" strokeLinecap="round"/>
+            </g>
+          </svg>
         </div>
       </div>
 
@@ -218,43 +239,7 @@ export default function EnhancedSidebar({ onViewTransactions, onViewGoals }: Enh
         </button>
       </div>
 
-      {/* DNA Analysis Modal */}
-      {showDNAAnalysis && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl p-8 w-full max-w-6xl h-[85vh] shadow-2xl animate-slide-up overflow-y-auto">
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-3xl font-bold text-gray-900">Financial DNA Analysis</h2>
-              <button
-                onClick={() => setShowDNAAnalysis(false)}
-                className="text-gray-400 hover:text-gray-600 transition-colors"
-              >
-                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
-            <div className="flex items-center justify-center h-[60vh] text-gray-400">
-              <p className="text-xl">Analysis content will go here...</p>
-            </div>
-          </div>
-        </div>
-      )}
-
       <style jsx>{`
-        @keyframes gradient-shift {
-          0%, 100% {
-            background-position: 0% 50%;
-          }
-          50% {
-            background-position: 100% 50%;
-          }
-        }
-
-        .animate-gradient-shift {
-          background-size: 200% 200%;
-          animation: gradient-shift 8s ease infinite;
-        }
-
         @keyframes pulse-subtle {
           0%, 100% {
             opacity: 1;
@@ -266,21 +251,6 @@ export default function EnhancedSidebar({ onViewTransactions, onViewGoals }: Enh
 
         .animate-pulse-subtle {
           animation: pulse-subtle 2s ease-in-out infinite;
-        }
-
-        @keyframes slide-up {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        .animate-slide-up {
-          animation: slide-up 0.4s ease-out;
         }
       `}</style>
     </aside>
