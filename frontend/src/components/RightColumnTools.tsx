@@ -2,14 +2,28 @@
 
 import { useState, useEffect } from 'react';
 
-interface InvestmentData {
-  income: number;
-  state: string;
-  zipCode: string;
-  afterTaxIncome: number;
-  recommendedInvestment: number;
-  surplusPercentage: number;
-  riskLevel: 'conservative' | 'moderate' | 'aggressive';
+interface InvestmentOption {
+  name: string;
+  risk_level: string;
+  typical_returns: string;
+  accessibility: string;
+  best_for: string;
+  description: string;
+}
+
+interface InvestmentBreakdown {
+  monthly_income: number;
+  take_home_income: number;
+  average_monthly_spending: number;
+  total_goal_commitments: number;
+  investable_surplus: number;
+}
+
+interface InvestmentCapacityResponse {
+  breakdown: InvestmentBreakdown;
+  investment_options: InvestmentOption[];
+  calculation_period: string;
+  active_goals_count: number;
 }
 
 interface ChatMessage {
@@ -72,9 +86,10 @@ interface SubscriptionSummary {
 
 export default function RightColumnTools() {
   const [showInvestmentModal, setShowInvestmentModal] = useState(false);
-  const [investmentData, setInvestmentData] = useState<InvestmentData | null>(null);
-  const [formData, setFormData] = useState({ income: '', state: '', zipCode: '' });
-  const [gaugeProgress, setGaugeProgress] = useState(0);
+  const [investmentData, setInvestmentData] = useState<InvestmentCapacityResponse | null>(null);
+  const [formData, setFormData] = useState({ income: '', isGross: true });
+  const [isCalculating, setIsCalculating] = useState(false);
+  const [expandedOption, setExpandedOption] = useState<number | null>(null);
 
   const [chatOpen, setChatOpen] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([
@@ -144,54 +159,39 @@ export default function RightColumnTools() {
     return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
   };
 
-  // Animate gauge on data load
-  useEffect(() => {
-    if (investmentData && gaugeProgress < investmentData.surplusPercentage) {
-      const timer = setTimeout(() => {
-        setGaugeProgress((prev) => Math.min(prev + 2, investmentData.surplusPercentage));
-      }, 20);
-      return () => clearTimeout(timer);
-    }
-  }, [gaugeProgress, investmentData]);
-
-  const calculateInvestment = () => {
+  const calculateInvestment = async () => {
     const income = parseFloat(formData.income);
-    // Mock tax calculation (simplified)
-    const taxRate = 0.25; // 25% effective tax rate
-    const afterTax = income * (1 - taxRate);
-    const monthlySpending = 4870; // From spending breakdown
-    const surplus = afterTax - monthlySpending;
-    const recommended = surplus * 0.7; // 70% of surplus
-    const percentage = (recommended / surplus) * 100;
+    if (isNaN(income) || income <= 0) {
+      alert('Please enter a valid income amount');
+      return;
+    }
 
-    const riskLevel: 'conservative' | 'moderate' | 'aggressive' =
-      percentage < 50 ? 'conservative' : percentage < 75 ? 'moderate' : 'aggressive';
+    setIsCalculating(true);
+    try {
+      const response = await fetch('http://localhost:8000/api/investment-capacity', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          monthly_income: income,
+          is_gross_income: formData.isGross,
+          user_id: 'default_user',
+        }),
+      });
 
-    const data: InvestmentData = {
-      income,
-      state: formData.state,
-      zipCode: formData.zipCode,
-      afterTaxIncome: afterTax,
-      recommendedInvestment: recommended,
-      surplusPercentage: percentage,
-      riskLevel,
-    };
+      if (!response.ok) {
+        throw new Error('Failed to calculate investment capacity');
+      }
 
-    setInvestmentData(data);
-    setShowInvestmentModal(false);
-    setGaugeProgress(0);
-  };
-
-  const getGaugeColor = (level: string) => {
-    switch (level) {
-      case 'conservative':
-        return '#10b981'; // green
-      case 'moderate':
-        return '#f59e0b'; // amber
-      case 'aggressive':
-        return '#ef4444'; // coral/red
-      default:
-        return '#6b7280';
+      const data: InvestmentCapacityResponse = await response.json();
+      setInvestmentData(data);
+      setShowInvestmentModal(false);
+    } catch (error) {
+      console.error('Error calculating investment capacity:', error);
+      alert('Failed to calculate investment capacity. Please try again.');
+    } finally {
+      setIsCalculating(false);
     }
   };
 
@@ -356,7 +356,7 @@ export default function RightColumnTools() {
       {/* Investment Capacity Predictor */}
       <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm mb-6">
         <h4 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
-          <span>📊</span> Investment Predictor
+          <span>📊</span> Investment Capacity
         </h4>
 
         {!investmentData ? (
@@ -368,75 +368,98 @@ export default function RightColumnTools() {
           </button>
         ) : (
           <div className="space-y-4">
-            {/* After-tax income */}
-            <div>
-              <p className="text-xs text-gray-600 mb-1">After-Tax Income</p>
-              <p className="text-lg font-semibold text-gray-900">
-                ${investmentData.afterTaxIncome.toLocaleString()}
-              </p>
-            </div>
-
-            {/* Spending Volatility Waveform */}
-            <div>
-              <p className="text-xs text-gray-600 mb-2">Spending Volatility</p>
-              <svg width="100%" height="30" viewBox="0 0 200 30">
-                <path
-                  d="M0,15 Q25,5 50,15 T100,15 T150,15 T200,15"
-                  stroke="#14b8a6"
-                  strokeWidth="2"
-                  fill="none"
-                  className="animate-pulse"
-                />
-              </svg>
-            </div>
-
-            {/* Recommended Investment */}
-            <div className="bg-gradient-to-br from-teal-50 to-cyan-50 rounded-lg p-4 border border-teal-200">
-              <p className="text-sm text-gray-700 mb-2">Recommended Safe Investment</p>
-              <p className="text-3xl font-bold text-teal-600">
-                ${Math.round(investmentData.recommendedInvestment).toLocaleString()}
-              </p>
-              <p className="text-xs text-gray-600 mt-1">per month</p>
-            </div>
-
-            {/* Circular Gauge */}
-            <div className="flex flex-col items-center">
-              <div className="relative w-32 h-32">
-                <svg className="transform -rotate-90" width="128" height="128">
-                  <circle
-                    cx="64"
-                    cy="64"
-                    r="56"
-                    stroke="#e5e7eb"
-                    strokeWidth="8"
-                    fill="none"
-                  />
-                  <circle
-                    cx="64"
-                    cy="64"
-                    r="56"
-                    stroke={getGaugeColor(investmentData.riskLevel)}
-                    strokeWidth="8"
-                    fill="none"
-                    strokeDasharray={`${2 * Math.PI * 56}`}
-                    strokeDashoffset={`${2 * Math.PI * 56 * (1 - gaugeProgress / 100)}`}
-                    className="transition-all duration-300"
-                    strokeLinecap="round"
-                  />
-                </svg>
-                <div className="absolute inset-0 flex flex-col items-center justify-center">
-                  <span className="text-2xl font-bold text-gray-900">{Math.round(gaugeProgress)}%</span>
-                  <span className="text-xs text-gray-600">of surplus</span>
-                </div>
+            {/* Visual Breakdown - Waterfall */}
+            <div className="space-y-3">
+              {/* Monthly Income */}
+              <div className="bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg p-3 border border-blue-200">
+                <p className="text-xs text-blue-700 font-medium">Monthly Income</p>
+                <p className="text-2xl font-bold text-blue-900">
+                  ${investmentData.breakdown.monthly_income.toLocaleString()}
+                </p>
               </div>
-              <p className="text-sm font-medium text-gray-700 mt-3 capitalize">
-                {investmentData.riskLevel} Risk
-              </p>
+
+              {/* Arrow down */}
+              <div className="flex justify-center">
+                <svg className="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10 3a1 1 0 011 1v10.586l2.293-2.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 14.586V4a1 1 0 011-1z" clipRule="evenodd" />
+                </svg>
+              </div>
+
+              {/* Take-Home Income (if different) */}
+              {investmentData.breakdown.monthly_income !== investmentData.breakdown.take_home_income && (
+                <>
+                  <div className="bg-gradient-to-r from-green-50 to-green-100 rounded-lg p-3 border border-green-200">
+                    <p className="text-xs text-green-700 font-medium">After-Tax Income (75%)</p>
+                    <p className="text-2xl font-bold text-green-900">
+                      ${investmentData.breakdown.take_home_income.toLocaleString()}
+                    </p>
+                  </div>
+                  <div className="flex justify-center">
+                    <svg className="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 3a1 1 0 011 1v10.586l2.293-2.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 14.586V4a1 1 0 011-1z" clipRule="evenodd" />
+                    </svg>
+                  </div>
+                </>
+              )}
+
+              {/* Spending */}
+              <div className="bg-gradient-to-r from-orange-50 to-orange-100 rounded-lg p-3 border border-orange-200">
+                <p className="text-xs text-orange-700 font-medium">Average Monthly Spending</p>
+                <p className="text-2xl font-bold text-orange-900">
+                  -${investmentData.breakdown.average_monthly_spending.toLocaleString()}
+                </p>
+                <p className="text-xs text-orange-600 mt-1">{investmentData.calculation_period}</p>
+              </div>
+
+              {/* Arrow down */}
+              {investmentData.breakdown.total_goal_commitments > 0 && (
+                <>
+                  <div className="flex justify-center">
+                    <svg className="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 3a1 1 0 011 1v10.586l2.293-2.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 14.586V4a1 1 0 011-1z" clipRule="evenodd" />
+                    </svg>
+                  </div>
+
+                  {/* Goal Commitments */}
+                  <div className="bg-gradient-to-r from-purple-50 to-purple-100 rounded-lg p-3 border border-purple-200">
+                    <p className="text-xs text-purple-700 font-medium">
+                      Goal Commitments ({investmentData.active_goals_count} {investmentData.active_goals_count === 1 ? 'goal' : 'goals'})
+                    </p>
+                    <p className="text-2xl font-bold text-purple-900">
+                      -${investmentData.breakdown.total_goal_commitments.toLocaleString()}
+                    </p>
+                  </div>
+                </>
+              )}
+
+              {/* Arrow down */}
+              <div className="flex justify-center">
+                <svg className="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10 3a1 1 0 011 1v10.586l2.293-2.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 14.586V4a1 1 0 011-1z" clipRule="evenodd" />
+                </svg>
+              </div>
+
+              {/* Available to Invest */}
+              <div className="bg-gradient-to-br from-teal-50 to-cyan-50 rounded-lg p-4 border-2 border-teal-300 shadow-md">
+                <p className="text-sm text-teal-700 font-semibold mb-2">💰 Available to Invest</p>
+                <p className="text-3xl font-bold text-teal-600">
+                  ${Math.round(investmentData.breakdown.investable_surplus).toLocaleString()}
+                </p>
+                <p className="text-xs text-teal-600 mt-1">per month</p>
+              </div>
             </div>
+
+            {/* Learn More Button */}
+            <button
+              onClick={() => setShowInvestmentModal(true)}
+              className="w-full bg-gradient-to-r from-teal-500 to-cyan-500 text-white py-3 rounded-lg font-medium hover:from-teal-600 hover:to-cyan-600 transition-all shadow-md"
+            >
+              📚 Learn Investment Options
+            </button>
 
             <button
               onClick={() => setInvestmentData(null)}
-              className="w-full text-sm text-teal-600 hover:text-teal-700 font-medium"
+              className="w-full text-sm text-gray-600 hover:text-gray-800 font-medium"
             >
               Recalculate
             </button>
@@ -522,59 +545,32 @@ export default function RightColumnTools() {
             {activeSubscriptions.map((sub) => (
               <div
                 key={sub.merchant_name}
-                className={`relative bg-gray-50 rounded-xl p-4 border transition-all ${
-                  sub.is_gray_charge ? 'border-amber-400 bg-amber-50/50' :
-                  sub.is_trial_conversion ? 'border-blue-400 bg-blue-50/50' :
-                  sub.has_price_increase ? 'border-red-300 bg-red-50/30' :
-                  'border-gray-200'
+                className={`rounded-xl p-4 border transition-all ${
+                  sub.is_gray_charge ? 'border-amber-400 bg-amber-50' :
+                  sub.is_trial_conversion ? 'border-blue-400 bg-blue-50' :
+                  sub.has_price_increase ? 'border-red-300 bg-red-50' :
+                  'border-gray-200 bg-white'
                 }`}
               >
-                {/* Warning/Status Badges */}
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 flex gap-1">
-                  {sub.is_gray_charge && (
-                    <div className="bg-amber-500 text-white text-[10px] px-2 py-0.5 rounded-full font-medium shadow-sm animate-pulse-subtle whitespace-nowrap">
-                      ⚠️ Gray Charge
-                    </div>
-                  )}
-                  {sub.is_trial_conversion && (
-                    <div className="bg-blue-500 text-white text-[10px] px-2 py-0.5 rounded-full font-medium shadow-sm whitespace-nowrap">
-                      🆕 New Trial
-                    </div>
-                  )}
-                </div>
-
-                <div className="flex items-start gap-4">
-                  {/* Logo/Initials */}
+                {/* Header: Logo, Name, and Price */}
+                <div className="flex items-center gap-3 mb-3">
+                  {/* Logo */}
                   <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center text-white font-bold text-base flex-shrink-0 shadow-md">
                     {getInitials(sub.merchant_name)}
                   </div>
 
+                  {/* Name and Price */}
                   <div className="flex-1 min-w-0">
-                    {/* Name and Amount */}
-                    <div className="flex items-start justify-between mb-2">
-                      <div className="flex-1 min-w-0">
-                        <h5 className="font-bold text-gray-900 text-base truncate capitalize mb-1">
-                          {sub.original_merchant_name}
-                        </h5>
-                        <div className="flex items-center gap-1.5">
-                          <div className="w-full bg-gray-200 rounded-full h-1.5">
-                            <div
-                              className="bg-gradient-to-r from-green-500 to-emerald-500 h-1.5 rounded-full transition-all duration-500"
-                              style={{ width: `${sub.confidence_score}%` }}
-                            ></div>
-                          </div>
-                          <span className="text-xs text-gray-600 font-medium whitespace-nowrap">
-                            {sub.confidence_score.toFixed(0)}%
-                          </span>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-1.5 ml-3">
+                    <div className="flex items-center justify-between mb-1">
+                      <h5 className="font-bold text-gray-900 text-base capitalize truncate">
+                        {sub.original_merchant_name}
+                      </h5>
+                      <div className="flex items-center gap-1 ml-2 flex-shrink-0">
                         {sub.has_price_increase && sub.price_increase && (
                           <div className="group relative">
-                            <svg className="w-5 h-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+                            <svg className="w-4 h-4 text-red-500" fill="currentColor" viewBox="0 0 20 20">
                               <path fillRule="evenodd" d="M5.293 7.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 5.414V17a1 1 0 11-2 0V5.414L6.707 7.707a1 1 0 01-1.414 0z" clipRule="evenodd" />
                             </svg>
-                            {/* Tooltip */}
                             <div className="absolute bottom-full right-0 mb-2 hidden group-hover:block w-48 bg-gray-900 text-white text-xs rounded-lg px-3 py-2 z-10 shadow-xl">
                               <div className="font-semibold mb-1">Price Increased</div>
                               <div>${sub.price_increase.old_price} → ${sub.price_increase.new_price} (+{sub.price_increase.percent_change.toFixed(1)}%)</div>
@@ -586,31 +582,61 @@ export default function RightColumnTools() {
                       </div>
                     </div>
 
-                    {/* Frequency and Details */}
-                    <div className="flex items-center gap-2 text-sm text-gray-600 mb-3">
-                      <span className="capitalize font-medium">{sub.frequency}</span>
-                      <span>•</span>
-                      <span>{sub.transaction_count} charges</span>
-                      <span>•</span>
-                      <span className="text-xs">Next: {formatDate(sub.next_predicted_date)}</span>
-                    </div>
-
-                    {/* Actions */}
-                    <div className="flex gap-2">
-                      <button
-                        onClick={() => handleSubscriptionAction(sub.merchant_name, 'dismiss')}
-                        className="flex-1 text-sm py-2 px-3 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors font-medium"
-                      >
-                        Dismiss
-                      </button>
-                      <button
-                        onClick={() => handleSubscriptionAction(sub.merchant_name, 'flag')}
-                        className="flex-1 text-sm py-2 px-3 bg-red-100 text-red-700 rounded-lg hover:bg-red-200 transition-colors font-medium"
-                      >
-                        Cancel
-                      </button>
+                    {/* Badges */}
+                    <div className="flex items-center gap-1.5 flex-wrap">
+                      {sub.is_gray_charge && (
+                        <span className="bg-amber-500 text-white text-[10px] px-2 py-0.5 rounded-full font-medium">
+                          ⚠️ Gray Charge
+                        </span>
+                      )}
+                      {sub.is_trial_conversion && (
+                        <span className="bg-blue-500 text-white text-[10px] px-2 py-0.5 rounded-full font-medium">
+                          🆕 New Trial
+                        </span>
+                      )}
+                      <span className="text-xs text-gray-600 capitalize">{sub.frequency}</span>
+                      <span className="text-xs text-gray-400">•</span>
+                      <span className="text-xs text-gray-600">{sub.transaction_count} charges</span>
                     </div>
                   </div>
+                </div>
+
+                {/* Confidence Bar */}
+                <div className="mb-3">
+                  <div className="flex items-center gap-2">
+                    <div className="flex-1 bg-gray-200 rounded-full h-1.5">
+                      <div
+                        className="bg-gradient-to-r from-green-500 to-emerald-500 h-1.5 rounded-full transition-all duration-500"
+                        style={{ width: `${sub.confidence_score}%` }}
+                      ></div>
+                    </div>
+                    <span className="text-xs text-gray-600 font-medium whitespace-nowrap">
+                      {sub.confidence_score.toFixed(0)}% confidence
+                    </span>
+                  </div>
+                </div>
+
+                {/* Next Charge Date */}
+                <div className="mb-3">
+                  <p className="text-xs text-gray-600">
+                    Next charge: <span className="font-medium text-gray-900">{formatDate(sub.next_predicted_date)}</span>
+                  </p>
+                </div>
+
+                {/* Actions */}
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => handleSubscriptionAction(sub.merchant_name, 'dismiss')}
+                    className="flex-1 text-sm py-2 px-3 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium"
+                  >
+                    Keep
+                  </button>
+                  <button
+                    onClick={() => handleSubscriptionAction(sub.merchant_name, 'flag')}
+                    className="flex-1 text-sm py-2 px-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors font-medium"
+                  >
+                    Mark to Cancel
+                  </button>
                 </div>
               </div>
             ))}
@@ -624,7 +650,7 @@ export default function RightColumnTools() {
               <h5 className="text-base font-bold text-gray-900">
                 Marked for Cancellation
               </h5>
-              <span className="bg-red-100 text-red-700 text-xs font-bold px-2.5 py-1 rounded-full">
+              <span className="bg-red-500 text-white text-xs font-bold px-2.5 py-1 rounded-full">
                 {flaggedSubscriptions.length}
               </span>
             </div>
@@ -634,16 +660,16 @@ export default function RightColumnTools() {
                   key={sub.merchant_name}
                   className="bg-red-50 rounded-xl p-4 border border-red-200"
                 >
-                  <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 bg-gray-400 rounded-xl flex items-center justify-center text-white font-bold text-sm flex-shrink-0 opacity-50">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-gray-400 rounded-xl flex items-center justify-center text-white font-bold text-sm flex-shrink-0 opacity-60">
                       {getInitials(sub.merchant_name)}
                     </div>
-                    <div className="flex-1">
-                      <p className="font-bold text-gray-900 text-base line-through capitalize mb-1">
+                    <div className="flex-1 min-w-0">
+                      <p className="font-bold text-gray-700 text-base line-through capitalize mb-1">
                         {sub.original_merchant_name}
                       </p>
-                      <div className="flex items-center gap-2 text-sm text-gray-600">
-                        <span className="font-semibold">${sub.monthly_cost.toFixed(2)}/mo</span>
+                      <div className="flex items-center gap-2 text-xs text-gray-600">
+                        <span className="font-semibold text-red-600">${sub.monthly_cost.toFixed(2)}/mo</span>
                         <span>•</span>
                         <span className="capitalize">{sub.frequency}</span>
                       </div>
@@ -652,23 +678,27 @@ export default function RightColumnTools() {
                       onClick={() => setSubscriptions(subscriptions.map(s =>
                         s.merchant_name === sub.merchant_name ? { ...s, status: 'active' } : s
                       ))}
-                      className="text-sm text-red-600 hover:text-red-700 font-semibold px-3 py-2 hover:bg-red-100 rounded-lg transition-colors"
+                      className="text-xs text-teal-600 hover:text-teal-700 font-semibold px-3 py-1.5 bg-white border border-teal-300 hover:bg-teal-50 rounded-lg transition-colors flex-shrink-0"
                     >
                       Undo
                     </button>
                   </div>
                 </div>
               ))}
-              <div className="bg-green-50 border border-green-200 rounded-xl p-4 mt-4">
-                <p className="text-sm font-semibold text-green-800 mb-1">
-                  💰 Potential Monthly Savings
-                </p>
-                <p className="text-2xl font-bold text-green-600">
-                  ${flaggedSubscriptions.reduce((sum, s) => sum + s.monthly_cost, 0).toFixed(2)}
-                </p>
-                <p className="text-xs text-green-700 mt-1">
-                  ${(flaggedSubscriptions.reduce((sum, s) => sum + s.monthly_cost, 0) * 12).toFixed(2)}/year if cancelled
-                </p>
+              <div className="bg-gradient-to-br from-green-50 to-emerald-50 border-2 border-green-300 rounded-xl p-4 mt-4 shadow-sm">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm font-semibold text-green-800 mb-1">
+                      💰 Potential Savings
+                    </p>
+                    <p className="text-xs text-green-700">
+                      ${(flaggedSubscriptions.reduce((sum, s) => sum + s.monthly_cost, 0) * 12).toFixed(2)}/year
+                    </p>
+                  </div>
+                  <p className="text-3xl font-bold text-green-600">
+                    ${flaggedSubscriptions.reduce((sum, s) => sum + s.monthly_cost, 0).toFixed(2)}<span className="text-sm font-medium text-green-700">/mo</span>
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -677,56 +707,152 @@ export default function RightColumnTools() {
 
       {/* Investment Modal */}
       {showInvestmentModal && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl p-6 w-full max-w-md shadow-2xl animate-slide-up">
-            <h3 className="text-2xl font-bold text-gray-900 mb-4">Investment Calculator</h3>
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Monthly Income</label>
-                <input
-                  type="number"
-                  value={formData.income}
-                  onChange={(e) => setFormData({ ...formData, income: e.target.value })}
-                  placeholder="e.g., 8000"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-400"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">State</label>
-                <input
-                  type="text"
-                  value={formData.state}
-                  onChange={(e) => setFormData({ ...formData, state: e.target.value })}
-                  placeholder="e.g., CA"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-400"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Zip Code</label>
-                <input
-                  type="text"
-                  value={formData.zipCode}
-                  onChange={(e) => setFormData({ ...formData, zipCode: e.target.value })}
-                  placeholder="e.g., 90210"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-400"
-                />
-              </div>
-            </div>
-            <div className="flex gap-3 mt-6">
-              <button
-                onClick={() => setShowInvestmentModal(false)}
-                className="flex-1 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors font-medium"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={calculateInvestment}
-                disabled={!formData.income || !formData.state || !formData.zipCode}
-                className="flex-1 px-4 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                Calculate
-              </button>
-            </div>
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4" onClick={() => !investmentData && setShowInvestmentModal(false)}>
+          <div className="bg-white rounded-2xl p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-2xl animate-slide-up" onClick={(e) => e.stopPropagation()}>
+            {!investmentData ? (
+              <>
+                <h3 className="text-2xl font-bold text-gray-900 mb-4">Calculate Investment Capacity</h3>
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Monthly Income</label>
+                    <input
+                      type="number"
+                      value={formData.income}
+                      onChange={(e) => setFormData({ ...formData, income: e.target.value })}
+                      placeholder="e.g., 8000"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-400"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Income Type</label>
+                    <div className="flex gap-4">
+                      <label className="flex items-center cursor-pointer">
+                        <input
+                          type="radio"
+                          checked={formData.isGross}
+                          onChange={() => setFormData({ ...formData, isGross: true })}
+                          className="mr-2"
+                        />
+                        <span className="text-sm">Gross (before taxes)</span>
+                      </label>
+                      <label className="flex items-center cursor-pointer">
+                        <input
+                          type="radio"
+                          checked={!formData.isGross}
+                          onChange={() => setFormData({ ...formData, isGross: false })}
+                          className="mr-2"
+                        />
+                        <span className="text-sm">Net (take-home)</span>
+                      </label>
+                    </div>
+                  </div>
+                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
+                    <p className="text-xs text-blue-700">
+                      💡 We'll analyze your transaction history and active savings goals to show you exactly
+                      how much you have available to invest each month.
+                    </p>
+                  </div>
+                </div>
+                <div className="flex gap-3 mt-6">
+                  <button
+                    onClick={() => setShowInvestmentModal(false)}
+                    className="flex-1 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors font-medium"
+                    disabled={isCalculating}
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={calculateInvestment}
+                    disabled={!formData.income || isCalculating}
+                    className="flex-1 px-4 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {isCalculating ? 'Calculating...' : 'Calculate'}
+                  </button>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="flex justify-between items-center mb-6">
+                  <h3 className="text-2xl font-bold text-gray-900">Investment Options for Beginners</h3>
+                  <button
+                    onClick={() => setShowInvestmentModal(false)}
+                    className="text-gray-400 hover:text-gray-600 transition-colors"
+                  >
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                </div>
+
+                <div className="bg-gradient-to-r from-teal-50 to-cyan-50 rounded-lg p-4 border border-teal-200 mb-6">
+                  <p className="text-sm text-teal-700 mb-2">You have <strong>${Math.round(investmentData.breakdown.investable_surplus).toLocaleString()}/month</strong> available to invest</p>
+                  <p className="text-xs text-teal-600">
+                    Here are beginner-friendly options for putting that money to work:
+                  </p>
+                </div>
+
+                <div className="space-y-4">
+                  {investmentData.investment_options.map((option, index) => (
+                    <div key={index} className="border border-gray-200 rounded-lg overflow-hidden">
+                      <button
+                        onClick={() => setExpandedOption(expandedOption === index ? null : index)}
+                        className="w-full p-4 bg-white hover:bg-gray-50 transition-colors text-left"
+                      >
+                        <div className="flex items-start justify-between">
+                          <div className="flex-1">
+                            <h4 className="font-bold text-gray-900 mb-2">{option.name}</h4>
+                            <div className="flex flex-wrap gap-2 mb-2">
+                              <span className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded-full font-medium">
+                                {option.risk_level}
+                              </span>
+                              <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full font-medium">
+                                {option.typical_returns}
+                              </span>
+                            </div>
+                            <p className="text-sm text-gray-600">
+                              <strong>Access:</strong> {option.accessibility}
+                            </p>
+                          </div>
+                          <svg
+                            className={`w-5 h-5 text-gray-400 transition-transform ${expandedOption === index ? 'transform rotate-180' : ''}`}
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                          </svg>
+                        </div>
+                      </button>
+
+                      {expandedOption === index && (
+                        <div className="px-4 pb-4 bg-gray-50 border-t border-gray-200 animate-slide-down">
+                          <div className="pt-4 space-y-3">
+                            <div>
+                              <p className="text-xs font-semibold text-gray-700 mb-1">Best For:</p>
+                              <p className="text-sm text-gray-600">{option.best_for}</p>
+                            </div>
+                            <div>
+                              <p className="text-xs font-semibold text-gray-700 mb-1">What It Is:</p>
+                              <p className="text-sm text-gray-600 leading-relaxed">{option.description}</p>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+
+                <div className="mt-6 bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                  <p className="text-xs text-yellow-800 mb-2">
+                    <strong>⚠️ Not Financial Advice:</strong>
+                  </p>
+                  <p className="text-xs text-yellow-700">
+                    This information is educational only. Do your own research and consider consulting
+                    a financial advisor before making investment decisions. Your financial situation is unique.
+                  </p>
+                </div>
+              </>
+            )}
           </div>
         </div>
       )}
@@ -869,6 +995,17 @@ export default function RightColumnTools() {
           }
         }
 
+        @keyframes slide-down {
+          from {
+            opacity: 0;
+            max-height: 0;
+          }
+          to {
+            opacity: 1;
+            max-height: 500px;
+          }
+        }
+
         .animate-bounce-subtle {
           animation: bounce-subtle 2s ease-in-out infinite;
         }
@@ -879,6 +1016,10 @@ export default function RightColumnTools() {
 
         .animate-slide-up {
           animation: slide-up 0.4s ease-out;
+        }
+
+        .animate-slide-down {
+          animation: slide-down 0.3s ease-out;
         }
       `}</style>
     </aside>

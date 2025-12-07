@@ -245,3 +245,39 @@ class SubscriptionSummary(BaseModel):
     price_increases_count: int
     trial_conversions_count: int
     subscriptions: List[Subscription]
+
+
+# Investment Capacity Predictor Models
+
+class InvestmentCapacityRequest(BaseModel):
+    """Request model for calculating investment capacity"""
+    monthly_income: float  # User's monthly income
+    is_gross_income: bool = True  # True if gross income, False if net/take-home
+    user_id: str = "default_user"  # User identifier for fetching goals
+
+
+class InvestmentOption(BaseModel):
+    """Information about a beginner-friendly investment option"""
+    name: str  # e.g., "High-Yield Savings Account"
+    risk_level: str  # e.g., "Zero risk"
+    typical_returns: str  # e.g., "4-5% APY"
+    accessibility: str  # e.g., "Instant access"
+    best_for: str  # e.g., "Emergency funds and short-term goals"
+    description: str  # Plain-language explanation
+
+
+class InvestmentBreakdown(BaseModel):
+    """Visual breakdown of income flow to investable surplus"""
+    monthly_income: float  # Original income entered
+    take_home_income: float  # After-tax income (if gross was provided)
+    average_monthly_spending: float  # Average spending from transactions
+    total_goal_commitments: float  # Monthly savings committed to active goals
+    investable_surplus: float  # Final amount available to invest
+
+
+class InvestmentCapacityResponse(BaseModel):
+    """Complete response with calculation breakdown and investment options"""
+    breakdown: InvestmentBreakdown
+    investment_options: List[InvestmentOption]
+    calculation_period: str  # e.g., "Based on last 3 months"
+    active_goals_count: int  # Number of active goals considered

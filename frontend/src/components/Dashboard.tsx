@@ -6,10 +6,12 @@ import TransactionPreview from './TransactionPreview';
 import AIInsightsFeed from './AIInsightsFeed';
 import RightColumnTools from './RightColumnTools';
 import GoalDashboard from './GoalDashboard';
+import NLCoach from './NLCoach';
 
 export default function Dashboard() {
   const [showTransactions, setShowTransactions] = useState(false);
   const [showGoals, setShowGoals] = useState(false);
+  const [showCoach, setShowCoach] = useState(false);
 
   return (
     <div className="min-h-screen bg-white flex">
@@ -79,6 +81,26 @@ export default function Dashboard() {
           </div>
         </div>
       )}
+
+      {/* Natural Language Coach Modal */}
+      {showCoach && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in" onClick={() => setShowCoach(false)}>
+          <div className="w-full max-w-3xl h-[90vh] animate-slide-up" onClick={(e) => e.stopPropagation()}>
+            <NLCoach onClose={() => setShowCoach(false)} />
+          </div>
+        </div>
+      )}
+
+      {/* Floating Chat Button */}
+      <button
+        onClick={() => setShowCoach(true)}
+        className="fixed bottom-8 right-8 w-16 h-16 bg-blue-500 hover:bg-blue-600 text-white rounded-full shadow-2xl flex items-center justify-center transition-all hover:scale-110 z-40"
+        aria-label="Open Financial Coach"
+      >
+        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+        </svg>
+      </button>
 
       <style jsx>{`
         @keyframes fade-in {

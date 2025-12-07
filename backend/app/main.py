@@ -4,15 +4,21 @@ from dotenv import load_dotenv
 import os
 import pandas as pd
 import json
-from typing import List
+from typing import List, Optional, Dict, Any
 from datetime import datetime
+from pydantic import BaseModel
 
-from app.models import Transaction, Insight, Goal, GoalForecast, SubscriptionSummary
+from app.models import (
+    Transaction, Insight, Goal, GoalForecast, SubscriptionSummary,
+    InvestmentCapacityRequest, InvestmentCapacityResponse
+)
 from insights.pipeline import InsightsPipeline
 from goals.storage import get_goal_storage
 from goals.forecaster import GoalForecaster
 from goals.recommendations import RecommendationEngine
 from spending.subscription_detector import SubscriptionDetector
+from app.investment_calculator import InvestmentCapacityCalculator
+from nlp_coach.coach import NaturalLanguageCoach
 
 # Load environment variables from root .env file
 # Note: .env is in project root, need to go up 2 levels from app/main.py
@@ -459,6 +465,154 @@ async def detect_subscriptions():
         import traceback
         traceback.print_exc()
         raise HTTPException(status_code=500, detail=f"Error detecting subscriptions: {str(e)}")
+
+
+# ============================================================================
+# INVESTMENT CAPACITY PREDICTOR ENDPOINTS
+# ============================================================================
+
+@app.post("/api/investment-capacity", response_model=InvestmentCapacityResponse)
+async def calculate_investment_capacity(request: InvestmentCapacityRequest):
+    """
+    Calculate how much money is available to invest each month
+
+    This endpoint helps users understand their investable surplus by:
+    1. Starting with monthly take-home income (estimated from gross if needed)
+    2. Subtracting average monthly spending from transaction history
+    3. Subtracting monthly commitments to active savings goals
+    4. Providing educational content on beginner-friendly investment options
+
+    The calculation:
+    - If gross income is provided, applies a simplified 25% effective tax rate
+    - Analyzes the last 3 months of transaction history for spending patterns
+    - Sums required monthly savings for all active goals
+    - Returns the investable surplus along with investment education
+
+    Request Body:
+    - monthly_income: User's monthly income
+    - is_gross_income: True if gross income, False if net/take-home (default: True)
+    - user_id: User identifier for fetching goals (default: "default_user")
+
+    Returns:
+    - breakdown: Complete flow from income → take-home → spending → goals → investable surplus
+    - investment_options: List of 4 beginner-friendly options (HYSA, CDs, Index Funds, Roth IRA)
+    - calculation_period: Description of transaction analysis period
+    - active_goals_count: Number of active goals factored into calculation
+    """
+    try:
+        # Load transactions
+        transactions = load_transactions()
+
+        # Load active goals for the user
+        storage = get_goal_storage()
+        goals = storage.get_all_goals(user_id=request.user_id)
+
+        # Create calculator
+        calculator = InvestmentCapacityCalculator(transactions, goals)
+
+        # Calculate investment capacity
+        result = calculator.calculate(
+            monthly_income=request.monthly_income,
+            is_gross_income=request.is_gross_income
+        )
+
+        return result
+
+    except Exception as e:
+        print(f"Error calculating investment capacity: {e}")
+        import traceback
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail=f"Error calculating investment capacity: {str(e)}")
+
+
+# ============================================================================
+# NATURAL LANGUAGE COACH ENDPOINTS
+# ============================================================================
+
+class ChatMessage(BaseModel):
+    """Individual message in chat history"""
+    role: str
+    content: Any
+
+
+class ChatRequest(BaseModel):
+    """Request model for natural language coach chat"""
+    message: str  # User's message
+    conversation_history: Optional[List[Dict[str, Any]]] = []  # Previous messages
+    user_id: str = "default_user"  # User identifier for fetching goals
+
+
+class ChatResponse(BaseModel):
+    """Response model for natural language coach chat"""
+    response: str  # Assistant's response text
+    function_calls: List[Dict[str, Any]]  # Functions that were called
+    conversation_history: List[Dict[str, Any]]  # Updated conversation history
+
+
+@app.post("/api/coach/chat", response_model=ChatResponse)
+async def chat_with_coach(request: ChatRequest):
+    """
+    Chat with the Natural Language Coach to ask questions about your finances.
+
+    This endpoint uses Claude's function calling to interpret natural language queries
+    and execute precise operations against your transaction history.
+
+    Examples:
+    - "How much did I spend on coffee last month?"
+    - "What are my top 5 spending categories?"
+    - "Am I spending more this month than last month?"
+    - "Show me my recurring subscriptions"
+    - "How am I progressing on my savings goals?"
+
+    Request Body:
+    - message: Your question in plain English
+    - conversation_history: Previous messages for context (optional)
+    - user_id: User identifier (default: "default_user")
+
+    Returns:
+    - response: Conversational answer to your question
+    - function_calls: List of data queries that were executed
+    - conversation_history: Updated conversation history for follow-ups
+
+    Note: Requires GEMINI_CHATBOT_API_KEY environment variable to be set
+    """
+    # Check if API key is configured
+    if not os.getenv("GEMINI_CHATBOT_API_KEY"):
+        raise HTTPException(
+            status_code=503,
+            detail="Natural Language Coach is not configured. GEMINI_CHATBOT_API_KEY environment variable is missing."
+        )
+
+    try:
+        # Load transactions
+        transactions = load_transactions()
+
+        # Load goals
+        storage = get_goal_storage()
+        goals = storage.get_all_goals(user_id=request.user_id)
+
+        # Initialize coach
+        coach = NaturalLanguageCoach(transactions, goals)
+
+        # Process chat message
+        result = coach.chat(
+            user_message=request.message,
+            conversation_history=request.conversation_history
+        )
+
+        return ChatResponse(
+            response=result["response"],
+            function_calls=result["function_calls"],
+            conversation_history=result["conversation_history"]
+        )
+
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    except Exception as e:
+        print(f"Error in natural language coach: {e}")
+        import traceback
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail=f"Error processing chat: {str(e)}")
 
 
 if __name__ == "__main__":

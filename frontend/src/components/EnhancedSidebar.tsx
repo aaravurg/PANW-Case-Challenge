@@ -21,10 +21,6 @@ interface Goal {
 
 export default function EnhancedSidebar({ onViewTransactions, onViewGoals }: EnhancedSidebarProps) {
   const [showDNAAnalysis, setShowDNAAnalysis] = useState(false);
-  const [showImpulseAnalysis, setShowImpulseAnalysis] = useState(false);
-  const [impulsePrice, setImpulsePrice] = useState('');
-  const [laborHours, setLaborHours] = useState(0);
-  const [animatedHours, setAnimatedHours] = useState(0);
 
   const [goals, setGoals] = useState<Goal[]>([]);
   const API_BASE_URL = 'http://localhost:8000';
@@ -51,47 +47,10 @@ export default function EnhancedSidebar({ onViewTransactions, onViewGoals }: Enh
         return new Date(a.deadline).getTime() - new Date(b.deadline).getTime();
       });
 
-      // Take only the first 2 goals for the sidebar
-      setGoals(sortedGoals.slice(0, 2));
+      // Show all goals in the sidebar
+      setGoals(sortedGoals);
     } catch (err) {
       console.error('Error loading goals:', err);
-    }
-  };
-
-  const hourlyWage = 25; // Mock hourly wage
-
-  // Counting animation for labor hours
-  useEffect(() => {
-    if (laborHours > 0) {
-      const duration = 500;
-      const steps = 30;
-      const increment = laborHours / steps;
-      let current = 0;
-      let step = 0;
-
-      const timer = setInterval(() => {
-        step++;
-        current = Math.min(current + increment, laborHours);
-        setAnimatedHours(current);
-
-        if (step >= steps) {
-          clearInterval(timer);
-          setAnimatedHours(laborHours);
-        }
-      }, duration / steps);
-
-      return () => clearInterval(timer);
-    }
-  }, [laborHours]);
-
-  const handleImpulseChange = (value: string) => {
-    setImpulsePrice(value);
-    const price = parseFloat(value);
-    if (!isNaN(price) && price > 0) {
-      setLaborHours(price / hourlyWage);
-    } else {
-      setLaborHours(0);
-      setAnimatedHours(0);
     }
   };
 
@@ -246,38 +205,6 @@ export default function EnhancedSidebar({ onViewTransactions, onViewGoals }: Enh
         </div>
       </div>
 
-      {/* Impulse Interceptor */}
-      <div className="bg-gradient-to-br from-teal-50 to-cyan-50 rounded-xl p-4 border border-teal-200">
-        <div className="flex items-center justify-between mb-3">
-          <h3 className="text-sm font-bold text-gray-900">💡 Impulse Interceptor</h3>
-          <button
-            onClick={() => setShowImpulseAnalysis(true)}
-            className="text-teal-600 hover:text-teal-700 transition-colors"
-            title="Expand analysis"
-          >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
-            </svg>
-          </button>
-        </div>
-        <input
-          type="number"
-          value={impulsePrice}
-          onChange={(e) => handleImpulseChange(e.target.value)}
-          placeholder="Enter a price..."
-          className="w-full px-3 py-2 rounded-lg border border-teal-300 focus:outline-none focus:ring-2 focus:ring-teal-400 bg-white text-sm mb-2"
-        />
-        {laborHours > 0 && (
-          <div className="bg-white rounded-lg p-3 border border-teal-200 animate-slide-down">
-            <p className="text-xs text-gray-600 mb-1">That's equivalent to:</p>
-            <p className="text-2xl font-bold text-teal-600">
-              {animatedHours.toFixed(1)} <span className="text-sm font-normal">hours</span>
-            </p>
-            <p className="text-xs text-gray-500 mt-1">of your labor time</p>
-          </div>
-        )}
-      </div>
-
       {/* Navigation */}
       <div className="mt-6 pt-6 border-t border-gray-200">
         <button
@@ -313,28 +240,6 @@ export default function EnhancedSidebar({ onViewTransactions, onViewGoals }: Enh
         </div>
       )}
 
-      {/* Impulse Analysis Modal */}
-      {showImpulseAnalysis && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl p-8 w-full max-w-6xl h-[85vh] shadow-2xl animate-slide-up overflow-y-auto">
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-3xl font-bold text-gray-900">Impulse Interceptor Analysis</h2>
-              <button
-                onClick={() => setShowImpulseAnalysis(false)}
-                className="text-gray-400 hover:text-gray-600 transition-colors"
-              >
-                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
-            <div className="flex items-center justify-center h-[60vh] text-gray-400">
-              <p className="text-xl">Impulse analysis content will go here...</p>
-            </div>
-          </div>
-        </div>
-      )}
-
       <style jsx>{`
         @keyframes gradient-shift {
           0%, 100% {
@@ -361,21 +266,6 @@ export default function EnhancedSidebar({ onViewTransactions, onViewGoals }: Enh
 
         .animate-pulse-subtle {
           animation: pulse-subtle 2s ease-in-out infinite;
-        }
-
-        @keyframes slide-down {
-          from {
-            opacity: 0;
-            transform: translateY(-10px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        .animate-slide-down {
-          animation: slide-down 0.3s ease-out;
         }
 
         @keyframes slide-up {
