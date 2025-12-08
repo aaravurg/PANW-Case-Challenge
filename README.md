@@ -7,6 +7,10 @@ A full-stack application built with Next.js (frontend) and FastAPI (backend) for
 Watch the project demo and walkthrough on YouTube:
 [YouTube Recording](https://youtu.be/XxLfbW9oWWM)
 
+## Design Doc
+
+The design doc is a pdf file by the name PANW_Case_Challenge_Design_Doc.pdf located in the root directory of the project. Download it to take a look at my thought process while building this project. 
+
 ## Project Overview
 
 This project provides:
